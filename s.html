@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHANTOM</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+<style>
+:root { --accent: #ff8c00; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Orbitron', sans-serif; background: #000; color: white; min-height: 100vh; position: relative; overflow-x: hidden; }
+#stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.star { position: absolute; background: rgba(255,255,255,0.7); border-radius: 50%; animation: drift linear infinite; }
+@keyframes drift { from { transform: translateY(0); } to { transform: translateY(-120vh); } }
+
+#bottom-glow { position: fixed; bottom: -35vh; left: 50%; transform: translateX(-50%); width: 140vw; height: 80vh; z-index: 0; pointer-events: none; transition: background 0.4s ease; }
+
+.page { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 40px 24px 80px; }
+.back-btn { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.5); font-size: 0.7rem; letter-spacing: 2px; text-decoration: none; border: none; background: none; cursor: pointer; font-family: 'Orbitron', sans-serif; margin-bottom: 32px; transition: color 0.2s; }
+.back-btn:hover { color: var(--accent); }
+
+.logo { font-size: clamp(2.5rem,7vw,4.5rem); font-weight: 900; letter-spacing: 10px; color: white; margin-bottom: 8px; animation: logoPulse 6s ease-in-out infinite; transition: text-shadow 0.4s ease; }
+@keyframes logoPulse { 0%,100% { transform: scale(1); filter: brightness(1); } 50% { transform: scale(1.015); filter: brightness(1.08); } }
+
+.page-subtitle { font-size: 0.7rem; letter-spacing: 3px; opacity: 0.4; margin-bottom: 48px; }
+.section { margin-bottom: 40px; }
+.section-title { font-size: 0.65rem; letter-spacing: 3px; margin-bottom: 16px; padding-bottom: 8px; transition: color 0.4s, border-color 0.4s; }
+.panel { background: rgba(255,255,255,0.025); border-radius: 16px; padding: 20px; backdrop-filter: blur(10px); margin-bottom: 12px; transition: border-color 0.4s; }
+.panel-label { font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6; margin-bottom: 14px; }
+
+.color-presets { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.color-swatch { width: 38px; height: 38px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; position: relative; }
+.color-swatch:hover { transform: scale(1.15); }
+.color-swatch.active { border-color: white; box-shadow: 0 0 0 2px rgba(255,255,255,0.3); }
+.color-swatch::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; color: white; opacity: 0; transition: opacity 0.2s; font-family: sans-serif; }
+.color-swatch.active::after { opacity: 1; }
+.custom-color-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+.custom-label { font-size: 0.65rem; letter-spacing: 1px; opacity: 0.5; }
+input[type="color"] { width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); background: none; cursor: pointer; padding: 0; overflow: hidden; transition: border-color 0.4s; }
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; border-radius: 50%; }
+input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+
+.wallpaper-input { width: 100%; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 10px 14px; color: white; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 1px; outline: none; transition: border-color 0.2s; }
+.wallpaper-input::placeholder { opacity: 0.3; }
+
+.themed-btn { font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 2px; cursor: pointer; border-radius: 8px; padding: 8px 20px; transition: all 0.3s; }
+
+.cursor-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+.cursor-opt { padding: 10px 6px; background: rgba(255,255,255,0.03); border-radius: 10px; text-align: center; cursor: pointer; font-size: 0.6rem; letter-spacing: 1.5px; color: rgba(255,255,255,0.55); transition: all 0.3s; }
+.cursor-opt .cursor-preview { font-size: 1.4rem; margin-bottom: 6px; line-height: 1; }
+.cursor-opt:hover { color: white; }
+
+.toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.toggle-row:last-child { border-bottom: none; padding-bottom: 0; }
+.toggle-info .tl { font-size: 0.7rem; letter-spacing: 1.5px; margin-bottom: 3px; }
+.toggle-info .td { font-size: 0.6rem; opacity: 0.4; letter-spacing: 0.5px; }
+.toggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; inset: 0; background: rgba(255,255,255,0.1); border-radius: 24px; cursor: pointer; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+.slider:before { content: ''; position: absolute; height: 18px; width: 18px; left: 2px; bottom: 2px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
+input:checked + .slider:before { transform: translateX(20px); }
+
+.panic-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.panic-label { font-size: 0.65rem; letter-spacing: 1px; opacity: 0.5; white-space: nowrap; }
+.panic-input { width: 60px; text-align: center; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 7px 10px; color: white; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; outline: none; transition: border-color 0.2s; letter-spacing: 2px; }
+
+.toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px); border-radius: 10px; padding: 10px 22px; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; letter-spacing: 2px; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 9999; backdrop-filter: blur(12px); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.version { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); font-size: 0.65rem; opacity: 0.3; z-index: 1; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
+
+#phantom-dot { position: fixed; width: 10px; height: 10px; border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); display: none; }
+</style>
+</head>
+<body>
+<div id="phantom-dot"></div>
+<div id="bottom-glow"></div>
+<div id="stars"></div>
+
+<div class="page">
+  <button class="back-btn" onclick="history.back()"><i class="fa-solid fa-chevron-left" style="font-size:0.7rem"></i> BACK</button>
+  <h1 class="logo" id="logo">PHANTOM</h1>
+  <div class="page-subtitle">SETTINGS</div>
+
+  <!-- VISUALS -->
+  <div class="section">
+    <div class="section-title" id="st1">⬡ VISUALS</div>
+
+    <div class="panel" id="p-color">
+      <div class="panel-label">ACCENT COLOR</div>
+      <div class="color-presets">
+        <div class="color-swatch" data-color="#00ff88" style="background:#00ff88;" title="Green"></div>
+        <div class="color-swatch" data-color="#00aaff" style="background:#00aaff;" title="Blue"></div>
+        <div class="color-swatch" data-color="#aa44ff" style="background:#aa44ff;" title="Purple"></div>
+        <div class="color-swatch" data-color="#ff3355" style="background:#ff3355;" title="Red"></div>
+        <div class="color-swatch" data-color="#ff8800" style="background:#ff8800;" title="Orange"></div>
+      </div>
+      <div class="custom-color-row">
+        <span class="custom-label">CUSTOM</span>
+        <input type="color" id="customColor" value="#00ff88">
+        <span style="font-size:0.6rem;opacity:0.4;letter-spacing:1px;">PICK ANY COLOR</span>
+      </div>
+    </div>
+
+    <div class="panel" id="p-wall">
+      <div class="panel-label">CUSTOM WALLPAPER</div>
+      <input type="text" class="wallpaper-input" id="wallpaperUrl" placeholder="PASTE IMAGE URL HERE...">
+      <br>
+      <button class="themed-btn" id="wallApplyBtn" onclick="applyWallpaperAction()" style="margin-top:10px;"><i class="fa-solid fa-image" style="margin-right:6px"></i>APPLY</button>
+      <button class="themed-btn" id="wallClearBtn" onclick="clearWallpaper()" style="margin-top:10px;margin-left:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.5);">CLEAR</button>
+    </div>
+
+    <div class="panel" id="p-cursor">
+      <div class="panel-label">CURSOR STYLE</div>
+      <div class="cursor-grid" id="cursorGrid">
+        <div class="cursor-opt" data-cursor="default"><div class="cursor-preview">↖</div>NORMAL</div>
+        <div class="cursor-opt" data-cursor="crosshair"><div class="cursor-preview">✛</div>CROSSHAIR</div>
+        <div class="cursor-opt" data-cursor="text"><div class="cursor-preview">Ι</div>TEXT</div>
+        <div class="cursor-opt" data-cursor="move"><div class="cursor-preview">✥</div>MOVE</div>
+        <div class="cursor-opt" data-cursor="help"><div class="cursor-preview">↖?</div>HELP</div>
+        <div class="cursor-opt" data-cursor="dot"><div class="cursor-preview">•</div>DOT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB & PANIC -->
+  <div class="section">
+    <div class="section-title" id="st2">⬡ TAB & PANIC</div>
+    <div class="panel" id="p-tab">
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <div class="tl">TAB CLOAKING</div>
+          <div class="td">DISGUISE TAB TITLE & ICON</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="tabCloakToggle" onchange="toggleTabCloak(this)">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="cloakOptions" style="display:none;margin-top:14px;">
+        <div class="panel-label">CLOAK AS</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="themed-btn action-themed" onclick="setCloak('Google','https://www.google.com/favicon.ico')">GOOGLE</button>
+          <button class="themed-btn action-themed" onclick="setCloak('Classroom','https://ssl.gstatic.com/classroom/favicon.png')">CLASSROOM</button>
+          <button class="themed-btn action-themed" onclick="setCloak('Canvas','https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico')">CANVAS</button>
+          <button class="themed-btn action-themed" onclick="setCloak('Khan Academy','https://www.khanacademy.org/favicon.ico')">KHAN ACADEMY</button>
+          <button class="themed-btn action-themed" onclick="setCloak('Reset','images/PHANTOM_LOGO')">RESET</button>
+        </div>
+      </div>
+
+      <div class="toggle-row" style="margin-top:16px;">
+        <div class="toggle-info">
+          <div class="tl">PANIC KEY</div>
+          <div class="td">PRESS KEY TO REDIRECT INSTANTLY</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="panicToggle" onchange="togglePanic(this)">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="panicOptions" style="display:none;margin-top:12px;">
+        <div class="panic-row">
+          <span class="panic-label">PANIC KEY</span>
+          <input type="text" class="panic-input" id="panicKey" maxlength="1" placeholder="P" readonly>
+          <span style="font-size:0.6rem;opacity:0.4;"> PRESS A KEY TO SET</span>
+        </div>
+        <div style="margin-top:10px;" class="panic-row">
+          <span class="panic-label">REDIRECT TO</span>
+          <input type="text" class="wallpaper-input" id="panicUrl" placeholder="HTTPS://GOOGLE.COM" style="flex:1;">
+        </div>
+        <button class="themed-btn action-themed" style="margin-top:10px;" onclick="savePanicUrl()">SAVE URL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEALTH -->
+  <div class="section">
+    <div class="section-title" id="st3">⬡ STEALTH</div>
+    <div class="panel" id="p-stealth">
+      <div class="toggle-info" style="margin-bottom:14px;">
+        <div class="tl" style="margin-bottom:4px;">ABOUT:BLANK CLOAK</div>
+        <div class="td">OPEN PHANTOM IN AN ABOUT:BLANK TAB TO HIDE THE URL</div>
+      </div>
+      <button class="themed-btn action-themed" onclick="openAboutBlank()">
+        <i class="fa-solid fa-ghost"></i> OPEN IN ABOUT:BLANK
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="version">PHANTOM v0.6</div>
+
+<script>
+/* ── Stars ── */
+const sc = document.getElementById("stars");
+for (let i = 0; i < 90; i++) {
+    const s = document.createElement("div"); s.className = "star";
+    const sz = Math.random() * 2 + 1;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*120}%;opacity:${Math.random()*0.6+0.2};animation-duration:${Math.random()*80+80}s;animation-delay:-${Math.random()*100}s;`;
+    sc.appendChild(s);
+}
+
+/* ── Toast ── */
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ── Helpers ── */
+function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+    return {r,g,b};
+}
+function rgba(hex, a) { const {r,g,b} = hexToRgb(hex); return `rgba(${r},${g},${b},${a})`; }
+
+/* ── Apply accent (visual only, no save here) ── */
+function applyAccentVisuals(color) {
+    document.documentElement.style.setProperty('--accent', color);
+
+    document.getElementById('logo').style.textShadow = `
+        0 0 6px rgba(255,255,255,0.15),
+        0 0 15px ${rgba(color,0.40)},
+        0 0 30px ${rgba(color,0.25)},
+        0 0 60px ${rgba(color,0.15)}`;
+
+    document.getElementById('bottom-glow').style.background =
+        `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, ${rgba(color,0.04)} 35%, transparent 70%)`;
+
+    ['st1','st2','st3'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.color = color;
+        el.style.borderBottomColor = rgba(color, 0.15);
+    });
+
+    ['p-color','p-wall','p-cursor','p-tab','p-stealth'].forEach(id => {
+        document.getElementById(id).style.border = `1px solid ${rgba(color,0.12)}`;
+    });
+
+    document.querySelectorAll('.wallpaper-input').forEach(el => el.style.border = `1px solid ${rgba(color,0.20)}`);
+    document.querySelectorAll('.panic-input').forEach(el => el.style.border = `1px solid ${rgba(color,0.20)}`);
+    document.getElementById('customColor').style.borderColor = rgba(color, 0.40);
+
+    const wab = document.getElementById('wallApplyBtn');
+    wab.style.background = rgba(color, 0.08);
+    wab.style.border = `1px solid ${rgba(color, 0.30)}`;
+    wab.style.color = color;
+
+    document.querySelectorAll('.action-themed').forEach(el => {
+        el.style.background = rgba(color, 0.07);
+        el.style.border = `1px solid ${rgba(color, 0.25)}`;
+        el.style.color = color;
+    });
+
+    /* Update cursor opts active state */
+    const savedCursor = localStorage.getItem('phantom_cursor') || 'default';
+    document.querySelectorAll('.cursor-opt').forEach(el => {
+        el.style.border = `1px solid ${rgba(color,0.10)}`;
+        if (el.dataset.cursor === savedCursor) {
+            el.style.borderColor = color;
+            el.style.color = color;
+            el.style.background = rgba(color, 0.06);
+            el.style.boxShadow = `0 0 10px ${rgba(color,0.12)}`;
+        } else {
+            el.style.color = 'rgba(255,255,255,0.55)';
+            el.style.background = 'rgba(255,255,255,0.03)';
+            el.style.boxShadow = 'none';
+        }
+    });
+
+    let dynStyle = document.getElementById('dynamic-toggle-style');
+    if (!dynStyle) { dynStyle = document.createElement('style'); dynStyle.id = 'dynamic-toggle-style'; document.head.appendChild(dynStyle); }
+    dynStyle.textContent = `
+        input:checked+.slider{background:${rgba(color,0.25)}!important;border-color:${rgba(color,0.40)}!important;}
+        input:checked+.slider:before{background:${color}!important;}
+        .cursor-opt.active{border-color:${color}!important;color:${color}!important;background:${rgba(color,0.06)}!important;box-shadow:0 0 10px ${rgba(color,0.12)}!important;}
+        .cursor-opt:hover{border-color:${rgba(color,0.30)}!important;color:white!important;}
+        .wallpaper-input:focus{border-color:${rgba(color,0.50)}!important;}
+        .panic-input:focus{border-color:${rgba(color,0.50)}!important;}
+        .back-btn:hover{color:${color}!important;}
+        .themed-btn.action-themed:hover{background:${rgba(color,0.14)}!important;box-shadow:0 0 16px ${rgba(color,0.20)}!important;}
+        #wallApplyBtn:hover{background:${rgba(color,0.15)}!important;box-shadow:0 0 12px ${rgba(color,0.20)}!important;}
+    `;
+
+    const toast = document.getElementById('toast');
+    toast.style.background = rgba(color, 0.12);
+    toast.style.border = `1px solid ${rgba(color, 0.35)}`;
+    toast.style.color = color;
+
+    updateDotStyle(color);
+}
+
+/* ── Set accent + save ── */
+function setAccent(color) {
+    localStorage.setItem('phantom_accent', color);
+    applyAccentVisuals(color);
+}
+
+/* ── DOT CURSOR ── */
+const dot = document.getElementById('phantom-dot');
+let dotActive = false;
+function updateDotStyle(color) {
+    if (!color) color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    dot.style.background = color;
+    dot.style.boxShadow = `0 0 6px 2px ${color}, 0 0 14px 4px ${rgba(color,0.50)}, 0 0 28px 8px ${rgba(color,0.25)}`;
+}
+document.addEventListener('mousemove', e => {
+    if (!dotActive) return;
+    dot.style.left = e.clientX + 'px';
+    dot.style.top = e.clientY + 'px';
+});
+function enableDotCursor() {
+    dotActive = true; dot.style.display = 'block'; updateDotStyle();
+    document.documentElement.style.cursor = 'none';
+    let s = document.getElementById('dot-cursor-style');
+    if (!s) { s = document.createElement('style'); s.id = 'dot-cursor-style'; s.textContent = '*{cursor:none!important;}'; document.head.appendChild(s); }
+}
+function disableDotCursor() {
+    dotActive = false; dot.style.display = 'none';
+    document.documentElement.style.cursor = '';
+    const s = document.getElementById('dot-cursor-style'); if (s) s.remove();
+}
+
+/* ── Cursor selection ── */
+const cursorOpts = document.querySelectorAll('.cursor-opt');
+function setCursor(cur, save = true) {
+    cursorOpts.forEach(o => o.classList.remove('active'));
+    const target = [...cursorOpts].find(o => o.dataset.cursor === cur);
+    if (target) target.classList.add('active');
+    if (cur === 'dot') { enableDotCursor(); }
+    else { disableDotCursor(); document.documentElement.style.cursor = cur === 'default' ? '' : cur; }
+    if (save) {
+        localStorage.setItem('phantom_cursor', cur);
+        showToast('CURSOR SAVED');
+    }
+    const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    applyAccentVisuals(accent);
+}
+cursorOpts.forEach(o => o.addEventListener('click', () => setCursor(o.dataset.cursor)));
+
+/* ── Color swatches ── */
+const swatches = document.querySelectorAll('.color-swatch');
+swatches.forEach(s => {
+    s.addEventListener('click', () => {
+        swatches.forEach(x => x.classList.remove('active'));
+        s.classList.add('active');
+        document.getElementById('customColor').value = s.dataset.color;
+        setAccent(s.dataset.color);
+        showToast('COLOR SAVED');
+    });
+});
+document.getElementById('customColor').addEventListener('input', e => {
+    swatches.forEach(x => x.classList.remove('active'));
+    setAccent(e.target.value);
+});
+
+/* ── Wallpaper ── */
+function applyWallpaperAction() {
+    const url = document.getElementById('wallpaperUrl').value.trim();
+    if (!url) { showToast('ENTER A URL FIRST'); return; }
+    document.body.style.backgroundImage = `url('${url}')`;
+    document.body.style.backgroundSize = 'cover';
+    document.body.style.backgroundPosition = 'center';
+    localStorage.setItem('phantom_wallpaper', url);
+    showToast('WALLPAPER SAVED');
+}
+function clearWallpaper() {
+    document.body.style.backgroundImage = '';
+    document.getElementById('wallpaperUrl').value = '';
+    localStorage.removeItem('phantom_wallpaper');
+    showToast('WALLPAPER CLEARED');
+}
+
+/* ── Tab Cloak ── */
+function toggleTabCloak(cb) {
+    document.getElementById('cloakOptions').style.display = cb.checked ? 'block' : 'none';
+    if (!cb.checked) {
+        document.title = 'PHANTOM';
+        localStorage.removeItem('phantom_cloak_name');
+        localStorage.removeItem('phantom_cloak_icon');
+        const link = document.querySelector("link[rel='icon']");
+        if (link) link.href = '';
+    }
+    localStorage.setItem('phantom_cloak_on', cb.checked);
+}
+function setCloak(name, icon) {
+    document.title = name;
+    let link = document.querySelector("link[rel='icon']");
+    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+    link.href = icon;
+    localStorage.setItem('phantom_cloak_name', name);
+    localStorage.setItem('phantom_cloak_icon', icon);
+    showToast('CLOAKED AS ' + name.toUpperCase() + ' — SAVED');
+}
+
+/* ── Panic Key ── */
+function togglePanic(cb) {
+    document.getElementById('panicOptions').style.display = cb.checked ? 'block' : 'none';
+    localStorage.setItem('phantom_panic_on', cb.checked);
+}
+const panicKeyInput = document.getElementById('panicKey');
+panicKeyInput.addEventListener('focus', () => {
+    panicKeyInput.placeholder = '...';
+    const handler = e => {
+        e.preventDefault();
+        panicKeyInput.value = e.key.toUpperCase();
+        localStorage.setItem('phantom_panickey', e.key);
+        panicKeyInput.blur();
+        document.removeEventListener('keydown', handler);
+        showToast('PANIC KEY SAVED: ' + e.key.toUpperCase());
+    };
+    document.addEventListener('keydown', handler);
+});
+function savePanicUrl() {
+    const url = document.getElementById('panicUrl').value.trim();
+    if (!url) { showToast('ENTER A URL FIRST'); return; }
+    localStorage.setItem('phantom_panicurl', url);
+    showToast('PANIC URL SAVED');
+}
+/* Also listen for panic key on settings page */
+let panicActiveHere = false;
+document.addEventListener('keydown', e => {
+    if (!panicActiveHere) return;
+    const pk = localStorage.getItem('phantom_panickey');
+    const url = localStorage.getItem('phantom_panicurl') || 'https://google.com';
+    if (pk && e.key === pk) window.location.href = url;
+});
+
+/* ── About:Blank ── */
+function openAboutBlank() {
+    const w = window.open('about:blank', '_blank');
+    if (!w) { showToast('POP-UP BLOCKED'); return; }
+    w.document.write(`<script>window.location.href=window.location.origin+'/index.html';<\/script>`);
+    w.document.close();
+    showToast('OPENED IN ABOUT:BLANK');
+}
+
+/* ── Init: load all saved settings ── */
+(function init() {
+    const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
+    const cursor     = localStorage.getItem('phantom_cursor')    || 'default';
+    const wallpaper  = localStorage.getItem('phantom_wallpaper') || '';
+    const cloakOn    = localStorage.getItem('phantom_cloak_on')  === 'true';
+    const cloakName  = localStorage.getItem('phantom_cloak_name')|| '';
+    const cloakIcon  = localStorage.getItem('phantom_cloak_icon')|| '';
+    const panicOn    = localStorage.getItem('phantom_panic_on')  === 'true';
+    const panicKey   = localStorage.getItem('phantom_panickey')  || '';
+    const panicUrl   = localStorage.getItem('phantom_panicurl')  || '';
+
+    /* Color */
+    document.getElementById('customColor').value = accent;
+    swatches.forEach(s => s.classList.toggle('active', s.dataset.color === accent));
+    applyAccentVisuals(accent);
+
+    /* Cursor */
+    setCursor(cursor, false);
+
+    /* Wallpaper */
+    if (wallpaper) {
+        document.getElementById('wallpaperUrl').value = wallpaper;
+        document.body.style.backgroundImage = `url('${wallpaper}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+    }
+
+    /* Tab cloak */
+    if (cloakOn) {
+        document.getElementById('tabCloakToggle').checked = true;
+        document.getElementById('cloakOptions').style.display = 'block';
+        if (cloakName) {
+            document.title = cloakName;
+            let link = document.querySelector("link[rel='icon']");
+            if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
+            link.href = cloakIcon;
+        }
+    }
+
+    /* Panic */
+    if (panicOn) {
+        document.getElementById('panicToggle').checked = true;
+        document.getElementById('panicOptions').style.display = 'block';
+        panicActiveHere = true;
+    }
+    if (panicKey) panicKeyInput.value = panicKey.toUpperCase();
+    if (panicUrl) document.getElementById('panicUrl').value = panicUrl;
+})();
+</script>
+</body>
+</html>
