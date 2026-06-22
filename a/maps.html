@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maps</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="ADD_FAVICON_HERE">
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            background: black;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .credit {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
+
+        .credit a {
+            color: black;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+             font-family: 'Orbitron';
+        }
+
+        .credit a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<iframe src="https://www.openstreetmap.org/export/embed.html" loading="lazy" allowfullscreen></iframe>
+
+<div class="credit">
+    <a href="https://www.openstreetmap.org/export/embed.html" target="_blank">
+         
+    </a>
+</div>
+
+</body>
+</html>
