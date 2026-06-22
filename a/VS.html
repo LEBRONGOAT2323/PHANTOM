@@ -1,474 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHANTOM — Settings</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-<style>
-:root { --accent: #00ff88; }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Orbitron',sans-serif;
-  background:#000;
-  color:white;
-  min-height:100vh;
-  position:relative;
-  overflow-x:hidden;
-}
-#stars{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
-.star{position:absolute;background:rgba(255,255,255,0.7);border-radius:50%;animation:drift linear infinite;}
-@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-120vh)}}
-body::after{
-  content:"";position:fixed;bottom:-35vh;left:50%;transform:translateX(-50%);
-  width:140vw;height:80vh;
-  background:radial-gradient(ellipse at center,rgba(0,255,136,0.12) 0%,rgba(0,255,136,0.04) 35%,transparent 70%);
-  z-index:0;pointer-events:none;
-}
-.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:40px 24px 80px;}
-.back-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  color:rgba(255,255,255,0.5);font-size:0.7rem;letter-spacing:2px;
-  text-decoration:none;border:none;background:none;cursor:pointer;
-  font-family:'Orbitron',sans-serif;margin-bottom:32px;
-  transition:color 0.2s;
-}
-.back-btn:hover{color:var(--accent);}
-.logo{
-  font-size:clamp(2.5rem,7vw,4.5rem);font-weight:900;letter-spacing:10px;
-  color:white;margin-bottom:8px;
-  text-shadow:
-    0 0 6px rgba(255,255,255,0.15),
-    0 0 15px color-mix(in srgb,var(--accent) 40%,transparent),
-    0 0 30px color-mix(in srgb,var(--accent) 25%,transparent),
-    0 0 60px color-mix(in srgb,var(--accent) 15%,transparent);
-  animation:logoPulse 6s ease-in-out infinite;
-}
-@keyframes logoPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.015);filter:brightness(1.08)}}
-.page-subtitle{font-size:0.7rem;letter-spacing:3px;opacity:0.4;margin-bottom:48px;}
-.section{margin-bottom:40px;}
-.section-title{
-  font-size:0.65rem;letter-spacing:3px;color:var(--accent);
-  margin-bottom:16px;padding-bottom:8px;
-  border-bottom:1px solid rgba(0,255,136,0.15);
-}
-.panel{
-  background:rgba(255,255,255,0.025);
-  border:1px solid rgba(0,255,136,0.12);
-  border-radius:16px;
-  padding:20px;
-  backdrop-filter:blur(10px);
-  margin-bottom:12px;
-}
-.panel-label{font-size:0.7rem;letter-spacing:2px;opacity:0.6;margin-bottom:14px;}
+    <title>VS code Studio</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="ADD_FAVICON_HERE">
+      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            background: black;
+        }
 
-/* Color presets */
-.color-presets{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-.color-swatch{
-  width:38px;height:38px;border-radius:50%;cursor:pointer;
-  border:2px solid transparent;
-  transition:all 0.2s;position:relative;
-}
-.color-swatch:hover{transform:scale(1.15);}
-.color-swatch.active{border-color:white;box-shadow:0 0 0 2px rgba(255,255,255,0.3);}
-.color-swatch::after{
-  content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:14px;color:white;opacity:0;transition:opacity 0.2s;font-family:sans-serif;
-}
-.color-swatch.active::after{opacity:1;}
-.custom-color-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
-.custom-label{font-size:0.65rem;letter-spacing:1px;opacity:0.5;}
-input[type="color"]{
-  width:38px;height:38px;border-radius:50%;border:2px solid rgba(0,255,136,0.25);
-  background:none;cursor:pointer;padding:0;overflow:hidden;
-}
-input[type="color"]::-webkit-color-swatch-wrapper{padding:0;border-radius:50%;}
-input[type="color"]::-webkit-color-swatch{border:none;border-radius:50%;}
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
 
-/* Wallpaper */
-.wallpaper-input{
-  width:100%;background:rgba(255,255,255,0.05);
-  border:1px solid rgba(0,255,136,0.2);
-  border-radius:10px;padding:10px 14px;
-  color:white;font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:1px;
-  outline:none;transition:border-color 0.2s;
-}
-.wallpaper-input::placeholder{opacity:0.3;}
-.wallpaper-input:focus{border-color:rgba(0,255,136,0.5);}
-.wallpaper-btn{
-  margin-top:10px;padding:8px 20px;
-  background:rgba(0,255,136,0.08);
-  border:1px solid rgba(0,255,136,0.3);
-  border-radius:8px;color:var(--accent);
-  font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:2px;
-  cursor:pointer;transition:all 0.2s;
-}
-.wallpaper-btn:hover{background:rgba(0,255,136,0.15);box-shadow:0 0 12px rgba(0,255,136,0.2);}
-.wallpaper-clear{
-  margin-top:10px;margin-left:8px;padding:8px 20px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:8px;color:rgba(255,255,255,0.5);
-  font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:2px;
-  cursor:pointer;transition:all 0.2s;
-}
-.wallpaper-clear:hover{border-color:rgba(255,255,255,0.25);color:white;}
+        .credit {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
 
-/* Cursor */
-.cursor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.cursor-opt{
-  padding:10px 6px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(0,255,136,0.1);
-  border-radius:10px;
-  text-align:center;cursor:pointer;
-  font-size:0.6rem;letter-spacing:1.5px;
-  color:rgba(255,255,255,0.55);
-  transition:all 0.2s;
-}
-.cursor-opt .cursor-preview{font-size:1.4rem;margin-bottom:6px;line-height:1;}
-.cursor-opt:hover{border-color:rgba(0,255,136,0.3);color:white;}
-.cursor-opt.active{
-  border-color:var(--accent);color:var(--accent);
-  background:rgba(0,255,136,0.06);
-  box-shadow:0 0 10px rgba(0,255,136,0.12);
-}
+        .credit a {
+            color: black;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.2s ease;
+             font-family: 'Orbitron';
+        }
 
-/* Toggle Row */
-.toggle-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.toggle-row:last-child{border-bottom:none;padding-bottom:0;}
-.toggle-info .tl{font-size:0.7rem;letter-spacing:1.5px;margin-bottom:3px;}
-.toggle-info .td{font-size:0.6rem;opacity:0.4;letter-spacing:0.5px;}
-.toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
-.toggle input{opacity:0;width:0;height:0;}
-.slider{
-  position:absolute;inset:0;background:rgba(255,255,255,0.1);
-  border-radius:24px;cursor:pointer;transition:0.3s;
-  border:1px solid rgba(255,255,255,0.1);
-}
-.slider:before{
-  content:'';position:absolute;height:18px;width:18px;
-  left:2px;bottom:2px;background:rgba(255,255,255,0.5);
-  border-radius:50%;transition:0.3s;
-}
-input:checked+.slider{background:rgba(0,255,136,0.25);border-color:rgba(0,255,136,0.4);}
-input:checked+.slider:before{transform:translateX(20px);background:var(--accent);}
-
-/* Panic key row */
-.panic-row{display:flex;align-items:center;gap:10px;margin-top:8px;}
-.panic-label{font-size:0.65rem;letter-spacing:1px;opacity:0.5;white-space:nowrap;}
-.panic-input{
-  width:60px;text-align:center;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(0,255,136,0.2);
-  border-radius:8px;padding:7px 10px;
-  color:white;font-family:'Orbitron',sans-serif;font-size:0.8rem;
-  outline:none;transition:border-color 0.2s;letter-spacing:2px;
-}
-.panic-input:focus{border-color:rgba(0,255,136,0.5);}
-
-/* About:Blank btn */
-.action-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:11px 22px;
-  background:rgba(0,255,136,0.07);
-  border:1px solid rgba(0,255,136,0.25);
-  border-radius:10px;color:var(--accent);
-  font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:2px;
-  cursor:pointer;transition:all 0.2s;text-decoration:none;
-}
-.action-btn:hover{
-  background:rgba(0,255,136,0.14);
-  box-shadow:0 0 16px rgba(0,255,136,0.2);
-}
-.action-btn i{font-size:0.9rem;}
-
-/* Toast */
-.toast{
-  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);
-  background:rgba(0,255,136,0.12);border:1px solid rgba(0,255,136,0.35);
-  border-radius:10px;padding:10px 22px;
-  font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:2px;color:var(--accent);
-  opacity:0;transition:all 0.3s;pointer-events:none;z-index:999;
-  backdrop-filter:blur(12px);
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-.version{
-  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
-  font-size:0.65rem;opacity:0.3;z-index:1;font-family:'Orbitron',sans-serif;letter-spacing:2px;
-}
-</style>
+        .credit a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<div id="stars"></div>
-<div class="page">
-  <button class="back-btn" onclick="history.back()"><i class="fa-solid fa-chevron-left" style="font-size:0.7rem"></i> BACK</button>
-  <h1 class="logo">PHANTOM</h1>
-  <div class="page-subtitle">SETTINGS</div>
 
-  <!-- VISUALS -->
-  <div class="section">
-    <div class="section-title">⬡ VISUALS</div>
+<iframe src="I_NEED_TO_ADD_URL_LOL" loading="lazy" allowfullscreen></iframe>
 
-    <div class="panel">
-      <div class="panel-label">ACCENT COLOR</div>
-      <div class="color-presets">
-        <div class="color-swatch active" data-color="#00ff88" style="background:#00ff88;" title="Green"></div>
-        <div class="color-swatch" data-color="#00aaff" style="background:#00aaff;" title="Blue"></div>
-        <div class="color-swatch" data-color="#aa44ff" style="background:#aa44ff;" title="Purple"></div>
-        <div class="color-swatch" data-color="#ff3355" style="background:#ff3355;" title="Red"></div>
-        <div class="color-swatch" data-color="#ff8800" style="background:#ff8800;" title="Orange"></div>
-      </div>
-      <div class="custom-color-row">
-        <span class="custom-label">CUSTOM</span>
-        <input type="color" id="customColor" value="#00ff88" title="Pick a custom color">
-        <span style="font-size:0.6rem;opacity:0.4;letter-spacing:1px;">PICK ANY COLOR</span>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-label">CUSTOM WALLPAPER</div>
-      <input type="text" class="wallpaper-input" id="wallpaperUrl" placeholder="PASTE IMAGE URL HERE...">
-      <br>
-      <button class="wallpaper-btn" onclick="applyWallpaper()"><i class="fa-solid fa-image" style="margin-right:6px"></i>APPLY</button>
-      <button class="wallpaper-clear" onclick="clearWallpaper()">CLEAR</button>
-    </div>
-
-    <div class="panel">
-      <div class="panel-label">CURSOR STYLE</div>
-      <div class="cursor-grid" id="cursorGrid">
-        <div class="cursor-opt active" data-cursor="default"><div class="cursor-preview">↖</div>NORMAL</div>
-        <div class="cursor-opt" data-cursor="crosshair"><div class="cursor-preview">✛</div>CROSSHAIR</div>
-        <div class="cursor-opt" data-cursor="text"><div class="cursor-preview">Ι</div>TEXT</div>
-        <div class="cursor-opt" data-cursor="move"><div class="cursor-preview">✥</div>MOVE</div>
-        <div class="cursor-opt" data-cursor="help"><div class="cursor-preview">↖?</div>HELP</div>
-        <div class="cursor-opt" data-cursor="dot" title="Custom dot cursor"><div class="cursor-preview">·</div>DOT</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB & PANIC -->
-  <div class="section">
-    <div class="section-title">⬡ TAB & PANIC</div>
-
-    <div class="panel">
-      <div class="toggle-row">
-        <div class="toggle-info">
-          <div class="tl">TAB CLOAKING</div>
-          <div class="td">DISGUISE TAB TITLE & ICON</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="tabCloakToggle" onchange="toggleTabCloak(this)">
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div id="cloakOptions" style="display:none;margin-top:14px;">
-        <div class="panel-label">CLOAK AS</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="action-btn" onclick="setCloak('Google','https://www.google.com/favicon.ico')">GOOGLE</button>
-          <button class="action-btn" onclick="setCloak('Classroom','https://ssl.gstatic.com/classroom/favicon.png')">CLASSROOM</button>
-          <button class="action-btn" onclick="setCloak('Canvas','https://du11hjcvx0uqb.cloudfront.net/dist/images/favicon-e10d657a73.ico')">CANVAS</button>
-          <button class="action-btn" onclick="setCloak('Khan Academy','https://www.khanacademy.org/favicon.ico')">KHAN ACADEMY</button>
-        </div>
-      </div>
-
-      <div class="toggle-row" style="margin-top:16px;">
-        <div class="toggle-info">
-          <div class="tl">PANIC KEY</div>
-          <div class="td">PRESS KEY TO REDIRECT INSTANTLY</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="panicToggle" onchange="togglePanic(this)">
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div id="panicOptions" style="display:none;margin-top:12px;">
-        <div class="panic-row">
-          <span class="panic-label">PANIC KEY</span>
-          <input type="text" class="panic-input" id="panicKey" maxlength="1" placeholder="P" readonly>
-          <span style="font-size:0.6rem;opacity:0.4;"> PRESS A KEY TO SET</span>
-        </div>
-        <div style="margin-top:10px;" class="panic-row">
-          <span class="panic-label">REDIRECT TO</span>
-          <input type="text" class="wallpaper-input" id="panicUrl" placeholder="HTTPS://GOOGLE.COM" style="flex:1;">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ABOUT:BLANK -->
-  <div class="section">
-    <div class="section-title">⬡ STEALTH</div>
-    <div class="panel">
-      <div class="toggle-info" style="margin-bottom:14px;">
-        <div class="tl" style="margin-bottom:4px;">ABOUT:BLANK CLOAK</div>
-        <div class="td">OPEN PHANTOM IN AN ABOUT:BLANK TAB TO HIDE THE URL</div>
-      </div>
-      <button class="action-btn" onclick="openAboutBlank()">
-        <i class="fa-solid fa-ghost"></i> OPEN IN ABOUT:BLANK
-      </button>
-    </div>
-  </div>
-
+<div class="credit">
+    <a href="https://hcodx.com/vs-editor" target="_blank">
+         
+    </a>
 </div>
 
-<div class="toast" id="toast"></div>
-<div class="version">PHANTOM v1.0</div>
-
-<script>
-const starsContainer = document.getElementById("stars");
-for(let i=0;i<90;i++){
-  const s=document.createElement("div");s.className="star";
-  const sz=Math.random()*2+1;
-  s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*120}%;opacity:${Math.random()*0.6+0.2};animation-duration:${Math.random()*80+80}s;animation-delay:-${Math.random()*100}s;`;
-  starsContainer.appendChild(s);
-}
-
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-}
-
-/* Accent color */
-const swatches=document.querySelectorAll('.color-swatch');
-function setAccent(color){
-  document.documentElement.style.setProperty('--accent',color);
-  localStorage.setItem('phantom_accent',color);
-  document.getElementById('customColor').value=color;
-  showToast('COLOR UPDATED');
-}
-swatches.forEach(s=>{
-  s.addEventListener('click',()=>{
-    swatches.forEach(x=>x.classList.remove('active'));
-    s.classList.add('active');
-    setAccent(s.dataset.color);
-  });
-});
-document.getElementById('customColor').addEventListener('input',e=>{
-  swatches.forEach(x=>x.classList.remove('active'));
-  setAccent(e.target.value);
-});
-const savedAccent=localStorage.getItem('phantom_accent');
-if(savedAccent){
-  setAccent(savedAccent);
-  swatches.forEach(s=>s.classList.toggle('active',s.dataset.color===savedAccent));
-}
-
-/* Wallpaper */
-function applyWallpaper(){
-  const url=document.getElementById('wallpaperUrl').value.trim();
-  if(!url){showToast('ENTER A URL FIRST');return;}
-  document.body.style.backgroundImage=`url('${url}')`;
-  document.body.style.backgroundSize='cover';
-  document.body.style.backgroundPosition='center';
-  localStorage.setItem('phantom_wallpaper',url);
-  showToast('WALLPAPER APPLIED');
-}
-function clearWallpaper(){
-  document.body.style.backgroundImage='';
-  document.getElementById('wallpaperUrl').value='';
-  localStorage.removeItem('phantom_wallpaper');
-  showToast('WALLPAPER CLEARED');
-}
-const savedWallpaper=localStorage.getItem('phantom_wallpaper');
-if(savedWallpaper){
-  document.getElementById('wallpaperUrl').value=savedWallpaper;
-  document.body.style.backgroundImage=`url('${savedWallpaper}')`;
-  document.body.style.backgroundSize='cover';
-  document.body.style.backgroundPosition='center';
-}
-
-/* Cursor */
-let dotStyleEl=null;
-const cursorOpts=document.querySelectorAll('.cursor-opt');
-function setCursor(cur){
-  if(dotStyleEl){dotStyleEl.remove();dotStyleEl=null;}
-  if(cur==='dot'){
-    dotStyleEl=document.createElement('style');
-    dotStyleEl.textContent='*{cursor:none!important;}body::before{content:"";position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);}';
-    document.head.appendChild(dotStyleEl);
-    document.addEventListener('mousemove',moveDot);
-  } else {
-    document.removeEventListener('mousemove',moveDot);
-    document.documentElement.style.cursor=cur;
-  }
-  localStorage.setItem('phantom_cursor',cur);
-}
-function moveDot(e){
-  const b=document.body;
-  b.style.setProperty('--mx',e.clientX+'px');
-  b.style.setProperty('--my',e.clientY+'px');
-}
-cursorOpts.forEach(o=>{
-  o.addEventListener('click',()=>{
-    cursorOpts.forEach(x=>x.classList.remove('active'));
-    o.classList.add('active');
-    setCursor(o.dataset.cursor);
-    showToast('CURSOR UPDATED');
-  });
-});
-const savedCursor=localStorage.getItem('phantom_cursor');
-if(savedCursor){
-  setCursor(savedCursor);
-  cursorOpts.forEach(o=>o.classList.toggle('active',o.dataset.cursor===savedCursor));
-}
-
-/* Tab Cloak */
-function toggleTabCloak(cb){
-  document.getElementById('cloakOptions').style.display=cb.checked?'block':'none';
-  if(!cb.checked){document.title='PHANTOM';const link=document.querySelector("link[rel='icon']");if(link)link.href='';}
-}
-function setCloak(name,icon){
-  document.title=name;
-  let link=document.querySelector("link[rel='icon']");
-  if(!link){link=document.createElement('link');link.rel='icon';document.head.appendChild(link);}
-  link.href=icon;
-  showToast('CLOAKED AS '+name.toUpperCase());
-}
-
-/* Panic Key */
-let panicActive=false;
-function togglePanic(cb){
-  panicActive=cb.checked;
-  document.getElementById('panicOptions').style.display=cb.checked?'block':'none';
-}
-const panicKeyInput=document.getElementById('panicKey');
-panicKeyInput.addEventListener('focus',()=>{
-  panicKeyInput.placeholder='...';
-  const handler=e=>{
-    panicKeyInput.value=e.key.toUpperCase();
-    localStorage.setItem('phantom_panickey',e.key);
-    panicKeyInput.blur();
-    document.removeEventListener('keydown',handler);
-    showToast('PANIC KEY SET: '+e.key.toUpperCase());
-  };
-  document.addEventListener('keydown',handler);
-});
-document.addEventListener('keydown',e=>{
-  if(!panicActive)return;
-  const pk=localStorage.getItem('phantom_panickey');
-  if(pk&&e.key===pk){
-    const url=document.getElementById('panicUrl').value||'https://google.com';
-    window.location.href=url;
-  }
-});
-const savedPanicKey=localStorage.getItem('phantom_panickey');
-if(savedPanicKey)panicKeyInput.value=savedPanicKey.toUpperCase();
-
-/* About:Blank */
-function openAboutBlank(){
-  const w=window.open('about:blank','_blank');
-  if(!w){showToast('POP-UP BLOCKED');return;}
-  w.document.write(`<script>window.location.href=window.location.origin+'/index.html';<\/script>`);
-  w.document.close();
-  showToast('OPENED IN ABOUT:BLANK');
-}
-</script>
 </body>
 </html>
