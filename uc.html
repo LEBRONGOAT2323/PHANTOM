@@ -41,26 +41,28 @@ body {
     position: relative;
     z-index: 1;
     text-align: center;
-    max-width: 600px;
+    max-width: 800px; /* Slightly wider for the longer text */
     padding: 40px;
 }
 
 .error-code {
-    font-size: clamp(6rem, 15vw, 10rem);
+    /* Adjusted font size for "UNDER CONSTRUCTION" */
+    font-size: clamp(2rem, 7vw, 4.5rem); 
     font-weight: 900;
-    letter-spacing: 15px;
-    line-height: 1;
-    margin-bottom: 10px;
+    letter-spacing: 10px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    text-transform: uppercase;
     animation: pulse 4s ease-in-out infinite;
 }
 
 @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.8; }
+    50% { transform: scale(1.03); opacity: 0.8; }
 }
 
 .error-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 6px;
     opacity: 0.6;
     margin-bottom: 30px;
@@ -71,8 +73,11 @@ body {
     font-size: 0.75rem;
     letter-spacing: 2px;
     opacity: 0.4;
-    line-height: 1.8;
+    line-height: 2;
     margin-bottom: 40px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .home-btn {
@@ -124,10 +129,10 @@ body {
 
 <div class="container">
     <div class="error-code" id="logo">UNDER CONSTRUCTION</div>
-    <div class="error-title">System Error: Page Not Found</div>
+    <div class="error-title">System Status: Maintenance In Progress</div>
     <p class="error-desc">
-        The requested module is currently under construction or has been redacted from the PHANTOM interface. 
-        Please verify the coordinates and try again.
+        The requested module is currently being optimized or has been temporarily redacted from the PHANTOM core. 
+        Please verify your access credentials and stand by.
     </p>
     <a href="index.html" class="home-btn" id="homeBtn">
         <i class="fa-solid fa-house"></i> Return to Home
@@ -168,7 +173,7 @@ function rgba(hex, a) {
 function applyAccent(color) {
     document.documentElement.style.setProperty('--accent', color);
 
-    /* 404 Glow */
+    /* Logo Glow */
     document.getElementById('logo').style.textShadow = `
         0 0 10px rgba(255,255,255,0.15),
         0 0 25px ${rgba(color,0.40)},
@@ -231,9 +236,6 @@ function disableDotCursor() {
     const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
     const cursor = localStorage.getItem('phantom_cursor') || 'default';
     const wallpaper = localStorage.getItem('phantom_wallpaper') || '';
-    const cloakOn = localStorage.getItem('phantom_cloak_on') === 'true';
-    const cloakName = localStorage.getItem('phantom_cloak_name') || '';
-    const cloakIcon = localStorage.getItem('phantom_cloak_icon') || '';
 
     applyAccent(accent);
     
@@ -244,13 +246,6 @@ function disableDotCursor() {
         document.body.style.backgroundImage = `url('${wallpaper}')`;
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
-    }
-
-    if (cloakOn && cloakName) {
-        document.title = cloakName;
-        let link = document.querySelector("link[rel='icon']");
-        if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
-        link.href = cloakIcon;
     }
 })();
 </script>
