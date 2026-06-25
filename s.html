@@ -189,7 +189,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 </div>
 
 <div class="toast" id="toast"></div>
-<div class="version">PHANTOM v0.6</div>
+<div class="version" id="version">PHANTOM</div>
 
 <script>
 /* ── Stars ── */
@@ -429,10 +429,42 @@ document.addEventListener('keydown', e => {
 
 /* ── About:Blank ── */
 function openAboutBlank() {
-    const w = window.open('about:blank', '_blank');
-    if (!w) { showToast('POP-UP BLOCKED'); return; }
-    w.document.write(`<script>window.location.href=window.location.origin+'/index.html';<\/script>`);
-    w.document.close();
+    const win = window.open('about:blank', '_blank');
+
+    if (!win) {
+        showToast('POP-UP BLOCKED');
+        return;
+    }
+
+    win.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Google Drive</title>
+            <link rel="icon" href="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_32dp.png">
+            <style>
+                html, body {
+                    margin: 0;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    background: #000;
+                }
+
+                iframe {
+                    width: 100%;
+                    height: 100%;
+                    border: none;
+                }
+            </style>
+        </head>
+        <body>
+            <iframe src="${window.location.origin}/index.html"></iframe>
+        </body>
+        </html>
+    `);
+
+    win.document.close();
     showToast('OPENED IN ABOUT:BLANK');
 }
 
@@ -485,6 +517,39 @@ function openAboutBlank() {
     if (panicKey) panicKeyInput.value = panicKey.toUpperCase();
     if (panicUrl) document.getElementById('panicUrl').value = panicUrl;
 })();
+
+/* ── Auto Version From Git Tag ── */
+async function loadVersion() {
+    try {
+        const res = await fetch(
+            "https://api.github.com/repos/LEBRONGOAT2323/PHANTOM/releases/latest"
+        );
+
+        if (res.ok) {
+            const data = await res.json();
+            document.getElementById("version").textContent =
+                `PHANTOM ${data.tag_name}`;
+            return;
+        }
+    } catch {}
+
+    try {
+        const res = await fetch(
+            "https://api.github.com/repos/LEBRONGOAT2323/PHANTOM/tags"
+        );
+
+        if (res.ok) {
+            const tags = await res.json();
+            if (tags.length > 0) {
+                document.getElementById("version").textContent =
+                    `PHANTOM ${tags[0].name}`;
+            }
+        }
+    } catch {}
+}
+
+loadVersion();
+
 </script>
 </body>
 </html>
