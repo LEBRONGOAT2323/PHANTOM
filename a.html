@@ -606,37 +606,18 @@ function filterApps() {
     panicEnabled = panicOn;
 })();
 
-/* ── Auto Version From Git Tag ── */
-async function loadVersion() {
-    try {
-        const res = await fetch(
-            "https://api.github.com/repos/LEBRONGOAT2323/PHANTOM/releases/latest"
-        );
+/* ── Version Loader ── */
+fetch("version.json")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("version").textContent =
+            `PHANTOM ${data.version}`;
+    })
+    .catch(() => {
+        document.getElementById("version").textContent =
+            "PHANTOM";
+    });
 
-        if (res.ok) {
-            const data = await res.json();
-            document.getElementById("version").textContent =
-                `PHANTOM ${data.tag_name}`;
-            return;
-        }
-    } catch {}
-
-    try {
-        const res = await fetch(
-            "https://api.github.com/repos/LEBRONGOAT2323/PHANTOM/tags"
-        );
-
-        if (res.ok) {
-            const tags = await res.json();
-            if (tags.length > 0) {
-                document.getElementById("version").textContent =
-                    `PHANTOM ${tags[0].name}`;
-            }
-        }
-    } catch {}
-}
-
-loadVersion();
 
 </script>
 </body>
