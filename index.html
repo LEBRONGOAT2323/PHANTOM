@@ -223,6 +223,7 @@ body {
             <div class="boot-progress" id="bootBar"></div>
         </div>
     </div>
+    <div class="boot-small" id="bootVersion">PHANTOM</div>
 </div>
 
 <div id="phantom-dot"></div>
@@ -448,16 +449,17 @@ window.addEventListener('load', () => {
     }, 300);
 });
 
-/* ── Version Loader ── */
 fetch("./version.json")
     .then(res => res.json())
     .then(data => {
-        document.getElementById("version").textContent =
-            `PHANTOM ${data.version}`;
+        const versionText = `PHANTOM ${data.version}`;
+
+        document.getElementById("version").textContent = versionText;
+        document.getElementById("bootVersion").textContent = versionText;
     })
     .catch(() => {
-        document.getElementById("version").textContent =
-            "PHANTOM";
+        document.getElementById("version").textContent = "PHANTOM";
+        document.getElementById("bootVersion").textContent = "PHANTOM";
     });
 
 </script>
