@@ -222,7 +222,6 @@ body {
         <div class="boot-bar">
             <div class="boot-progress" id="bootBar"></div>
         </div>
-        <div class="version" id="version">PHANTOM</div>
     </div>
 </div>
 
@@ -450,7 +449,7 @@ window.addEventListener('load', () => {
 });
 
 /* ── Version Loader ── */
-fetch("version.json")
+fetch("./version.json")
     .then(res => res.json())
     .then(data => {
         document.getElementById("version").textContent =
