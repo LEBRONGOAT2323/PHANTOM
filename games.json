@@ -43,37 +43,37 @@
   },
   {
     "name": "Jetpack Joyride",
-    "image": "https://files.catbox.moe/l5ra16",
-    "category": "Arcade",
+    "image": "https://files.catbox.moe/y8qzch.png",
+    "category": "Action",
     "url": "g/jetpackjoyride.html"
   },
   {
     "name": "Friday Night Funkin",
     "image": "https://files.catbox.moe/rar2xp.png",
-    "category": "Simulation",
+    "category": "Rhythm",
     "url": "g/og-fnf.html"
   },
   {
     "name": "Sprunki",
     "image": "https://files.catbox.moe/1dildm.png",
-    "category": "Strategy",
+    "category": "Rhythm",
     "url": "g/sprunki.html"
   },
   {
     "name": "Temple Run 2",
-    "image": "https://files.catbox.moe/yr2mlh",
+    "image": "https://files.catbox.moe/enws3w.jpg",
     "category": "Action",
     "url": "g/templerun2.html"
   },
   {
     "name": "Stickman Hook",
-    "image": "https://files.catbox.moe/9t719c.jpg",
+    "image": "https://files.catbox.moe/xpyk6f",
     "category": "Action",
     "url": "g/stickmanhook.html"
   },
   {
     "name": "Attack Hole",
-    "image": "https://files.catbox.moe/zlfoq2",
+    "image": "https://files.catbox.moe/3bu6fv",
     "category": "Action",
     "url": "g/attackhole.html"
   }
