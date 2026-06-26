@@ -42,33 +42,39 @@
     "url": "g/blockblast.html"
   },
   {
-    "name": "Game 8",
-    "image": "assets/images/g/game8.png",
+    "name": "Jetpack Joyride",
+    "image": "https://files.catbox.moe/l5ra16",
     "category": "Arcade",
-    "url": "g/game8.html"
+    "url": "g/jetpackjoyride.html"
   },
   {
-    "name": "Game 9",
-    "image": "assets/images/g/game9.png",
+    "name": "Friday Night Funkin",
+    "image": "https://files.catbox.moe/rar2xp.png",
     "category": "Simulation",
-    "url": "g/game9.html"
+    "url": "g/og-fnf.html"
   },
   {
-    "name": "Game 10",
-    "image": "assets/images/g/game10.png",
+    "name": "Sprunki",
+    "image": "https://files.catbox.moe/1dildm.png",
     "category": "Strategy",
-    "url": "g/game10.html"
+    "url": "g/sprunki.html"
   },
   {
-    "name": "Game 11",
-    "image": "assets/images/g/game11.png",
-    "category": "IO",
-    "url": "g/game11.html"
+    "name": "Temple Run 2",
+    "image": "https://files.catbox.moe/yr2mlh",
+    "category": "Action",
+    "url": "g/templerun2.html"
   },
   {
-    "name": "Game 12",
-    "image": "assets/images/g/game12.png",
-    "category": "Idle",
-    "url": "g/game12.html"
+    "name": "Stickman Hook",
+    "image": "https://files.catbox.moe/9t719c.jpg",
+    "category": "Action",
+    "url": "g/stickmanhook.html"
+  },
+  {
+    "name": "Attack Hole",
+    "image": "https://files.catbox.moe/zlfoq2",
+    "category": "Action",
+    "url": "g/attackhole.html"
   }
 ]
