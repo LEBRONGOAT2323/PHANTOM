@@ -295,19 +295,19 @@ function applyAccent(color) {
     document.getElementById('bottom-glow').style.background =
         `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, ${rgba(color,0.04)} 35%, transparent 70%)`;
 
+    const themedHover = localStorage.getItem('phantom_game_hover') === 'true';
     let dynStyle = document.getElementById('games-dynamic-style');
     if (!dynStyle) { dynStyle = document.createElement('style'); dynStyle.id = 'games-dynamic-style'; document.head.appendChild(dynStyle); }
     dynStyle.textContent = `
         .game-card { border: 1px solid ${rgba(color,0.15)}; }
         .game-card:hover {
-            border-color: ${rgba(color,0.50)};
-            box-shadow: 0 0 25px ${rgba(color,0.20)}, inset 0 0 20px ${rgba(color,0.05)};
+            ${themedHover ? `border-color:${rgba(color,0.50)};box-shadow:0 0 25px ${rgba(color,0.20)}, inset 0 0 20px ${rgba(color,0.05)};` : `border-color:rgba(255,255,255,0.08);box-shadow:none;`}
         }
         .game-card:hover .game-image {
             filter: brightness(1.1);
         }
         .game-card:hover .game-name {
-            color: ${color};
+            color: ${themedHover ? color : "white"};
         }
         .search-input:focus {
             border-color: ${rgba(color, 0.40)};

@@ -125,7 +125,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
   <!-- TAB & PANIC -->
   <div class="section">
-    <div class="section-title" id="st2">⬡ TAB & PANIC</div>
+    <div class="section-title" id="st2">⬡ TAB & PANIC & HOVER</div>
     <div class="panel" id="p-tab">
       <div class="toggle-row">
         <div class="toggle-info">
@@ -171,6 +171,20 @@ input:checked + .slider:before { transform: translateX(20px); }
         </div>
         <button class="themed-btn action-themed" style="margin-top:10px;" onclick="savePanicUrl()">SAVE URL</button>
       </div>
+      <div class="toggle-row" style="margin-top:16px;">
+    <div class="toggle-info">
+        <div class="tl">THEMED GAME HOVER</div>
+        <div class="td">GAME NAME & BORDER USE ACCENT COLOR</div>
+    </div>
+
+    <label class="toggle">
+        <input
+            type="checkbox"
+            id="gameHoverToggle"
+            onchange="toggleGameHover(this)">
+        <span class="slider"></span>
+    </label>
+</div>
     </div>
   </div>
 
@@ -193,6 +207,11 @@ input:checked + .slider:before { transform: translateX(20px); }
 <div class="version" id="version">PHANTOM</div>
 
 <script>
+function toggleGameHover(cb) {
+    localStorage.setItem("phantom_game_hover", cb.checked);
+    showToast(cb.checked ? "THEMED GAME HOVER ENABLED" : "THEMED GAME HOVER DISABLED");
+}
+
 /* ── Stars ── */
 const sc = document.getElementById("stars");
 for (let i = 0; i < 90; i++) {
@@ -508,6 +527,11 @@ function openAboutBlank() {
             link.href = cloakIcon;
         }
     }
+
+    const gameHover =
+        localStorage.getItem("phantom_game_hover") === "true";
+
+    document.getElementById("gameHoverToggle").checked = gameHover;
 
     /* Panic */
     if (panicOn) {
