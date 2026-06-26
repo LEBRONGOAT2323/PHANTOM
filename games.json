@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Bowmasters",
+    "image": "https://files.catbox.moe/r4j5xm.png",
+    "category": "Shooting",
+    "url": "g/bowmasters.html"
+  },
+  {
+    "name": "ovo",
+    "image": "https://files.catbox.moe/s4qdyw",
+    "category": "Parkour",
+    "url": "g/ovo.html"
+  },
+  {
+    "name": "ovo 2",
+    "image": "https://files.catbox.moe/dc4l4r.jpg",
+    "category": "Parkour",
+    "url": "g/ovo2.html"
+  },
+  {
+    "name": "ovo 3 dimensions",
+    "image": "https://files.catbox.moe/cpf4nu.webp",
+    "category": "Parkour",
+    "url": "g/ovo3.html"
+  },
+  {
+    "name": "Gladihoppers",
+    "image": "https://files.catbox.moe/mxjy7q",
+    "category": "Fighting",
+    "url": "g/gladihoppers.html"
+  },
+  {
+    "name": "Ice dodo",
+    "image": "https://files.catbox.moe/nlx4yh",
+    "category": "Action",
+    "url": "g/icedodo.html"
+  },
+  {
+    "name": "Block Blast",
+    "image": "https://files.catbox.moe/6qeryb",
+    "category": "Puzzle",
+    "url": "g/blockblast.html"
+  },
+  {
+    "name": "Game 8",
+    "image": "assets/images/g/game8.png",
+    "category": "Arcade",
+    "url": "g/game8.html"
+  },
+  {
+    "name": "Game 9",
+    "image": "assets/images/g/game9.png",
+    "category": "Simulation",
+    "url": "g/game9.html"
+  },
+  {
+    "name": "Game 10",
+    "image": "assets/images/g/game10.png",
+    "category": "Strategy",
+    "url": "g/game10.html"
+  },
+  {
+    "name": "Game 11",
+    "image": "assets/images/g/game11.png",
+    "category": "IO",
+    "url": "g/game11.html"
+  },
+  {
+    "name": "Game 12",
+    "image": "assets/images/g/game12.png",
+    "category": "Idle",
+    "url": "g/game12.html"
+  }
+]
