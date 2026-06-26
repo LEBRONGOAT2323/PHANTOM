@@ -355,26 +355,53 @@ function disableDotCursor() {
 }
 
 function applyCursor(cur) {
-    if (cur === 'dot') { enableDotCursor(); }
-    else { disableDotCursor(); document.documentElement.style.cursor = cur === 'default' ? '' : cur; }
+
+    document.documentElement.style.cursor = "";
+
+    if (cur === "dot") {
+        enableDotCursor();
+    } else {
+        disableDotCursor();
+
+        if (cur !== "default") {
+            document.documentElement.style.cursor = cur;
+        }
+    }
 }
 
-/* ── Wallpaper & Tab Cloak ── */
 function applyWallpaper(url) {
-    if (!url) return;
+    if (!url) {
+        document.body.style.backgroundImage = "";
+        return;
+    }
+
     document.body.style.backgroundImage = `url('${url}')`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundPosition = 'center';
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
 }
 
 function applyTabCloak(name, icon) {
-    if (!name) return;
-    document.title = name;
-    let link = document.querySelector("link[rel='icon']");
-    if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
-    link.href = icon || '';
-}
 
+    if (!name) {
+        document.title = "PHANTOM";
+
+        let link = document.querySelector("link[rel='icon']");
+        if (link) link.href = "";
+
+        return;
+    }
+
+    document.title = name;
+
+    let link = document.querySelector("link[rel='icon']");
+    if (!link) {
+        link = document.createElement("link");
+        link.rel = "icon";
+        document.head.appendChild(link);
+    }
+
+    link.href = icon || "";
+}
 /* ── Panic Key ── */
 let panicEnabled = false;
 document.addEventListener('keydown', e => {
@@ -384,8 +411,7 @@ document.addEventListener('keydown', e => {
     if (pk && e.key.toLowerCase() === pk.toLowerCase()) window.location.href = url;
 });
 
-/* ── Initialization ── */
-(function init() {
+function loadSettings() {
     const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
     const cursor = localStorage.getItem('phantom_cursor') || 'default';
     const wallpaper = localStorage.getItem('phantom_wallpaper') || '';
@@ -396,11 +422,32 @@ document.addEventListener('keydown', e => {
 
     applyAccent(accent);
     applyCursor(cursor);
-    applyWallpaper(wallpaper);
-    if (cloakOn && cloakName) applyTabCloak(cloakName, cloakIcon);
-    panicEnabled = panicOn;
-})();
 
+    if (wallpaper) {
+        applyWallpaper(wallpaper);
+    } else {
+        document.body.style.backgroundImage = "";
+    }
+
+    if (cloakOn && cloakName) {
+        applyTabCloak(cloakName, cloakIcon);
+    } else {
+        document.title = "PHANTOM";
+
+        let link = document.querySelector("link[rel='icon']");
+        if (link) link.href = "";
+    }
+
+    panicEnabled = panicOn;
+}
+
+loadSettings();
+
+// Reload if another tab changes settings
+window.addEventListener("storage", loadSettings);
+
+// Reload every time this page is shown again
+window.addEventListener("pageshow", loadSettings);
 /* ── Boot Animation ── */
 window.addEventListener('load', () => {
     const boot = document.getElementById('boot');
