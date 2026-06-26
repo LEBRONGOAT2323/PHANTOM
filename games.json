@@ -76,5 +76,77 @@
     "image": "assets/images/g/attack-hole.webp",
     "category": "Action",
     "url": "g/attackhole.html"
+  },
+  {
+    "name": "Bridge Race",
+    "image": "assets/images/g/bridge-race.png",
+    "category": "Action",
+    "url": "g/bridgerace.html"
+  },
+  {
+    "name": "Color Water sort 3D",
+    "image": "assets/images/g/color-water-sort-3d.png",
+    "category": "Puzzle",
+    "url": "g/colorwatersort3d.html"
+  },
+  {
+    "name": "hide n seek",
+    "image": "assets/images/g/hidenseek.png",
+    "category": "Action",
+    "url": "g/hidenseek.html"
+  },
+  {
+    "name": "Magic Tiles 3",
+    "image": "assets/images/g/magic-tiles.png",
+    "category": "Rhythm",
+    "url": "g/magictiles3.html"
+  },
+  {
+    "name": "Stacky Dash",
+    "image": "assets/images/g/stacky-dash.png",
+    "category": "Action",
+    "url": "g/stackydash.html"
+  },
+  {
+    "name": "Supreme Duelist",
+    "image": "assets/images/g/supreme-duelist.png",
+    "category": "Fighting",
+    "url": "g/supremeduelist.html"
+  },
+  {
+    "name": "Tall Man Run",
+    "image": "assets/images/g/tall-man-run.png",
+    "category": "Action",
+    "url": "g/tall-man-run.html"
+  },
+  {
+    "name": "Turbo Stars",
+    "image": "assets/images/g/turbo-stars.jpeg",
+    "category": "Action",
+    "url": "g/turbo-stars.html"
+  },
+  {
+    "name": "Mob Control",
+    "image": "assets/images/g/mob-control.png",
+    "category": "Action",
+    "url": "g/mob-control.html"
+  },
+  {
+    "name": "Pou",
+    "image": "assets/images/g/pou.svg",
+    "category": "Action",
+    "url": "g/pou.html"
+  },
+  {
+    "name": "Crossy Road",
+    "image": "assets/images/g/crossy-road.jpeg",
+    "category": "Action",
+    "url": "g/crossy-road.html"
+  },
+  {
+    "name": "Basket Battle",
+    "image": "assets/images/g/basket-battle.png",
+    "category": "Action",
+    "url": "g/basket-battle.html"
   }
 ]
