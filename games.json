@@ -32,7 +32,7 @@
   {
     "name": "Ice dodo",
     "image": "https://files.catbox.moe/nlx4yh",
-    "category": "Action",
+    "category": "parkour",
     "url": "g/icedodo.html"
   },
   {
@@ -44,7 +44,7 @@
   {
     "name": "Jetpack Joyride",
     "image": "https://files.catbox.moe/y8qzch.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/jetpackjoyride.html"
   },
   {
@@ -62,25 +62,25 @@
   {
     "name": "Temple Run 2",
     "image": "assets/images/g/Temple_Run_2.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/templerun2.html"
   },
   {
     "name": "Stickman Hook",
     "image": "assets/images/g/stickman-hook.jpg",
-    "category": "Action",
+    "category": "Parkour",
     "url": "g/stickmanhook.html"
   },
   {
     "name": "Attack Hole",
     "image": "assets/images/g/attack-hole.webp",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/attackhole.html"
   },
   {
     "name": "Bridge Race",
     "image": "assets/images/g/bridge-race.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/bridgerace.html"
   },
   {
@@ -92,7 +92,7 @@
   {
     "name": "hide n seek",
     "image": "assets/images/g/hidenseek.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/hidenseek.html"
   },
   {
@@ -104,7 +104,7 @@
   {
     "name": "Stacky Dash",
     "image": "assets/images/g/stacky-dash.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/stackydash.html"
   },
   {
@@ -116,37 +116,109 @@
   {
     "name": "Tall Man Run",
     "image": "assets/images/g/tall-man-run.png",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/tall-man-run.html"
   },
   {
     "name": "Turbo Stars",
     "image": "assets/images/g/turbo-stars.jpeg",
-    "category": "Action",
+    "category": "racing",
     "url": "g/turbo-stars.html"
   },
   {
     "name": "Mob Control",
     "image": "assets/images/g/mob-control.png",
-    "category": "Action",
+    "category": "arcade",
     "url": "g/mob-control.html"
   },
   {
     "name": "Pou",
     "image": "assets/images/g/pou.svg",
-    "category": "Action",
+    "category": "Simulation",
     "url": "g/pou.html"
   },
   {
     "name": "Crossy Road",
     "image": "assets/images/g/crossy-road.jpeg",
-    "category": "Action",
+    "category": "Arcade",
     "url": "g/crossy-road.html"
   },
   {
     "name": "Basket Battle",
     "image": "assets/images/g/basket-battle.png",
-    "category": "Action",
+    "category": "Sports",
     "url": "g/basket-battle.html"
+  },
+  {
+    "name": "Amaze",
+    "image": "assets/images/g/AMAZE.png",
+    "category": "Puzzle",
+    "url": "g/Amaze.html"
+  },
+  {
+    "name": "Basketball Frvr",
+    "image": "assets/images/g/basketball-frvr.jpg",
+    "category": "Sports",
+    "url": "g/basketball-frvr.html"
+  },
+  {
+    "name": "Bazooka Boy",
+    "image": "assets/images/g/bazooka-boy.jpeg",
+    "category": "Shooting",
+    "url": "g/bazooka-boy.html"
+  },
+  {
+    "name": "Bottle Jump 3D",
+    "image": "assets/images/g/bottle-jump-3d.jpeg",
+    "category": "Arcade",
+    "url": "g/bottle-jump-3d.html"
+  },
+  {
+    "name": "Color Match",
+    "image": "assets/images/g/color-match.jpg",
+    "category": "Puzzle",
+    "url": "g/color-match.html"
+  },
+  {
+    "name": "Dig Deep",
+    "image": "assets/images/g/dig-deep.jpeg",
+    "category": "Simulation",
+    "url": "g/dig-deep.html"
+  },
+  {
+    "name": "Retro Bowl",
+    "image": "assets/images/g/Retro-Bowl.jpg",
+    "category": "Sports",
+    "url": "g/retro-bowl.html"
+  },
+  {
+    "name": "Retro Bowl College",
+    "image": "https://files.catbox.moe/geez24",
+    "category": "Sports",
+    "url": "g/retro-bowl-college.html"
+  },
+  {
+    "name": "DRIVE MAD",
+    "image": "https://files.catbox.moe/lybd4x.png",
+    "category": "Racing",
+    "url": "g/drive-mad.html"
+  },
+  {
+    "name": "Monster Tracks",
+    "image": "https://files.catbox.moe/4dw29n.png",
+    "category": "Racing",
+    "url": "g/monster-tracks.html"
+  },
+  {
+    "name": "Gobble",
+    "image": "assets/images/g/Gobble.png",
+    "category": "Arcade",
+    "url": "g/Gobble.html"
+  },
+  {
+    "name": "FNAF 1",
+    "image": "assets/images/g/fnaf-1.png",
+    "category": "Horror",
+    "url": "g/fnaf-1.html"
   }
 ]
