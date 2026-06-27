@@ -220,5 +220,35 @@
     "image": "assets/images/g/fnaf-1.png",
     "category": "Horror",
     "url": "g/fnaf-1.html"
+  },
+  {
+    "name": "FNAF 2",
+    "image": "assets/images/g/fnaf-2.png",
+    "category": "Horror",
+    "url": "g/fnaf-2.html"
+  },
+  {
+    "name": "FNAF 3",
+    "image": "assets/images/g/fnaf-3.jpeg",
+    "category": "Horror",
+    "url": "g/fnaf-3.html"
+  },
+  {
+    "name": "FNAF 4",
+    "image": "assets/images/g/fnaf-4.png",
+    "category": "Horror",
+    "url": "g/fnaf-4.html"
+  },
+  {
+    "name": "Ragdoll Hit",
+    "image": "assets/images/g/ragdoll-hit.png",
+    "category": "Fighting",
+    "url": "g/ragdoll-hit.html"
+  },
+  {
+    "name": "Ragdoll Archers",
+    "image": "assets/images/g/ragdoll-archers.jpeg",
+    "category": "Shooting",
+    "url": "g/ragdoll-archers.html"
   }
 ]
