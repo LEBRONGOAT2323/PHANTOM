@@ -250,5 +250,71 @@
     "image": "assets/images/g/ragdoll-archers.jpeg",
     "category": "Shooting",
     "url": "g/ragdoll-archers.html"
+  },
+  {
+    "name": "Vex 1",
+    "image": "assets/images/g/vex-1.png",
+    "category": "Platformer",
+    "url": "g/vex-1.html"
+  },
+  {
+    "name": "Vex 2",
+    "image": "assets/images/g/vex-2.jpeg",
+    "category": "Platformer",
+    "url": "g/vex-2.html"
+  },
+  {
+    "name": "Vex 3",
+    "image": "assets/images/g/vex-3.jpg",
+    "category": "Platformer",
+    "url": "g/vex-3.html"
+  },
+  {
+    "name": "Vex 4",
+    "image": "assets/images/g/vex-4.jpeg",
+    "category": "Platformer",
+    "url": "g/vex-4.html"
+  },
+  {
+    "name": "Vex 5",
+    "image": "assets/images/g/vex-5.png",
+    "category": "Platformer",
+    "url": "g/vex-5.html"
+  },
+  {
+    "name": "Vex 6",
+    "image": "assets/images/g/vex-6.webp",
+    "category": "Platformer",
+    "url": "g/vex-6.html"
+  },
+  {
+    "name": "Vex 7",
+    "image": "assets/images/g/vex-7.jpeg",
+    "category": "Platformer",
+    "url": "g/vex-7.html"
+  },
+  {
+    "name": "Vex 8",
+    "image": "assets/images/g/vex-8.jpeg",
+    "category": "Platformer",
+    "url": "g/vex-8.html"
+  },
+   {
+    "name": "Vex Challenges",
+    "image": "assets/images/g/vex-chall.jpeg",
+    "category": "Platformer",
+    "url": "g/vex-chall.html"
+  },
+   {
+    "name": "Vex X3M",
+    "image": "assets/images/g/vex-x3m.jpeg",
+    "category": "Racing",
+    "url": "g/vex-x3m.html"
+  },
+   {
+    "name": "Vex X3M 2",
+    "image": "assets/images/g/vex-x3m-2.png",
+    "category": "Racing",
+    "url": "g/vex-x3m-2.html"
   }
 ]
