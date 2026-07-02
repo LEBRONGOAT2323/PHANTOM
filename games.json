@@ -299,22 +299,70 @@
     "category": "Platformer",
     "url": "g/vex-8.html"
   },
-   {
+  {
     "name": "Vex Challenges",
     "image": "assets/images/g/vex-chall.jpeg",
     "category": "Platformer",
     "url": "g/vex-chall.html"
   },
-   {
+  {
     "name": "Vex X3M",
     "image": "assets/images/g/vex-x3m.jpeg",
     "category": "Racing",
     "url": "g/vex-x3m.html"
   },
-   {
+  {
     "name": "Vex X3M 2",
     "image": "assets/images/g/vex-x3m-2.png",
     "category": "Racing",
     "url": "g/vex-x3m-2.html"
+  },
+    {
+    "name": "1v1.Lol",
+    "image": "assets/images/g/1v1.png",
+    "category": "Shooting",
+    "url": "g/1v1-LoL.html"
+  },
+    {
+    "name": "A dance of fire and ice",
+    "image": "assets/images/g/adofai.png",
+    "category": "rhythm",
+    "url": "g/adofai.html"
+  },
+    {
+    "name": "Achievment Unlocked",
+    "image": "assets/images/g/achievement-unlocked.jpg",
+    "category": "Racing",
+    "url": "g/achievment-unlocked.html"
+  },
+    {
+    "name": "Achievment Unlocked 2",
+    "image": "assets/images/g/achievement-unlocked.jpg",
+    "category": "Racing",
+    "url": "g/achievment-unlocked-2.html"
+  },
+    {
+    "name": "Achievment Unlocked 3",
+    "image": "assets/images/g/achievement-unlocked.jpg",
+    "category": "Racing",
+    "url": "g/achievment-unlocked-3.html"
+  },
+    {
+    "name": "Angry Birds",
+    "image": "assets/images/g/angry-birds.jpeg",
+    "category": "Shooting",
+    "url": "g/angry-birds.html"
+  },
+    {
+    "name": "Backrooms",
+    "image": "assets/images/g/backrooms.jpeg",
+    "category": "Horror",
+    "url": "g/backrooms.html"
+  },
+    {
+    "name": "Baldis basics",
+    "image": "assets/images/g/baldis.png",
+    "category": "Racing",
+    "url": "g/baldis-basics.html"
   }
 ]
