@@ -135,17 +135,6 @@ body {
     background: rgba(255,255,255,0.06);
 }
 
-.game-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 70%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 1;
-}
-.game-card:hover::before { opacity: 1; }
-
 .game-image {
     width: 100%;
     height: 100%;
@@ -172,7 +161,6 @@ body {
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 
 .game-category {
@@ -182,12 +170,46 @@ body {
     margin-top: 2px;
 }
 
-.no-results {
-    text-align: center;
-    padding: 60px 20px;
-    opacity: 0.4;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
+/* Game Viewer */
+#game-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #000;
+    display: none;
+}
+#game-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+}
+.viewer-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10001;
+}
+.viewer-btn {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+.viewer-btn:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent);
 }
 
 #phantom-dot {
@@ -207,18 +229,18 @@ body {
     letter-spacing: 2px;
 }
 
-.loading {
+.loading-msg {
+    grid-column: 1 / -1;
     text-align: center;
-    padding: 60px 20px;
-    opacity: 0.4;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
+    padding: 50px;
+    opacity: 0.5;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
 }
 
 @media (max-width: 600px) {
     .header-nav { flex-direction: column; gap: 20px; }
     .logo-section { text-align: left; }
-    .games-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
 }
 </style>
 </head>
@@ -226,6 +248,19 @@ body {
 
 <div id="bottom-glow"></div>
 <div id="stars"></div>
+
+<!-- Game Viewer Container -->
+<div id="game-viewer">
+    <div class="viewer-controls">
+        <button class="viewer-btn" onclick="closeGame()">
+            <i class="fa-solid fa-xmark"></i> EXIT
+        </button>
+        <button class="viewer-btn" id="external-link-btn" onclick="openExternal()">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> DOWNLOAD GAME
+        </button>
+    </div>
+    <iframe id="game-frame" allow="fullscreen; autoplay; gamepad; focus-without-user-activation" src="about:blank"></iframe>
+</div>
 
 <div class="page">
     <div class="header-nav">
@@ -244,7 +279,7 @@ body {
     </div>
 
     <div class="games-grid" id="gamesGrid">
-        <div class="loading">LOADING GAMES...</div>
+        <div class="loading-msg">CONNECTING TO GAMES...</div>
     </div>
 </div>
 
@@ -253,8 +288,9 @@ body {
 
 <script>
 let gamesData = [];
+let currentUrl = "";
 
-/* Starfield Animation */
+/* Starfield */
 const sc = document.getElementById("stars");
 for (let i = 0; i < 90; i++) {
     const s = document.createElement("div");
@@ -270,7 +306,6 @@ for (let i = 0; i < 90; i++) {
     sc.appendChild(s);
 }
 
-/* Utility Functions */
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
     return {r,g,b};
@@ -280,169 +315,276 @@ function rgba(hex, a) {
     return `rgba(${r},${g},${b},${a})`;
 }
 
-/* Apply System Settings */
 function applyAccent(color) {
     document.documentElement.style.setProperty('--accent', color);
+    const logo = document.getElementById('logo');
+    if (logo) logo.style.textShadow = `0 0 15px ${rgba(color,0.40)}, 0 0 30px ${rgba(color,0.25)}`;
+    
+    const glow = document.getElementById('bottom-glow');
+    if (glow) glow.style.background = `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, transparent 70%)`;
 
-    document.getElementById('logo').style.textShadow = `
-        0 0 6px rgba(255,255,255,0.15),
-        0 0 15px ${rgba(color,0.40)},
-        0 0 30px ${rgba(color,0.25)}`;
-
-    document.getElementById('searchIcon').style.color = color;
-    document.getElementById('searchIcon').style.opacity = '0.6';
-
-    document.getElementById('bottom-glow').style.background =
-        `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, ${rgba(color,0.04)} 35%, transparent 70%)`;
-
-    const themedHover = localStorage.getItem('phantom_game_hover') === 'true';
     let dynStyle = document.getElementById('games-dynamic-style');
     if (!dynStyle) { dynStyle = document.createElement('style'); dynStyle.id = 'games-dynamic-style'; document.head.appendChild(dynStyle); }
-    dynStyle.textContent = `
-        .game-card { border: 1px solid ${rgba(color,0.15)}; }
-        .game-card:hover {
-            ${themedHover ? `border-color:${rgba(color,0.50)};box-shadow:0 0 25px ${rgba(color,0.20)}, inset 0 0 20px ${rgba(color,0.05)};` : `border-color:rgba(255,255,255,0.08);box-shadow:none;`}
-        }
-        .game-card:hover .game-image {
-            filter: brightness(1.1);
-        }
-        .game-card:hover .game-name {
-            color: ${themedHover ? color : "white"};
-        }
-        .search-input:focus {
-            border-color: ${rgba(color, 0.40)};
-            box-shadow: 0 0 15px ${rgba(color, 0.10)};
-        }
-    `;
+    const hoverEnabled =
+localStorage.getItem("phantom_game_hover")==="true";
 
-    updateDotStyle(color);
+dynStyle.textContent = `
+.game-card{
+    border:1px solid ${rgba(color,0.15)};
 }
 
-/* Dot Cursor Logic */
-const dot = document.getElementById('phantom-dot');
-let dotActive = false;
-
-function updateDotStyle(color) {
-    if (!color) color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    dot.style.background = color;
-    dot.style.boxShadow = `0 0 6px 2px ${color}, 0 0 14px 4px ${rgba(color,0.50)}, 0 0 28px 8px ${rgba(color,0.25)}`;
+.game-card:hover{
+    border-color:${rgba(color,0.50)};
+    box-shadow:0 0 25px ${rgba(color,0.20)};
 }
 
-document.addEventListener('mousemove', e => {
-    if (!dotActive) return;
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
+.search-input:focus{
+    border-color:${rgba(color,0.40)};
+    box-shadow:0 0 15px ${rgba(color,0.10)};
+}
+
+${
+hoverEnabled
+?`
+.game-card:hover .game-name{
+    color:${color};
+    text-shadow:0 0 8px ${rgba(color,.45)};
+}
+`
+:""
+}
+`;
+}
+ 
+/* Initialization */
+async function loadGames() {
+    try {
+        const res = await fetch("https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json");
+        const data = await res.json();
+
+        gamesData = data.map(g => {
+
+    const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
+    const COVER_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
+
+    let finalUrl = g.url || "";
+
+    // Handle template URLs like "{HTML_URL}/0.html"
+    finalUrl = finalUrl.replace(/\{HTML_URL\}/g, HTML_BASE);
+
+    // Handle plain numeric ids like "0"
+    if (!finalUrl.startsWith("http")) {
+        finalUrl = `${HTML_BASE}/${finalUrl.replace(/^\/+/, "")}`;
+        if (!finalUrl.endsWith(".html")) {
+            finalUrl += ".html";
+        }
+    }
+
+    return {
+        id: g.id,
+        name: g.name,
+        category: g.category || "GAMES",
+        image: (g.cover || "").replace(/\{COVER_URL\}/g, COVER_BASE),
+        url: finalUrl
+    };
 });
 
-function enableDotCursor() {
-    dotActive = true; dot.style.display = 'block'; updateDotStyle();
-    document.documentElement.style.cursor = 'none';
-    let s = document.getElementById('dot-cursor-style');
-    if (!s) { s = document.createElement('style'); s.id = 'dot-cursor-style'; s.textContent = '*{cursor:none!important;}'; document.head.appendChild(s); }
+        renderGames(gamesData);
+    } catch (err) {
+        console.error("Dashboard error:", err);
+        document.getElementById('gamesGrid').innerHTML = '<div class="loading-msg">FAIL: CHECK CONNECTION</div>';
+    }
 }
 
-function disableDotCursor() {
-    dotActive = false; dot.style.display = 'none';
-    document.documentElement.style.cursor = '';
-    const s = document.getElementById('dot-cursor-style'); if (s) s.remove();
-}
-
-/* Panic Key */
-let panicEnabled = false;
-document.addEventListener('keydown', e => {
-    if (!panicEnabled) return;
-    const pk = localStorage.getItem('phantom_panickey');
-    const url = localStorage.getItem('phantom_panicurl') || 'https://google.com';
-    if (pk && e.key.toLowerCase() === pk.toLowerCase()) window.location.href = url;
-});
-
-/* Render Games */
 function renderGames(games) {
     const grid = document.getElementById('gamesGrid');
-
-    /* Filter out games with "Game" in the name */
-    const filteredGames = games.filter(game => !game.name.toLowerCase().includes('game'));
-
-    if (filteredGames.length === 0) {
-        grid.innerHTML = '<div class="no-results">NO GAMES FOUND</div>';
+    if (!grid) return;
+    
+    if (games.length === 0) {
+        grid.innerHTML = '<div class="loading-msg">NO GAMES FOUND</div>';
         return;
     }
 
-    grid.innerHTML = filteredGames.map(game => `
-        <a href="${game.url}" class="game-card" data-name="${game.name}">
-            <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.src='https://via.placeholder.com/200x200/1a1a1a/ffffff?text=${encodeURIComponent(game.name.charAt(0))}'">
+    grid.innerHTML = games.map(game => `
+        <div class="game-card" onclick="openGame('${game.url}')">
+            <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.src='https://via.placeholder.com'">
             <div class="game-overlay">
-                <div class="game-name">${game.name}</div>
+                <div class="game-name"
+                style="${
+                localStorage.getItem('phantom_game_hover')==='true'
+                ?`transition:.3s;`
+                :''
+                }">
+                ${game.name}
+                </div>
                 <div class="game-category">${game.category}</div>
             </div>
-        </a>
+        </div>
     `).join('');
 }
 
-/* Filter Games */
 function filterGames() {
     const query = document.getElementById('gameSearch').value.toLowerCase();
-    const filtered = gamesData.filter(game =>
-        !game.name.toLowerCase().includes('game') &&
-        (game.name.toLowerCase().includes(query) || game.category.toLowerCase().includes(query))
+    const filtered = gamesData.filter(g => 
+        g.name.toLowerCase().includes(query) || g.category.toLowerCase().includes(query)
     );
     renderGames(filtered);
 }
 
-/* Load Games from JSON */
-async function loadGames() {
+async function openGame(url) {
+    currentUrl = url;
+
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+
+    viewer.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+   
+    frame.src = "about:blank";
+
     try {
-        const res = await fetch('games.json');
-        gamesData = await res.json();
-        renderGames(gamesData);
+        
+        const res = await fetch(url);
+        const html = await res.text();
+
+        const blob = new Blob([html], { type: "text/html" });
+        const blobUrl = URL.createObjectURL(blob);
+
+        frame.src = blobUrl;
+
+        frame.onload = () => {
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        };
+
     } catch (err) {
-        document.getElementById('gamesGrid').innerHTML =
-            '<div class="no-results">FAILED TO LOAD GAMES</div>';
+        console.error("Game load failed:", err);
+        frame.src = url; // fallback
     }
+
+    try {
+        history.pushState({ viewingGame: true }, "");
+    } catch (e) {}
 }
 
-/* Initialization */
-(function init() {
-    const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
-    const cursor = localStorage.getItem('phantom_cursor') || 'default';
-    const wallpaper = localStorage.getItem('phantom_wallpaper') || '';
-    const cloakOn = localStorage.getItem('phantom_cloak_on') === 'true';
-    const cloakName = localStorage.getItem('phantom_cloak_name') || '';
-    const cloakIcon = localStorage.getItem('phantom_cloak_icon') || '';
-    const panicOn = localStorage.getItem('phantom_panic_on') === 'true';
 
+function openExternal() {
+    if (currentUrl) window.open(currentUrl, '_blank');
+}
+
+function closeGame() {
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+    viewer.style.display = 'none';
+    frame.src = "about:blank";
+    document.body.style.overflow = '';
+}
+
+window.onpopstate = function() {
+    if (document.getElementById('game-viewer').style.display === 'block') closeGame();
+};
+
+(function initSettings() {
+
+    /* Accent */
+    const accent = localStorage.getItem("phantom_accent") || "#ff8c00";
     applyAccent(accent);
 
-    if (cursor === 'dot') enableDotCursor();
-    else { disableDotCursor(); document.documentElement.style.cursor = (cursor === 'default' ? '' : cursor); }
-
+    /* Wallpaper */
+    const wallpaper = localStorage.getItem("phantom_wallpaper");
     if (wallpaper) {
         document.body.style.backgroundImage = `url('${wallpaper}')`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
     }
 
-    if (cloakOn && cloakName) {
-        document.title = cloakName;
-        let link = document.querySelector("link[rel='icon']");
-        if (!link) { link = document.createElement('link'); link.rel = 'icon'; document.head.appendChild(link); }
-        link.href = cloakIcon;
+    /* Cursor */
+    const cursor = localStorage.getItem("phantom_cursor") || "default";
+
+    if (cursor === "dot") {
+        const dot = document.getElementById("phantom-dot");
+
+        dot.style.display = "block";
+        document.documentElement.style.cursor = "none";
+
+        const style = document.createElement("style");
+        style.textContent = "*{cursor:none!important}";
+        document.head.appendChild(style);
+
+        dot.style.background = accent;
+        dot.style.boxShadow =
+            `0 0 6px ${accent},
+             0 0 14px ${accent},
+             0 0 28px ${accent}`;
+
+        document.addEventListener("mousemove", e=>{
+            dot.style.left=e.clientX+"px";
+            dot.style.top=e.clientY+"px";
+        });
+
+    } else {
+        document.documentElement.style.cursor =
+            cursor === "default" ? "" : cursor;
     }
 
-    panicEnabled = panicOn;
+    /* Tab Cloak */
+    if (localStorage.getItem("phantom_cloak_on")==="true"){
+
+        const title =
+            localStorage.getItem("phantom_cloak_name");
+
+        const icon =
+            localStorage.getItem("phantom_cloak_icon");
+
+        if(title) document.title = title;
+
+        if(icon){
+            let link=document.querySelector("link[rel='icon']");
+            if(!link){
+                link=document.createElement("link");
+                link.rel="icon";
+                document.head.appendChild(link);
+            }
+            link.href=icon;
+        }
+    }
+
+    /* Panic Key */
+    if(localStorage.getItem("phantom_panic_on")==="true"){
+
+        document.addEventListener("keydown",e=>{
+
+            const key=
+                localStorage.getItem("phantom_panickey");
+
+            const url=
+                localStorage.getItem("phantom_panicurl") ||
+                "https://google.com";
+
+            if(key && e.key===key){
+                location.href=url;
+            }
+
+        });
+
+    }
 
     loadGames();
+
 })();
 
-/* Version Loader */
+
 fetch("version.json")
     .then(res => res.json())
     .then(data => {
-        document.getElementById("version").textContent = `PHANTOM ${data.version}`;
+        document.getElementById("version").textContent =
+            `PHANTOM ${data.version}`;
     })
     .catch(() => {
-        document.getElementById("version").textContent = "PHANTOM";
+        document.getElementById("version").textContent =
+            "PHANTOM";
     });
+
 </script>
 </body>
 </html>
