@@ -6,6 +6,8 @@
 <title>PHANTOM</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 <style>
 :root { --accent: #ff8c00; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -143,7 +145,7 @@ body {
 }
 
 .game-card:hover .game-image {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .game-overlay {
@@ -358,41 +360,67 @@ hoverEnabled
  
 /* Initialization */
 async function loadGames() {
-    try {
-        const res = await fetch("https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json");
-        const data = await res.json();
+    const CACHE_KEY = "phantom_games_cache";
+    const CACHE_TIME_KEY = "phantom_games_cache_time";
+    const CACHE_LENGTH = 1000 * 60 * 10; // 10 minutes
 
-        gamesData = data.map(g => {
+    // Load cached games instantly
+    const cached = localStorage.getItem(CACHE_KEY);
+    const cachedTime = Number(localStorage.getItem(CACHE_TIME_KEY));
 
-    const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
-    const COVER_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
-
-    let finalUrl = g.url || "";
-
-    // Handle template URLs like "{HTML_URL}/0.html"
-    finalUrl = finalUrl.replace(/\{HTML_URL\}/g, HTML_BASE);
-
-    // Handle plain numeric ids like "0"
-    if (!finalUrl.startsWith("http")) {
-        finalUrl = `${HTML_BASE}/${finalUrl.replace(/^\/+/, "")}`;
-        if (!finalUrl.endsWith(".html")) {
-            finalUrl += ".html";
-        }
+    if (cached && Date.now() - cachedTime < CACHE_LENGTH) {
+        try {
+            gamesData = JSON.parse(cached);
+            renderGames(gamesData);
+        } catch {}
     }
 
-    return {
-        id: g.id,
-        name: g.name,
-        category: g.category || "GAMES",
-        image: (g.cover || "").replace(/\{COVER_URL\}/g, COVER_BASE),
-        url: finalUrl
-    };
-});
+    // Always fetch newest version in background
+    try {
+        const res = await fetch(
+            "https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json?t=" + Date.now()
+        );
+
+        const data = await res.json();
+
+        const parsed = data.map(g => {
+
+            const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
+            const COVER_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
+
+            let finalUrl = g.url || "";
+
+            finalUrl = finalUrl.replace(/\{HTML_URL\}/g, HTML_BASE);
+
+            if (!finalUrl.startsWith("http")) {
+                finalUrl = `${HTML_BASE}/${finalUrl.replace(/^\/+/, "")}`;
+                if (!finalUrl.endsWith(".html")) finalUrl += ".html";
+            }
+
+            return {
+                id: g.id,
+                name: g.name,
+                category: g.category || "GAMES",
+                image: (g.cover || "").replace(/\{COVER_URL\}/g, COVER_BASE),
+                url: finalUrl
+            };
+        });
+
+        gamesData = parsed;
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify(parsed));
+        localStorage.setItem(CACHE_TIME_KEY, Date.now());
 
         renderGames(gamesData);
+
     } catch (err) {
-        console.error("Dashboard error:", err);
-        document.getElementById('gamesGrid').innerHTML = '<div class="loading-msg">FAIL: CHECK CONNECTION</div>';
+
+        if (!cached) {
+            document.getElementById("gamesGrid").innerHTML =
+                '<div class="loading-msg">FAIL: CHECK CONNECTION</div>';
+        }
+
+        console.error(err);
     }
 }
 
