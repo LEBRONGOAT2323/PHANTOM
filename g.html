@@ -467,6 +467,11 @@ function filterGames() {
 async function openGame(url) {
     currentUrl = url;
 
+    if (url.includes("discord.gg") || url.includes("discord.com")) {
+        window.open(url, "_blank");
+        return;
+    }
+
     const viewer = document.getElementById('game-viewer');
     const frame = document.getElementById('game-frame');
 
