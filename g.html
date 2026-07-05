@@ -385,6 +385,11 @@ async function loadGames() {
 
         const parsed = data.map(g => {
 
+            if (g.id === -1) {
+            g.name = "[!] SUGGEST GAMES .gg/znBHUWEa5e";
+            g.url = "https://discord.gg/znBHUWEa5e";
+            }
+
             const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
             const COVER_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
 
