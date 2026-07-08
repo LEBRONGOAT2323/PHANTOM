@@ -134,7 +134,7 @@ body {
     </a>
 </div>
 
-<div class="version">PHANTOM v0.6</div>
+<div class="version" id="version">PHANTOM</div>
 <div id="phantom-dot"></div>
 
 <script>
@@ -253,6 +253,18 @@ function disableDotCursor() {
         link.href = cloakIcon;
     }
 })();
+
+/* ── Version Loader ── */
+fetch("./version.json")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("version").textContent =
+            `PHANTOM ${data.version}`;
+    })
+    .catch(() => {
+        document.getElementById("version").textContent =
+            "PHANTOM";
+    });    
 </script>
 </body>
 </html>
