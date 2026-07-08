@@ -386,8 +386,9 @@ async function loadGames() {
         const parsed = data.map(g => {
 
             if (g.id === -1) {
-            g.name = "[!] SUGGEST GAMES .gg/znBHUWEa5e";
+            g.name = "[!] DISCORD .gg/znBHUWEa5e";
             g.url = "https://discord.gg/znBHUWEa5e";
+            g.category = "COMMUNITY";
             }
 
             const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
@@ -412,6 +413,15 @@ async function loadGames() {
         });
 
         gamesData = parsed;
+
+        
+        parsed.unshift({
+        id: -2,
+        name: "[!] REQUEST GAMES",
+        category: "COMMUNITY",
+        image: "assets/images/forms.png",
+        url: "request"
+        });
 
         localStorage.setItem(CACHE_KEY, JSON.stringify(parsed));
         localStorage.setItem(CACHE_TIME_KEY, Date.now());
@@ -467,10 +477,34 @@ function filterGames() {
 async function openGame(url) {
     currentUrl = url;
 
-    if (url.includes("discord.gg") || url.includes("discord.com")) {
-        window.open(url, "_blank");
-        return;
-    }
+const externalBtn = document.getElementById("external-link-btn");
+
+if (url === "request") {
+    externalBtn.style.display = "none";
+} else {
+    externalBtn.style.display = "block";
+}
+
+if (url === "request") {
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+
+    viewer.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    frame.src = "https://forms.zohopublic.com/hrsipes22gm1/form/PHANTOMGAMEREQUEST/formperma/IvApEem6fdBZ64bjIUqd7CBYhpvNMq2acfg5wJk2-GI";
+
+    return;
+}
+    if (
+    url.includes("discord.gg") ||
+    url.includes("discord.com") ||
+    url.includes("forms.zoho") ||
+    url.includes("forms.zoho.com")
+) {
+    window.open(url, "_blank");
+    return;
+}
 
     const viewer = document.getElementById('game-viewer');
     const frame = document.getElementById('game-frame');
