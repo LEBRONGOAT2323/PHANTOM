@@ -6,6 +6,8 @@
 <title>PHANTOM</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="//cdn.jsdelivr.net">
 <style>
 :root { --accent: #ff8c00; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -14,18 +16,14 @@ body {
     font-family: 'Orbitron', sans-serif;
     background: #000;
     color: white;
-    overflow: hidden;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
+    overflow-x: hidden;
 }
- 
-/* ── Starfield ── */
-#stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; }
+
+#stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .star { position: absolute; background: rgba(255,255,255,0.7); border-radius: 50%; animation: drift linear infinite; }
-@keyframes drift { from { transform: translateY(0px); } to { transform: translateY(-120vh); } }
+@keyframes drift { from { transform: translateY(0); } to { transform: translateY(-120vh); } }
 
 #bottom-glow {
     position: fixed;
@@ -36,242 +34,267 @@ body {
     transition: background 0.4s ease;
 }
 
-.container { position: relative; z-index: 1; text-align: center; width: 90%; }
-
-.logo {
-    font-size: clamp(4rem, 10vw, 7rem);
-    font-weight: 900;
-    letter-spacing: 12px;
-    margin-bottom: 60px;
-    color: white;
+.page {
     position: relative;
     z-index: 1;
-    animation: logoPulse 6s ease-in-out infinite;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    transition: color 0.2s;
+}
+.back-btn:hover { color: var(--accent); }
+
+.logo-section { text-align: right; }
+.logo {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: white;
+    line-height: 1;
+    margin-bottom: 4px;
     transition: text-shadow 0.4s ease;
 }
-
-.logo::after {
-    content: "";
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140%; height: 180%;
-    filter: blur(40px);
-    z-index: -1;
-    pointer-events: none;
-    transition: background 0.4s ease;
+.page-subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    opacity: 0.4;
 }
 
-@keyframes logoPulse {
-    0%, 100% { transform: scale(1); filter: brightness(1); }
-    50% { transform: scale(1.015); filter: brightness(1.08); }
+.search-container {
+    margin-bottom: 40px;
+    position: relative;
+    max-width: 500px;
 }
-
-/* ── Launcher Grid ── */
-.launcher {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 22px;
-    justify-content: center;
-    align-items: center;
-    max-width: 650px;
-    margin: 0 auto;
-    padding: 10px;
-}
-
-.card {
+.search-input {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px 20px 14px 45px;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    outline: none;
+    transition: all 0.3s;
+}
+.search-container i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.9rem;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
+}
+
+.game-card {
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
     text-decoration: none;
     color: white;
-    border-radius: 24px;
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 1 / 1;
 }
 
-.card:hover {
-    transform: translateY(-6px) scale(1.06);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+.game-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.06);
 }
 
-.card::before {
-    content: "";
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s;
+}
+
+.game-card:hover .game-image {
+    transform: scale(1.02);
+}
+
+.game-overlay {
     position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+    z-index: 2;
+}
+
+.game-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.game-category {
+    font-size: 0.5rem;
+    opacity: 0.5;
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+/* Game Viewer */
+#game-viewer {
+    position: fixed;
     inset: 0;
-    background: radial-gradient(circle at top, rgba(255,255,255,0.08), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    z-index: 10000;
+    background: #000;
+    display: none;
+}
+#game-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #000;
+}
+.viewer-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10001;
+}
+.viewer-btn {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+.viewer-btn:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent);
 }
 
-.card:hover::before { opacity: 1; }
-
-.icon {
-    font-size: 2.6rem;
-    margin-bottom: 10px;
-    transition: text-shadow 0.3s ease;
-}
-
-.label { font-size: 0.9rem; font-weight: 700; letter-spacing: 1px; }
-
-.version {
-    position: fixed; bottom: 30px; left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.75rem; opacity: 0.45; z-index: 1;
-}
-
-/* ── Dot Cursor ── */
 #phantom-dot {
     position: fixed;
     width: 10px; height: 10px;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 99999;
+    z-index: 999999;
     transform: translate(-50%, -50%);
     display: none;
 }
 
-/* ── Boot Screen ── */
-#boot {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    z-index: 999999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    display: none;
+.version {
+    position: fixed; bottom: 20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem; opacity: 0.3; z-index: 1;
+    letter-spacing: 2px;
 }
 
-.boot-center { text-align: center; width: 90%; }
-
-.boot-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: clamp(3rem, 8vw, 5rem);
-    font-weight: 900;
-    letter-spacing: 12px;
-    color: white;
-    margin-bottom: 18px;
-    animation: bootPulse 2s ease-in-out infinite;
-}
-
-@keyframes bootPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.75; transform: scale(1.02); }
-}
-
-.boot-sub {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 24px;
-    min-height: 1em;
-}
-
-.boot-bar {
-    width: min(320px, 80vw);
-    height: 4px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 999px;
-    overflow: hidden;
-    margin: 0 auto 20px;
-}
-
-.boot-progress {
-    width: 0%;
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.25s ease;
-}
-
-.boot-small {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.65rem;
+.loading-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    opacity: 0.5;
     letter-spacing: 3px;
-    color: rgba(255,255,255,0.35);
+    font-size: 0.8rem;
 }
 
-.boot-hidden {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.7s ease;
-}
-
-@media (max-width: 550px) {
-    .launcher { grid-template-columns: repeat(2, 130px); }
-    .logo { margin-bottom: 40px; letter-spacing: 6px; }
+@media (max-width: 600px) {
+    .header-nav { flex-direction: column; gap: 20px; }
+    .logo-section { text-align: left; }
 }
 </style>
 </head>
 <body>
 
-<!-- PHANTOM Boot Screen -->
-<div id="boot">
-    <div class="boot-center">
-        <div class="boot-logo" id="bootLogo">PHANTOM</div>
-        <div class="boot-sub" id="bootText">INITIALIZING SYSTEM</div>
-        <div class="boot-bar">
-            <div class="boot-progress" id="bootBar"></div>
-        </div>
-    </div>
-</div>
-
-<div id="phantom-dot"></div>
 <div id="bottom-glow"></div>
 <div id="stars"></div>
 
-<div class="container">
-    <h1 class="logo" id="logo">PHANTOM</h1>
-    <div class="launcher">
-        <a href="g.html" class="card">
-            <div class="icon"><i class="fa-solid fa-gamepad"></i></div>
-            <div class="label">GAMES</div>
-        </a>
-        <a href="a.html" class="card">
-            <div class="icon"><i class="fa-solid fa-cubes"></i></div>
-            <div class="label">APPS</div>
-        </a>
-        <a href="e.html" class="card">
-            <div class="icon"><i class="fa-solid fa-user-secret"></i></div>
-            <div class="label">EXPLOITS</div>
-        </a>
-        <a href="movies.html" class="card">
-            <div class="icon"><i class="fa-solid fa-clapperboard"></i></div>
-            <div class="label">MOVIES</div>
-        </a>
-        <a href="music.html" class="card">
-            <div class="icon"><i class="fa-solid fa-music"></i></div>
-            <div class="label">MUSIC</div>
-        </a>
-        <a href="unblocker.html" class="card">
-            <div class="icon"><i class="fa-solid fa-globe"></i></div>
-            <div class="label">UNBLOCKER</div>
-        </a>
-        <a href="account.html" class="card">
-            <div class="icon"><i class="fa-solid fa-user"></i></div>
-            <div class="label">ACCOUNT</div>
-        </a>
-        <a href="s.html" class="card">
-            <div class="icon"><i class="fa-solid fa-gear"></i></div>
-            <div class="label">SETTINGS</div>
-        </a>
+<!-- Game Viewer Container -->
+<div id="game-viewer">
+    <div class="viewer-controls">
+        <button class="viewer-btn" onclick="closeGame()">
+            <i class="fa-solid fa-xmark"></i> EXIT
+        </button>
+        <button class="viewer-btn" id="external-link-btn" onclick="openExternal()">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> DOWNLOAD GAME
+        </button>
+    </div>
+    <iframe id="game-frame" allow="fullscreen; autoplay; gamepad; focus-without-user-activation" src="about:blank"></iframe>
+</div>
+
+<div class="page">
+    <div class="header-nav">
+        <button class="back-btn" onclick="history.back()">
+            <i class="fa-solid fa-chevron-left"></i> BACK
+        </button>
+        <div class="logo-section">
+            <h1 class="logo" id="logo">PHANTOM</h1>
+            <div class="page-subtitle">GAMES</div>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass" id="searchIcon"></i>
+        <input type="text" class="search-input" id="gameSearch" placeholder="SEARCH GAMES..." oninput="filterGames()">
+    </div>
+
+    <div class="games-grid" id="gamesGrid">
+        <div class="loading-msg">CONNECTING TO GAMES...</div>
     </div>
 </div>
+
 <div class="version" id="version">PHANTOM</div>
+<div id="phantom-dot"></div>
 
 <script>
-/* ── Starfield Animation ── */
+let gamesData = [];
+let currentUrl = "";
+
+/* Starfield */
 const sc = document.getElementById("stars");
-for (let i = 0; i < 90; i++) {
+for (let i = 0; i < 35; i++) {
     const s = document.createElement("div");
     s.className = "star";
     const size = Math.random() * 2 + 1;
@@ -285,7 +308,6 @@ for (let i = 0; i < 90; i++) {
     sc.appendChild(s);
 }
 
-/* ── Utility ── */
 function hexToRgb(hex) {
     const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
     return {r,g,b};
@@ -295,208 +317,343 @@ function rgba(hex, a) {
     return `rgba(${r},${g},${b},${a})`;
 }
 
-/* ── Apply Accent Color ── */
 function applyAccent(color) {
     document.documentElement.style.setProperty('--accent', color);
+    const logo = document.getElementById('logo');
+    if (logo) logo.style.textShadow = `0 0 15px ${rgba(color,0.40)}, 0 0 30px ${rgba(color,0.25)}`;
+    
+    const glow = document.getElementById('bottom-glow');
+    if (glow) glow.style.background = `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, transparent 70%)`;
 
-    /* Logo Glow */
-    document.getElementById('logo').style.textShadow = `
-        0 0 6px rgba(255,255,255,0.15),
-        0 0 15px ${rgba(color,0.40)},
-        0 0 30px ${rgba(color,0.25)},
-        0 0 60px ${rgba(color,0.15)}`;
+    let dynStyle = document.getElementById('games-dynamic-style');
+    if (!dynStyle) { dynStyle = document.createElement('style'); dynStyle.id = 'games-dynamic-style'; document.head.appendChild(dynStyle); }
+    const hoverEnabled =
+localStorage.getItem("phantom_game_hover")==="true";
 
-    /* Dynamic Style Tag for Halo and Cards */
-    let dynStyle = document.getElementById('dynamic-style');
-    if (!dynStyle) { dynStyle = document.createElement('style'); dynStyle.id = 'dynamic-style'; document.head.appendChild(dynStyle); }
-    dynStyle.textContent = `
-        .logo::after { background: radial-gradient(ellipse, ${rgba(color,0.18)} 0%, ${rgba(color,0.08)} 35%, transparent 70%); }
-        .card { border: 1px solid ${rgba(color,0.15)}; }
-        .card:hover { 
-            border-color: ${rgba(color,0.40)}; 
-            box-shadow: 0 0 18px ${rgba(color,0.18)}, inset 0 0 20px ${rgba(color,0.04)}; 
-        }
-        .icon { text-shadow: 0 0 8px ${rgba(color,0.25)}, 0 0 18px ${rgba(color,0.15)}; }
-        .card:hover .icon { text-shadow: 0 0 12px ${rgba(color,0.40)}, 0 0 28px ${rgba(color,0.25)}; }
-    `;
-
-    /* Bottom glow */
-    document.getElementById('bottom-glow').style.background =
-        `radial-gradient(ellipse at center, ${rgba(color,0.12)} 0%, ${rgba(color,0.04)} 35%, transparent 70%)`;
-
-    updateDotStyle(color);
+dynStyle.textContent = `
+.game-card{
+    border:1px solid ${rgba(color,0.15)};
 }
 
-/* ── Cursor Logic ── */
-const dot = document.getElementById('phantom-dot');
-let dotActive = false;
-
-function updateDotStyle(color) {
-    if (!color) color = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    dot.style.background = color;
-    dot.style.boxShadow = `0 0 6px 2px ${color}, 0 0 14px 4px ${rgba(color,0.50)}, 0 0 28px 8px ${rgba(color,0.25)}`;
+.game-card:hover{
+    border-color:${rgba(color,0.50)};
+    box-shadow:0 0 25px ${rgba(color,0.20)};
 }
 
-document.addEventListener('mousemove', e => {
-    if (!dotActive) return;
-    dot.style.left = e.clientX + 'px';
-    dot.style.top = e.clientY + 'px';
-});
-
-function enableDotCursor() {
-    dotActive = true; dot.style.display = 'block'; updateDotStyle();
-    let s = document.getElementById('dot-cursor-style');
-    if (!s) { s = document.createElement('style'); s.id = 'dot-cursor-style'; s.textContent = '*{cursor:none!important;}'; document.head.appendChild(s); }
+.search-input:focus{
+    border-color:${rgba(color,0.40)};
+    box-shadow:0 0 15px ${rgba(color,0.10)};
 }
 
-function disableDotCursor() {
-    dotActive = false; dot.style.display = 'none';
-    const s = document.getElementById('dot-cursor-style'); if (s) s.remove();
+${
+hoverEnabled
+?`
+.game-card:hover .game-name{
+    color:${color};
+    text-shadow:0 0 8px ${rgba(color,.45)};
 }
-
-function applyCursor(cur) {
-
-    document.documentElement.style.cursor = "";
-
-    if (cur === "dot") {
-        enableDotCursor();
-    } else {
-        disableDotCursor();
-
-        if (cur !== "default") {
-            document.documentElement.style.cursor = cur;
-        }
-    }
+`
+:""
 }
-
-function applyWallpaper(url) {
-    if (!url) {
-        document.body.style.backgroundImage = "";
-        return;
-    }
-
-    document.body.style.backgroundImage = `url('${url}')`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundPosition = "center";
+`;
 }
-
-function applyTabCloak(name, icon) {
-
-    if (!name) {
-        document.title = "PHANTOM";
-
-        let link = document.querySelector("link[rel='icon']");
-        if (link) link.href = "";
-
-        return;
-    }
  
-    document.title = name;
+/* Initialization */
+async function loadGames() {
+    const CACHE_KEY = "phantom_games_cache";
+    const CACHE_TIME_KEY = "phantom_games_cache_time";
+    const CACHE_LENGTH = 1000 * 60 * 10; // 10 minutes
 
-    let link = document.querySelector("link[rel='icon']");
-    if (!link) {
-        link = document.createElement("link");
-        link.rel = "icon";
-        document.head.appendChild(link);
+    // Load cached games instantly
+    const cached = localStorage.getItem(CACHE_KEY);
+    const cachedTime = Number(localStorage.getItem(CACHE_TIME_KEY));
+
+    if (cached && Date.now() - cachedTime < CACHE_LENGTH) {
+        try {
+            gamesData = JSON.parse(cached);
+            renderGames(gamesData);
+        } catch {}
     }
 
-    link.href = icon || "";
+    // Always fetch newest version in background
+    try {
+        const res = await fetch(
+            "https://cdn.jsdelivr.net/gh/freebuisness/assets@main/zones.json?t=" + Date.now()
+        );
+
+        const data = await res.json();
+
+        const parsed = data.map(g => {
+
+            if (g.id === -1) {
+            g.name = "[!] DISCORD .gg/znBHUWEa5e";
+            g.url = "https://discord.gg/znBHUWEa5e";
+            g.category = "COMMUNITY";
+            }
+
+            const HTML_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/html@main";
+            const COVER_BASE = "https://cdn.jsdelivr.net/gh/freebuisness/covers@main";
+
+            let finalUrl = g.url || "";
+
+            finalUrl = finalUrl.replace(/\{HTML_URL\}/g, HTML_BASE);
+
+            if (!finalUrl.startsWith("http")) {
+                finalUrl = `${HTML_BASE}/${finalUrl.replace(/^\/+/, "")}`;
+                if (!finalUrl.endsWith(".html")) finalUrl += ".html";
+            }
+
+            return {
+                id: g.id,
+                name: g.name,
+                category: g.category || "GAMES",
+                image: (g.cover || "").replace(/\{COVER_URL\}/g, COVER_BASE),
+                url: finalUrl
+            };
+        });
+
+        gamesData = parsed;
+        parsed.splice(1, 0, {
+        id: -3,
+        name: "SUBWAY SURFERS SERIES",
+        category: "SERIES",
+        image: "assets/images/g/subwaysurfers.jpeg",
+        url: "subwaysurfers.html",
+        direct: true
+        });
+        
+        parsed.unshift({
+        id: -2,
+        name: "[!] REQUEST GAMES",
+        category: "COMMUNITY",
+        image: "assets/images/forms.png",
+        url: "request"
+        });
+
+        localStorage.setItem(CACHE_KEY, JSON.stringify(parsed));
+        localStorage.setItem(CACHE_TIME_KEY, Date.now());
+
+        renderGames(gamesData);
+
+    } catch (err) {
+
+        if (!cached) {
+            document.getElementById("gamesGrid").innerHTML =
+                '<div class="loading-msg">FAIL: CHECK CONNECTION</div>';
+        }
+
+        console.error(err);
+    }
 }
-/* ── Panic Key ── */
-let panicEnabled = false;
-document.addEventListener('keydown', e => {
-    if (!panicEnabled) return;
-    const pk = localStorage.getItem('phantom_panickey');
-    const url = localStorage.getItem('phantom_panicurl') || 'https://google.com';
-    if (pk && e.key.toLowerCase() === pk.toLowerCase()) window.location.href = url;
-});
 
-function loadSettings() {
-    const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
-    const cursor = localStorage.getItem('phantom_cursor') || 'default';
-    const wallpaper = localStorage.getItem('phantom_wallpaper') || '';
-    const cloakOn = localStorage.getItem('phantom_cloak_on') === 'true';
-    const cloakName = localStorage.getItem('phantom_cloak_name') || '';
-    const cloakIcon = localStorage.getItem('phantom_cloak_icon') || '';
-    const panicOn = localStorage.getItem('phantom_panic_on') === 'true';
-
-    applyAccent(accent);
-    applyCursor(cursor);
-
-    if (wallpaper) {
-        applyWallpaper(wallpaper);
-    } else {
-        document.body.style.backgroundImage = "";
-    }
-
-    if (cloakOn && cloakName) {
-        applyTabCloak(cloakName, cloakIcon);
-    } else {
-        document.title = "PHANTOM";
-
-        let link = document.querySelector("link[rel='icon']");
-        if (link) link.href = "";
-    }
-
-    panicEnabled = panicOn;
-}
-
-loadSettings();
-
-// Reload if another tab changes settings
-window.addEventListener("storage", loadSettings);
-
-// Reload every time this page is shown again
-window.addEventListener("pageshow", loadSettings);
-/* ── Boot Animation ── */
-window.addEventListener('load', () => {
-    const boot = document.getElementById('boot');
-
-    if (sessionStorage.getItem('phantomBootPlayed') === 'true') {
-        boot.remove();
+function renderGames(games) {
+    const grid = document.getElementById('gamesGrid');
+    if (!grid) return;
+    
+    if (games.length === 0) {
+        grid.innerHTML = '<div class="loading-msg">NO GAMES FOUND</div>';
         return;
     }
 
-    sessionStorage.setItem('phantomBootPlayed', 'true');
-    boot.style.display = 'flex';
+    grid.innerHTML = games.map(game => `
+        <div class="game-card" onclick="${game.direct ? `window.location.href='${game.url}'` : `openGame('${game.url}')`}">
+            <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.src='https://via.placeholder.com'">
+            <div class="game-overlay">
+                <div class="game-name"
+                style="${
+                localStorage.getItem('phantom_game_hover')==='true'
+                ?`transition:.3s;`
+                :''
+                }">
+                ${game.name}
+                </div>
+                <div class="game-category">${game.category}</div>
+            </div>
+        </div>
+    `).join('');
+}
 
-    const progress = document.getElementById('bootBar');
-    const text = document.getElementById('bootText');
-    const bootLogo = document.getElementById('bootLogo');
-    const accent = localStorage.getItem('phantom_accent') || '#ff8c00';
-    const rgb = hexToRgb(accent);
+function filterGames() {
+    const query = document.getElementById('gameSearch').value.toLowerCase();
+    const filtered = gamesData.filter(g => 
+        g.name.toLowerCase().includes(query) || g.category.toLowerCase().includes(query)
+    );
+    renderGames(filtered);
+}
 
-    bootLogo.style.textShadow = `0 0 15px ${rgba(accent, 0.45)}, 0 0 30px ${rgba(accent, 0.30)}`;
-    progress.style.boxShadow = `0 0 10px ${accent}, 0 0 20px ${accent}`;
-    progress.style.background = accent;
+async function openGame(url) {
+    currentUrl = url;
 
-    const messages = ['INITIALIZING SYSTEM', 'LOADING CORE MODULES', 'VERIFYING SECURITY', 'RESTORING USER SETTINGS', 'STARTING INTERFACE', 'READY'];
-    let percent = 0;
-    let step = 0;
+const externalBtn = document.getElementById("external-link-btn");
 
-    const interval = setInterval(() => {
-        percent += Math.floor(Math.random() * 15) + 5;
-        if (percent > 100) percent = 100;
-        progress.style.width = percent + '%';
+if (url === "request") {
+    externalBtn.style.display = "none";
+} else {
+    externalBtn.style.display = "block";
+}
 
-        if (step < messages.length && percent > (step * 20)) {
-            text.textContent = messages[step];
-            step++;
+if (url === "request") {
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+
+    viewer.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+    frame.src = "https://forms.zohopublic.com/hrsipes22gm1/form/PHANTOMGAMEREQUEST/formperma/IvApEem6fdBZ64bjIUqd7CBYhpvNMq2acfg5wJk2-GI";
+
+    return;
+}
+    if (
+    url.includes("discord.gg") ||
+    url.includes("discord.com") ||
+    url.includes("forms.zoho") ||
+    url.includes("forms.zoho.com")
+) {
+    window.open(url, "_blank");
+    return;
+}
+
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+
+    viewer.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+
+   
+    frame.src = "about:blank";
+
+    try {
+        
+        const res = await fetch(url);
+        const html = await res.text();
+
+        const blob = new Blob([html], { type: "text/html" });
+        const blobUrl = URL.createObjectURL(blob);
+
+        frame.src = blobUrl;
+
+        frame.onload = () => {
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        };
+
+    } catch (err) {
+        console.error("Game load failed:", err);
+        frame.src = url; // fallback
+    }
+
+    try {
+        history.pushState({ viewingGame: true }, "");
+    } catch (e) {}
+}
+
+
+function openExternal() {
+    if (currentUrl) window.open(currentUrl, '_blank');
+}
+
+function closeGame() {
+    const viewer = document.getElementById('game-viewer');
+    const frame = document.getElementById('game-frame');
+    viewer.style.display = 'none';
+    frame.src = "about:blank";
+    document.body.style.overflow = '';
+}
+
+window.onpopstate = function() {
+    if (document.getElementById('game-viewer').style.display === 'block') closeGame();
+};
+
+(function initSettings() {
+
+    /* Accent */
+    const accent = localStorage.getItem("phantom_accent") || "#ff8c00";
+    applyAccent(accent);
+
+    /* Wallpaper */
+    const wallpaper = localStorage.getItem("phantom_wallpaper");
+    if (wallpaper) {
+        document.body.style.backgroundImage = `url('${wallpaper}')`;
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+    }
+
+    /* Cursor */
+    const cursor = localStorage.getItem("phantom_cursor") || "default";
+
+    if (cursor === "dot") {
+        const dot = document.getElementById("phantom-dot");
+
+        dot.style.display = "block";
+        document.documentElement.style.cursor = "none";
+
+        const style = document.createElement("style");
+        style.textContent = "*{cursor:none!important}";
+        document.head.appendChild(style);
+
+        dot.style.background = accent;
+        dot.style.boxShadow =
+            `0 0 6px ${accent},
+             0 0 14px ${accent},
+             0 0 28px ${accent}`;
+
+        document.addEventListener("mousemove", e=>{
+            dot.style.left=e.clientX+"px";
+            dot.style.top=e.clientY+"px";
+        });
+
+    } else {
+        document.documentElement.style.cursor =
+            cursor === "default" ? "" : cursor;
+    }
+
+    /* Tab Cloak */
+    if (localStorage.getItem("phantom_cloak_on")==="true"){
+
+        const title =
+            localStorage.getItem("phantom_cloak_name");
+
+        const icon =
+            localStorage.getItem("phantom_cloak_icon");
+
+        if(title) document.title = title;
+
+        if(icon){
+            let link=document.querySelector("link[rel='icon']");
+            if(!link){
+                link=document.createElement("link");
+                link.rel="icon";
+                document.head.appendChild(link);
+            }
+            link.href=icon;
         }
+    }
 
-        if (percent >= 100) {
-            clearInterval(interval);
-            text.textContent = 'WELCOME TO PHANTOM';
-            setTimeout(() => {
-                boot.classList.add('boot-hidden');
-                setTimeout(() => boot.remove(), 700);
-            }, 800);
-        }
-    }, 300);
-});
+    /* Panic Key */
+    if(localStorage.getItem("phantom_panic_on")==="true"){
 
-/* ── Version Loader ── */
-fetch("./version.json")
+        document.addEventListener("keydown",e=>{
+
+            const key=
+                localStorage.getItem("phantom_panickey");
+
+            const url=
+                localStorage.getItem("phantom_panicurl") ||
+                "https://google.com";
+
+            if(key && e.key===key){
+                location.href=url;
+            }
+
+        });
+
+    }
+
+    loadGames();
+
+})();
+
+
+fetch("version.json")
     .then(res => res.json())
     .then(data => {
         document.getElementById("version").textContent =
