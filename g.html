@@ -413,7 +413,14 @@ async function loadGames() {
         });
 
         gamesData = parsed;
-
+        parsed.splice(1, 0, {
+        id: -3,
+        name: "SUBWAY SURFERS SERIES",
+        category: "SERIES",
+        image: "assets/images/g/subwaysurfers.jpeg",
+        url: "subwaysurfers.html",
+        direct: true
+        });
         
         parsed.unshift({
         id: -2,
@@ -449,7 +456,7 @@ function renderGames(games) {
     }
 
     grid.innerHTML = games.map(game => `
-        <div class="game-card" onclick="openGame('${game.url}')">
+        <div class="game-card" onclick="${game.direct ? `window.location.href='${game.url}'` : `openGame('${game.url}')`}">
             <img src="${game.image}" alt="${game.name}" class="game-image" onerror="this.src='https://via.placeholder.com'">
             <div class="game-overlay">
                 <div class="game-name"
