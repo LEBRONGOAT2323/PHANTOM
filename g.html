@@ -422,6 +422,16 @@ async function loadGames() {
         direct: true
         });
         
+        gamesData = parsed;
+        parsed.splice(2, 0, {
+        id: -4,
+        name: "Pixel Panic",
+        category: "GAMES",
+        image: "assets/images/g/pixel-panic.png",
+        url: "g/pixel-panic.html",
+        direct: true
+        });
+
         parsed.unshift({
         id: -2,
         name: "[!] REQUEST GAMES",
