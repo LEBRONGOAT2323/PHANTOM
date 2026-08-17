@@ -14,6 +14,7 @@
 <style>
 :root {
     --accent: #ff8c00;
+    --profile-accent: #ff8c00;
 }
 
 * {
@@ -28,6 +29,12 @@ body {
     color: white;
     min-height: 100vh;
     overflow-x: hidden;
+}
+
+button,
+input,
+textarea {
+    font-family: 'Orbitron', sans-serif;
 }
 
 /* =========================
@@ -77,7 +84,7 @@ body {
 .page {
     position: relative;
     z-index: 2;
-    width: min(780px, calc(100% - 32px));
+    width: min(850px, calc(100% - 32px));
     margin: auto;
     padding: 40px 0 90px;
 }
@@ -95,8 +102,6 @@ body {
     border: none;
     cursor: pointer;
 
-    font-family: 'Orbitron', sans-serif;
-
     margin-bottom: 32px;
 
     transition: .25s;
@@ -110,22 +115,7 @@ body {
     font-size: clamp(2.5rem, 7vw, 4.5rem);
     font-weight: 900;
     letter-spacing: 10px;
-
     margin-bottom: 8px;
-
-    animation: logoPulse 6s ease-in-out infinite;
-}
-
-@keyframes logoPulse {
-    0%,100% {
-        transform: scale(1);
-        filter: brightness(1);
-    }
-
-    50% {
-        transform: scale(1.015);
-        filter: brightness(1.08);
-    }
 }
 
 .subtitle {
@@ -141,22 +131,16 @@ body {
 
 .panel {
     background: rgba(255,255,255,.025);
-
     border: 1px solid rgba(255,255,255,.08);
-
     border-radius: 18px;
-
     padding: 26px;
-
     backdrop-filter: blur(14px);
-
     margin-bottom: 16px;
-
     transition: .3s;
 }
 
 .panel:hover {
-    border-color: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.13);
 }
 
 .panel-title {
@@ -166,22 +150,24 @@ body {
     margin-bottom: 22px;
 }
 
+/* =========================
+   FIELDS
+========================= */
+
 .field {
     margin-bottom: 16px;
 }
 
 .field label {
     display: block;
-
     font-size: .6rem;
     letter-spacing: 2px;
-
     opacity: .5;
-
     margin-bottom: 8px;
 }
 
-.field input {
+.field input,
+.field textarea {
     width: 100%;
 
     background: rgba(255,255,255,.045);
@@ -194,7 +180,6 @@ body {
 
     color: white;
 
-    font-family: 'Orbitron', sans-serif;
     font-size: .7rem;
     letter-spacing: 1px;
 
@@ -203,12 +188,20 @@ body {
     transition: .25s;
 }
 
-.field input:focus {
-    border-color: var(--accent);
+.field textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: var(--profile-accent);
     box-shadow: 0 0 15px rgba(255,140,0,.08);
 }
 
-.field input::placeholder {
+.field input::placeholder,
+.field textarea::placeholder {
     color: rgba(255,255,255,.2);
 }
 
@@ -218,17 +211,13 @@ body {
 
 .btn {
     width: 100%;
-
     border-radius: 10px;
-
     padding: 13px 18px;
 
-    font-family: 'Orbitron', sans-serif;
     font-size: .65rem;
     letter-spacing: 2px;
 
     cursor: pointer;
-
     transition: .25s;
 
     margin-top: 6px;
@@ -237,7 +226,7 @@ body {
 .primary-btn {
     background: rgba(255,140,0,.08);
     border: 1px solid rgba(255,140,0,.35);
-    color: var(--accent);
+    color: var(--profile-accent);
 }
 
 .primary-btn:hover {
@@ -256,44 +245,16 @@ body {
     border-color: rgba(255,255,255,.2);
 }
 
-.small-btn {
-    width: auto;
-    padding: 9px 16px;
-}
-
 /* =========================
-   SWITCH
+   VIEW SYSTEM
 ========================= */
 
-.switch-row {
-    text-align: center;
-
-    margin-top: 20px;
-
-    font-size: .6rem;
-    letter-spacing: 1px;
-
-    color: rgba(255,255,255,.4);
+.view {
+    display: none;
 }
 
-.link-btn {
-    border: none;
-    background: none;
-
-    color: var(--accent);
-
-    font-family: 'Orbitron', sans-serif;
-
-    font-size: .6rem;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    margin-left: 5px;
-}
-
-.link-btn:hover {
-    text-decoration: underline;
+.view.active {
+    display: block;
 }
 
 /* =========================
@@ -326,26 +287,100 @@ body {
 }
 
 .status.success {
-    color: var(--accent);
+    color: var(--profile-accent);
     background: rgba(255,140,0,.07);
     border: 1px solid rgba(255,140,0,.2);
 }
 
 /* =========================
-   ACCOUNT
+   SWITCH
 ========================= */
+
+.switch-row {
+    text-align: center;
+    margin-top: 20px;
+
+    font-size: .6rem;
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,.4);
+}
+
+.link-btn {
+    border: none;
+    background: none;
+
+    color: var(--accent);
+
+    font-size: .6rem;
+    letter-spacing: 1px;
+
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* =========================
+   PROFILE BANNER
+========================= */
+
+.profile-banner {
+    height: 190px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,140,0,.12),
+            rgba(255,255,255,.02)
+        );
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    background-size: cover;
+    background-position: center;
+
+    position: relative;
+
+    overflow: hidden;
+
+    margin-bottom: -42px;
+}
+
+.profile-banner::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 30%,
+            rgba(0,0,0,.85)
+        );
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card {
+    position: relative;
+    z-index: 2;
+}
 
 .profile-head {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 18px;
 
-    margin-bottom: 26px;
+    margin-bottom: 24px;
 }
 
 .avatar {
-    width: 68px;
-    height: 68px;
+    width: 86px;
+    height: 86px;
 
     border-radius: 50%;
 
@@ -353,22 +388,30 @@ body {
     align-items: center;
     justify-content: center;
 
-    background: rgba(255,255,255,.05);
+    background: #111;
 
-    border: 1px solid var(--accent);
+    border: 2px solid var(--profile-accent);
 
-    color: var(--accent);
+    color: var(--profile-accent);
 
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: 700;
 
-    box-shadow: 0 0 20px rgba(255,140,0,.12);
+    box-shadow:
+        0 0 20px rgba(255,140,0,.15);
 
     flex-shrink: 0;
+
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-info {
+    padding-bottom: 5px;
 }
 
 .username {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     letter-spacing: 2px;
 }
 
@@ -400,11 +443,31 @@ body {
 }
 
 .admin-badge {
-    color: var(--accent);
+    color: var(--profile-accent);
 
     background: rgba(255,140,0,.08);
 
     border-color: rgba(255,140,0,.3);
+}
+
+.bio {
+    font-size: .6rem;
+
+    line-height: 1.8;
+
+    letter-spacing: .5px;
+
+    color: rgba(255,255,255,.5);
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    background: rgba(255,255,255,.02);
+
+    border: 1px solid rgba(255,255,255,.05);
+
+    margin-bottom: 18px;
 }
 
 /* =========================
@@ -433,7 +496,7 @@ body {
 
 .stat-number {
     font-size: 1.2rem;
-    color: var(--accent);
+    color: var(--profile-accent);
     margin-bottom: 7px;
 }
 
@@ -502,6 +565,38 @@ body {
 }
 
 /* =========================
+   COLOR PICKER
+========================= */
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255,255,255,.15);
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.color-option:hover {
+    transform: scale(1.12);
+}
+
+.color-option.selected {
+    border-color: white;
+    box-shadow: 0 0 15px currentColor;
+}
+
+/* =========================
    ADMIN
 ========================= */
 
@@ -543,18 +638,6 @@ body {
 #loading.hidden {
     opacity: 0;
     pointer-events: none;
-}
-
-/* =========================
-   VIEWS
-========================= */
-
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
 }
 
 /* =========================
@@ -620,8 +703,13 @@ body {
     }
 
     .profile-head {
-        align-items: flex-start;
+        align-items: flex-end;
     }
+
+    .profile-banner {
+        height: 150px;
+    }
+
 }
 </style>
 </head>
@@ -635,557 +723,708 @@ body {
 
 <div class="page">
 
-    <button class="back-btn" onclick="history.back()">
-        <i class="fa-solid fa-chevron-left"></i>
-        BACK
-    </button>
-
-    <h1 class="logo" id="logo">PHANTOM</h1>
-
-    <div class="subtitle">ACCOUNT</div>
-
-
-    <!-- =========================
-         LOGIN VIEW
-    ========================== -->
-
-    <div id="loginView" class="view">
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                LOGIN
-            </div>
-
-            <div id="loginStatus" class="status"></div>
-
-            <div class="field">
-
-                <label>EMAIL</label>
-
-                <input
-                    type="email"
-                    id="loginEmail"
-                    placeholder="YOUR EMAIL"
-                    autocomplete="email"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>PASSWORD</label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    placeholder="YOUR PASSWORD"
-                    autocomplete="current-password"
-                >
-
-            </div>
-
-            <button
-                class="btn primary-btn"
-                onclick="login()"
-                id="loginBtn"
-            >
-                LOGIN
-            </button>
-
-            <div class="switch-row">
-
-                DON'T HAVE AN ACCOUNT?
-
-                <button class="link-btn" onclick="showView('signup')">
-                    CREATE ONE
-                </button>
-
-            </div>
-
-        </div>
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <i class="fa-solid fa-key"></i>
-                PASSWORD
-            </div>
-
-            <button
-                class="btn secondary-btn"
-                onclick="resetPassword()"
-            >
-                RESET PASSWORD
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         SIGNUP VIEW
-    ========================== -->
-
-    <div id="signupView" class="view">
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <i class="fa-solid fa-user-plus"></i>
-                CREATE ACCOUNT
-            </div>
-
-            <div id="signupStatus" class="status"></div>
-
-            <div class="field">
-
-                <label>USERNAME</label>
-
-                <input
-                    type="text"
-                    id="signupUsername"
-                    placeholder="CHOOSE A USERNAME"
-                    maxlength="24"
-                    autocomplete="username"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>EMAIL</label>
-
-                <input
-                    type="email"
-                    id="signupEmail"
-                    placeholder="YOUR EMAIL"
-                    autocomplete="email"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>PASSWORD</label>
-
-                <input
-                    type="password"
-                    id="signupPassword"
-                    placeholder="AT LEAST 6 CHARACTERS"
-                    autocomplete="new-password"
-                >
-
-            </div>
-
-            <div class="field">
-
-                <label>CONFIRM PASSWORD</label>
-
-                <input
-                    type="password"
-                    id="signupConfirm"
-                    placeholder="RE-ENTER PASSWORD"
-                    autocomplete="new-password"
-                >
-
-            </div>
-
-            <button
-                class="btn primary-btn"
-                onclick="signup()"
-                id="signupBtn"
-            >
-                CREATE ACCOUNT
-            </button>
-
-            <div class="switch-row">
-
-                ALREADY HAVE AN ACCOUNT?
-
-                <button class="link-btn" onclick="showView('login')">
-                    LOGIN
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         VERIFY VIEW
-    ========================== -->
-
-    <div id="verifyView" class="view">
-
-        <div class="panel" style="text-align:center;">
-
-            <div style="
-                width:70px;
-                height:70px;
-                border-radius:50%;
-                margin:0 auto 20px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                border:1px solid var(--accent);
-                color:var(--accent);
-                font-size:1.5rem;
-                box-shadow:0 0 25px rgba(255,140,0,.12);
-            ">
-
-                <i class="fa-solid fa-envelope"></i>
-
-            </div>
-
-            <div class="panel-title">
-                CHECK YOUR EMAIL
-            </div>
-
-            <div style="
-                font-size:.6rem;
-                line-height:1.8;
-                opacity:.45;
-                letter-spacing:.5px;
-            ">
-
-                We've sent a confirmation link to:
-
-                <br><br>
-
-                <strong
-                    id="verifyEmail"
-                    style="color:var(--accent);opacity:1;"
-                ></strong>
-
-                <br><br>
-
-                Open the email and confirm your address.
-                Then come back and log in.
-
-            </div>
-
-            <button
-                class="btn secondary-btn"
-                onclick="showView('login')"
-                style="margin-top:25px;"
-            >
-                BACK TO LOGIN
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PROFILE VIEW
-    ========================== -->
-
-    <div id="profileView" class="view">
-
-        <div class="panel">
-
-            <div class="profile-head">
-
-                <div class="avatar" id="avatar">
-                    ?
-                </div>
-
-                <div>
-
-                    <div
-                        class="username"
-                        id="profileUsername"
-                    >
-                        USER
-                    </div>
-
-                    <div
-                        class="email"
-                        id="profileEmail"
-                    >
-                        email
-                    </div>
-
-                    <div
-                        class="badge"
-                        id="profileBadge"
-                    >
-                        MEMBER
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="stats">
-
-                <div class="stat">
-
-                    <div
-                        class="stat-number"
-                        id="achievementCount"
-                    >
-                        0
-                    </div>
-
-                    <div class="stat-label">
-                        ACHIEVEMENTS
-                    </div>
-
-                </div>
-
-                <div class="stat">
-
-                    <div
-                        class="stat-number"
-                        id="memberSince"
-                    >
-                        --
-                    </div>
-
-                    <div class="stat-label">
-                        MEMBER SINCE
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <button
-                class="btn secondary-btn"
-                onclick="logout()"
-            >
-                <i class="fa-solid fa-right-from-bracket"></i>
-                LOG OUT
-            </button>
-
-        </div>
-
-
-        <!-- ACHIEVEMENTS -->
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <i class="fa-solid fa-trophy"></i>
-                ACHIEVEMENTS
-            </div>
-
-            <div id="achievementsList">
-
-                <div class="empty">
-                    NO ACHIEVEMENTS YET
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- ADMIN -->
-
-        <div
-            class="panel admin-panel"
-            id="adminPanel"
-            style="display:none;"
-        >
-
-            <div class="panel-title">
-                <i class="fa-solid fa-crown"></i>
-                ADMIN
-            </div>
-
-            <div class="admin-warning">
-
-                You have administrator privileges on PHANTOM.
-                This section is only visible to authorized accounts.
-
-            </div>
-
-            <button
-                class="btn primary-btn"
-                onclick="openAdmin()"
-            >
-                OPEN ADMIN PANEL
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         ADMIN VIEW
-    ========================== -->
-
-    <div id="adminView" class="view">
-
-        <div class="panel">
-
-            <div class="panel-title">
-                <i class="fa-solid fa-crown"></i>
-                PHANTOM ADMIN
-            </div>
-
-            <div class="admin-warning">
-
-                ADMIN PANEL
-
-                <br><br>
-
-                This area is restricted to PHANTOM administrators.
-
-                <br><br>
-
-                The administrator status is stored in the
-                Supabase database and is not controlled by
-                the browser.
-
-            </div>
-
-            <button
-                class="btn secondary-btn"
-                onclick="showView('profile')"
-            >
-                BACK TO PROFILE
-            </button>
-
-        </div>
-
-    </div>
+<button class="back-btn" onclick="history.back()">
+    <i class="fa-solid fa-chevron-left"></i>
+    BACK
+</button>
+
+<h1 class="logo" id="logo">PHANTOM</h1>
+
+<div class="subtitle">ACCOUNT</div>
+
+
+<!-- =====================================================
+     LOGIN
+===================================================== -->
+
+<div id="loginView" class="view">
+
+<div class="panel">
+
+<div class="panel-title">
+    <i class="fa-solid fa-right-to-bracket"></i>
+    LOGIN
+</div>
+
+<div id="loginStatus" class="status"></div>
+
+<div class="field">
+<label>EMAIL</label>
+<input
+    type="email"
+    id="loginEmail"
+    placeholder="YOUR EMAIL"
+    autocomplete="email"
+>
+</div>
+
+<div class="field">
+<label>PASSWORD</label>
+<input
+    type="password"
+    id="loginPassword"
+    placeholder="YOUR PASSWORD"
+    autocomplete="current-password"
+>
+</div>
+
+<button
+    class="btn primary-btn"
+    onclick="login()"
+    id="loginBtn"
+>
+LOGIN
+</button>
+
+<div class="switch-row">
+DON'T HAVE AN ACCOUNT?
+<button class="link-btn" onclick="showView('signup')">
+CREATE ONE
+</button>
+</div>
 
 </div>
+
+<div class="panel">
+
+<div class="panel-title">
+    <i class="fa-solid fa-key"></i>
+    PASSWORD
+</div>
+
+<button
+    class="btn secondary-btn"
+    onclick="resetPassword()"
+>
+RESET PASSWORD
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     SIGNUP
+===================================================== -->
+
+<div id="signupView" class="view">
+
+<div class="panel">
+
+<div class="panel-title">
+    <i class="fa-solid fa-user-plus"></i>
+    CREATE ACCOUNT
+</div>
+
+<div id="signupStatus" class="status"></div>
+
+<div class="field">
+<label>USERNAME</label>
+<input
+    type="text"
+    id="signupUsername"
+    placeholder="CHOOSE A USERNAME"
+    maxlength="24"
+    autocomplete="username"
+>
+</div>
+
+<div class="field">
+<label>EMAIL</label>
+<input
+    type="email"
+    id="signupEmail"
+    placeholder="YOUR EMAIL"
+    autocomplete="email"
+>
+</div>
+
+<div class="field">
+<label>PASSWORD</label>
+<input
+    type="password"
+    id="signupPassword"
+    placeholder="AT LEAST 6 CHARACTERS"
+    autocomplete="new-password"
+>
+</div>
+
+<div class="field">
+<label>CONFIRM PASSWORD</label>
+<input
+    type="password"
+    id="signupConfirm"
+    placeholder="RE-ENTER PASSWORD"
+    autocomplete="new-password"
+>
+</div>
+
+<button
+    class="btn primary-btn"
+    onclick="signup()"
+    id="signupBtn"
+>
+CREATE ACCOUNT
+</button>
+
+<div class="switch-row">
+ALREADY HAVE AN ACCOUNT?
+<button class="link-btn" onclick="showView('login')">
+LOGIN
+</button>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     VERIFY
+===================================================== -->
+
+<div id="verifyView" class="view">
+
+<div class="panel" style="text-align:center;">
+
+<div style="
+width:70px;
+height:70px;
+border-radius:50%;
+margin:0 auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid var(--accent);
+color:var(--accent);
+font-size:1.5rem;
+box-shadow:0 0 25px rgba(255,140,0,.12);
+">
+
+<i class="fa-solid fa-envelope"></i>
+
+</div>
+
+<div class="panel-title">
+CHECK YOUR EMAIL
+</div>
+
+<div style="
+font-size:.6rem;
+line-height:1.8;
+opacity:.45;
+letter-spacing:.5px;
+">
+
+We've sent a confirmation link to:
+
+<br><br>
+
+<strong
+id="verifyEmail"
+style="color:var(--accent);opacity:1;"
+></strong>
+
+<br><br>
+
+Open the email and confirm your address.
+Then come back and log in.
+
+</div>
+
+<button
+class="btn secondary-btn"
+onclick="showView('login')"
+style="margin-top:25px;"
+>
+BACK TO LOGIN
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     PROFILE
+===================================================== -->
+
+<div id="profileView" class="view">
+
+<div class="profile-banner" id="profileBanner"></div>
+
+<div class="panel profile-card">
+
+<div class="profile-head">
+
+<div class="avatar" id="avatar">
+?
+</div>
+
+<div class="profile-info">
+
+<div
+class="username"
+id="profileUsername"
+>
+USER
+</div>
+
+<div
+class="email"
+id="profileEmail"
+>
+email
+</div>
+
+<div
+class="badge"
+id="profileBadge"
+>
+MEMBER
+</div>
+
+</div>
+
+</div>
+
+<div
+class="bio"
+id="profileBio"
+>
+NO BIO SET.
+</div>
+
+<div class="stats">
+
+<div class="stat">
+
+<div
+class="stat-number"
+id="achievementCount"
+>
+0
+</div>
+
+<div class="stat-label">
+ACHIEVEMENTS
+</div>
+
+</div>
+
+<div class="stat">
+
+<div
+class="stat-number"
+id="memberSince"
+>
+--
+</div>
+
+<div class="stat-label">
+MEMBER SINCE
+</div>
+
+</div>
+
+</div>
+
+<button
+class="btn primary-btn"
+onclick="showView('customize')"
+>
+<i class="fa-solid fa-sliders"></i>
+CUSTOMIZE PROFILE
+</button>
+
+<button
+class="btn secondary-btn"
+onclick="logout()"
+>
+<i class="fa-solid fa-right-from-bracket"></i>
+LOG OUT
+</button>
+
+</div>
+
+
+<!-- ACHIEVEMENTS -->
+
+<div class="panel">
+
+<div class="panel-title">
+<i class="fa-solid fa-trophy"></i>
+ACHIEVEMENTS
+</div>
+
+<div id="achievementsList">
+
+<div class="empty">
+NO ACHIEVEMENTS YET
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ADMIN -->
+
+<div
+class="panel admin-panel"
+id="adminPanel"
+style="display:none;"
+>
+
+<div class="panel-title">
+<i class="fa-solid fa-crown"></i>
+ADMIN
+</div>
+
+<div class="admin-warning">
+
+You have administrator privileges on PHANTOM.
+This section is only visible to authorized accounts.
+
+</div>
+
+<button
+class="btn primary-btn"
+onclick="openAdmin()"
+>
+OPEN ADMIN PANEL
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     CUSTOMIZE
+===================================================== -->
+
+<div id="customizeView" class="view">
+
+<div class="panel">
+
+<div class="panel-title">
+<i class="fa-solid fa-wand-magic-sparkles"></i>
+CUSTOMIZE PROFILE
+</div>
+
+<div id="customizeStatus" class="status"></div>
+
+<div class="field">
+
+<label>USERNAME</label>
+
+<input
+type="text"
+id="editUsername"
+maxlength="24"
+placeholder="YOUR USERNAME"
+>
+
+</div>
+
+<div class="field">
+
+<label>BIO</label>
+
+<textarea
+id="editBio"
+maxlength="200"
+placeholder="TELL PEOPLE A LITTLE ABOUT YOURSELF..."
+></textarea>
+
+</div>
+
+<div class="field">
+
+<label>PROFILE PICTURE URL</label>
+
+<input
+type="url"
+id="editAvatar"
+placeholder="https://..."
+>
+
+</div>
+
+<div class="field">
+
+<label>PROFILE BANNER URL</label>
+
+<input
+type="url"
+id="editBanner"
+placeholder="https://..."
+>
+
+</div>
+
+<div class="field">
+
+<label>PROFILE ACCENT</label>
+
+<div class="color-options">
+
+<button
+class="color-option"
+style="background:#ff8c00;color:#ff8c00"
+data-color="#ff8c00"
+onclick="selectColor(this)"
+></button>
+
+<button
+class="color-option"
+style="background:#00aaff;color:#00aaff"
+data-color="#00aaff"
+onclick="selectColor(this)"
+></button>
+
+<button
+class="color-option"
+style="background:#9b5cff;color:#9b5cff"
+data-color="#9b5cff"
+onclick="selectColor(this)"
+></button>
+
+<button
+class="color-option"
+style="background:#ff3b5c;color:#ff3b5c"
+data-color="#ff3b5c"
+onclick="selectColor(this)"
+></button>
+
+<button
+class="color-option"
+style="background:#00d084;color:#00d084"
+data-color="#00d084"
+onclick="selectColor(this)"
+></button>
+
+<button
+class="color-option"
+style="background:#ffffff;color:#ffffff"
+data-color="#ffffff"
+onclick="selectColor(this)"
+></button>
+
+</div>
+
+</div>
+
+<button
+class="btn primary-btn"
+onclick="saveProfile()"
+id="saveProfileBtn"
+>
+<i class="fa-solid fa-floppy-disk"></i>
+SAVE PROFILE
+</button>
+
+<button
+class="btn secondary-btn"
+onclick="showView('profile')"
+>
+CANCEL
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<div class="panel-title">
+<i class="fa-solid fa-lock"></i>
+ACCOUNT
+</div>
+
+<button
+class="btn secondary-btn"
+onclick="resetPassword()"
+>
+CHANGE PASSWORD
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMIN
+===================================================== -->
+
+<div id="adminView" class="view">
+
+<div class="panel">
+
+<div class="panel-title">
+<i class="fa-solid fa-crown"></i>
+PHANTOM ADMIN
+</div>
+
+<div class="admin-warning">
+
+ADMIN PANEL
+
+<br><br>
+
+This area is restricted to PHANTOM administrators.
+
+<br><br>
+
+Administrator status is stored securely
+in the Supabase database.
+
+</div>
+
+<button
+class="btn secondary-btn"
+onclick="showView('profile')"
+>
+BACK TO PROFILE
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 
 <div class="toast" id="toast"></div>
 
 <div class="version" id="version">
-    PHANTOM
+PHANTOM
 </div>
 
 
 <script>
 
 /* =========================================================
-   SUPABASE CONFIG
+   SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
-    "https://xxzrbpglmgzoisjnnezy.supabase.co";
+"https://xxzrbpglmgzoisjnnezy.supabase.co";
 
 const SUPABASE_ANON_KEY =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
-
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
 
 const {
-    createClient
+createClient
 } = window.supabase;
 
-
 const db = createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
+SUPABASE_URL,
+SUPABASE_ANON_KEY
 );
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+let currentUser = null;
+let selectedColor = "#ff8c00";
 
 
 /* =========================================================
    STARS
 ========================================================= */
 
-const stars = document.getElementById("stars");
+const stars =
+document.getElementById("stars");
 
-for (let i = 0; i < 90; i++) {
+for(let i = 0; i < 90; i++){
 
-    const star = document.createElement("div");
+const star =
+document.createElement("div");
 
-    star.className = "star";
+star.className = "star";
 
-    const size = Math.random() * 2 + 1;
+const size =
+Math.random() * 2 + 1;
 
-    star.style.cssText = `
-        width:${size}px;
-        height:${size}px;
-        left:${Math.random() * 100}%;
-        top:${Math.random() * 120}%;
-        opacity:${Math.random() * .6 + .2};
-        animation-duration:${Math.random() * 80 + 80}s;
-        animation-delay:-${Math.random() * 100}s;
-    `;
+star.style.cssText = `
+width:${size}px;
+height:${size}px;
+left:${Math.random()*100}%;
+top:${Math.random()*120}%;
+opacity:${Math.random()*.6+.2};
+animation-duration:${Math.random()*80+80}s;
+animation-delay:-${Math.random()*100}s;
+`;
 
-    stars.appendChild(star);
+stars.appendChild(star);
+
 }
 
 
 /* =========================================================
-   THEME
+   COLOR
 ========================================================= */
 
-function hexToRgb(hex) {
+function hexToRgb(hex){
 
-    hex = hex.replace("#","");
+hex = hex.replace("#","");
 
-    return {
-        r: parseInt(hex.substring(0,2),16),
-        g: parseInt(hex.substring(2,4),16),
-        b: parseInt(hex.substring(4,6),16)
-    };
+return {
+
+r:parseInt(hex.substring(0,2),16),
+
+g:parseInt(hex.substring(2,4),16),
+
+b:parseInt(hex.substring(4,6),16)
+
+};
+
 }
 
 
-function rgba(hex, alpha) {
+function rgba(hex,alpha){
 
-    const c = hexToRgb(hex);
+const c =
+hexToRgb(hex);
 
-    return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+
 }
 
 
-function applyTheme(color) {
+function applyTheme(color){
 
-    document.documentElement
-        .style
-        .setProperty("--accent", color);
+document.documentElement
+.style
+.setProperty("--profile-accent",color);
 
-    document.getElementById("logo").style.textShadow = `
-        0 0 6px rgba(255,255,255,.15),
-        0 0 15px ${rgba(color,.4)},
-        0 0 30px ${rgba(color,.25)},
-        0 0 60px ${rgba(color,.15)}
-    `;
+document.documentElement
+.style
+.setProperty("--accent",color);
 
-    document.getElementById("bottom-glow").style.background = `
-        radial-gradient(
-            ellipse at center,
-            ${rgba(color,.12)} 0%,
-            ${rgba(color,.04)} 35%,
-            transparent 70%
-        )
-    `;
+document.getElementById("logo")
+.style.textShadow = `
+0 0 6px rgba(255,255,255,.15),
+0 0 15px ${rgba(color,.4)},
+0 0 30px ${rgba(color,.25)},
+0 0 60px ${rgba(color,.15)}
+`;
 
-    document.querySelectorAll(".primary-btn").forEach(btn => {
+document.getElementById("bottom-glow")
+.style.background = `
+radial-gradient(
+ellipse at center,
+${rgba(color,.12)} 0%,
+${rgba(color,.04)} 35%,
+transparent 70%
+)
+`;
 
-        btn.style.color = color;
-
-        btn.style.borderColor =
-            rgba(color,.35);
-
-        btn.style.background =
-            rgba(color,.08);
-
-    });
-
-    document.querySelectorAll(".panel-title").forEach(el => {
-
-        el.style.color = color;
-
-    });
 }
 
 
@@ -1193,33 +1432,30 @@ function applyTheme(color) {
    TOAST
 ========================================================= */
 
-function toast(message) {
+function toast(message){
 
-    const el =
-        document.getElementById("toast");
+const el =
+document.getElementById("toast");
 
-    el.textContent = message;
+el.textContent = message;
 
-    const color =
-        getComputedStyle(document.documentElement)
-            .getPropertyValue("--accent")
-            .trim();
+el.style.background =
+rgba(selectedColor,.12);
 
-    el.style.background =
-        rgba(color,.12);
+el.style.border =
+`1px solid ${rgba(selectedColor,.35)}`;
 
-    el.style.border =
-        `1px solid ${rgba(color,.35)}`;
+el.style.color =
+selectedColor;
 
-    el.style.color = color;
+el.classList.add("show");
 
-    el.classList.add("show");
+setTimeout(()=>{
 
-    setTimeout(() => {
+el.classList.remove("show");
 
-        el.classList.remove("show");
+},2500);
 
-    }, 2500);
 }
 
 
@@ -1227,240 +1463,241 @@ function toast(message) {
    STATUS
 ========================================================= */
 
-function status(element, message, type) {
+function status(element,message,type){
 
-    element.textContent = message;
+element.textContent =
+message;
 
-    element.className =
-        "status show " + type;
+element.className =
+"status show " + type;
 
 }
 
 
 /* =========================================================
-   VIEW SYSTEM
+   VIEWS
 ========================================================= */
 
-function showView(view) {
+function showView(view){
 
-    document.querySelectorAll(".view")
-        .forEach(v => v.classList.remove("active"));
+document
+.querySelectorAll(".view")
+.forEach(v =>
+v.classList.remove("active")
+);
 
-    const target =
-        document.getElementById(view + "View");
+const target =
+document.getElementById(
+view + "View"
+);
 
-    if (target)
-        target.classList.add("active");
+if(target)
+target.classList.add("active");
+
 }
 
 
 /* =========================================================
-   SIGN UP
+   SIGNUP
 ========================================================= */
 
-async function signup() {
+async function signup(){
 
-    const username =
-        document.getElementById("signupUsername")
-            .value
-            .trim();
+const username =
+document.getElementById("signupUsername")
+.value.trim();
 
-    const email =
-        document.getElementById("signupEmail")
-            .value
-            .trim();
+const email =
+document.getElementById("signupEmail")
+.value.trim();
 
-    const password =
-        document.getElementById("signupPassword")
-            .value;
+const password =
+document.getElementById("signupPassword")
+.value;
 
-    const confirm =
-        document.getElementById("signupConfirm")
-            .value;
+const confirm =
+document.getElementById("signupConfirm")
+.value;
 
-    const statusEl =
-        document.getElementById("signupStatus");
+const statusEl =
+document.getElementById("signupStatus");
 
-    const button =
-        document.getElementById("signupBtn");
+const button =
+document.getElementById("signupBtn");
 
 
-    if (!username) {
+if(!username){
 
-        status(
-            statusEl,
-            "CHOOSE A USERNAME.",
-            "error"
-        );
+status(
+statusEl,
+"CHOOSE A USERNAME.",
+"error"
+);
 
-        return;
-    }
+return;
 
+}
 
-    if (username.length < 3) {
 
-        status(
-            statusEl,
-            "USERNAME MUST BE AT LEAST 3 CHARACTERS.",
-            "error"
-        );
+if(username.length < 3){
 
-        return;
-    }
+status(
+statusEl,
+"USERNAME MUST BE AT LEAST 3 CHARACTERS.",
+"error"
+);
 
+return;
 
-    if (!email) {
+}
 
-        status(
-            statusEl,
-            "ENTER YOUR EMAIL.",
-            "error"
-        );
 
-        return;
-    }
+if(!email){
 
+status(
+statusEl,
+"ENTER YOUR EMAIL.",
+"error"
+);
 
-    if (password.length < 6) {
+return;
 
-        status(
-            statusEl,
-            "PASSWORD MUST BE AT LEAST 6 CHARACTERS.",
-            "error"
-        );
+}
 
-        return;
-    }
 
+if(password.length < 6){
 
-    if (password !== confirm) {
+status(
+statusEl,
+"PASSWORD MUST BE AT LEAST 6 CHARACTERS.",
+"error"
+);
 
-        status(
-            statusEl,
-            "PASSWORDS DO NOT MATCH.",
-            "error"
-        );
+return;
 
-        return;
-    }
+}
 
 
-    button.disabled = true;
+if(password !== confirm){
 
-    button.textContent =
-        "CREATING ACCOUNT...";
+status(
+statusEl,
+"PASSWORDS DO NOT MATCH.",
+"error"
+);
 
+return;
 
-    /* Check username */
+}
 
-    const {
-        data: existing,
-        error: usernameError
-    } = await db
-        .from("profiles")
-        .select("id")
-        .eq("username", username)
-        .maybeSingle();
 
+button.disabled = true;
 
-    if (usernameError) {
+button.textContent =
+"CREATING ACCOUNT...";
 
-        console.error(usernameError);
 
-        status(
-            statusEl,
-            "COULD NOT CHECK USERNAME.",
-            "error"
-        );
+const {
+data:existing,
+error:usernameError
+} =
+await db
+.from("profiles")
+.select("id")
+.eq("username",username)
+.maybeSingle();
 
-        button.disabled = false;
 
-        button.textContent =
-            "CREATE ACCOUNT";
+if(usernameError){
 
-        return;
-    }
+console.error(usernameError);
 
+status(
+statusEl,
+"COULD NOT CHECK USERNAME.",
+"error"
+);
 
-    if (existing) {
+button.disabled = false;
 
-        status(
-            statusEl,
-            "THAT USERNAME IS ALREADY TAKEN.",
-            "error"
-        );
+button.textContent =
+"CREATE ACCOUNT";
 
-        button.disabled = false;
+return;
 
-        button.textContent =
-            "CREATE ACCOUNT";
+}
 
-        return;
-    }
 
+if(existing){
 
-    /* Create Supabase account */
+status(
+statusEl,
+"THAT USERNAME IS ALREADY TAKEN.",
+"error"
+);
 
-    const {
-        data,
-        error
-    } = await db.auth.signUp({
+button.disabled = false;
 
-        email: email,
+button.textContent =
+"CREATE ACCOUNT";
 
-        password: password,
+return;
 
-        options: {
+}
 
-            data: {
-                username: username
-            },
 
-            emailRedirectTo:
-                window.location.origin +
-                window.location.pathname
+const {
+data,
+error
+} =
+await db.auth.signUp({
 
-        }
+email:email,
 
-    });
+password:password,
 
+options:{
+data:{
+username:username
+},
 
-    if (error) {
+emailRedirectTo:
+window.location.origin +
+window.location.pathname
 
-        console.error(error);
+}
 
-        status(
-            statusEl,
-            error.message.toUpperCase(),
-            "error"
-        );
+});
 
-        button.disabled = false;
 
-        button.textContent =
-            "CREATE ACCOUNT";
+if(error){
 
-        return;
-    }
+status(
+statusEl,
+error.message.toUpperCase(),
+"error"
+);
 
+button.disabled = false;
 
-    /*
-       Supabase creates the profile automatically
-       through the database trigger we created earlier.
-    */
+button.textContent =
+"CREATE ACCOUNT";
 
+return;
 
-    document.getElementById("verifyEmail")
-        .textContent = email;
+}
 
 
-    showView("verify");
+document.getElementById("verifyEmail")
+.textContent = email;
 
+showView("verify");
 
-    button.disabled = false;
+button.disabled = false;
 
-    button.textContent =
-        "CREATE ACCOUNT";
+button.textContent =
+"CREATE ACCOUNT";
+
 }
 
 
@@ -1468,80 +1705,79 @@ async function signup() {
    LOGIN
 ========================================================= */
 
-async function login() {
+async function login(){
 
-    const email =
-        document.getElementById("loginEmail")
-            .value
-            .trim();
+const email =
+document.getElementById("loginEmail")
+.value.trim();
 
-    const password =
-        document.getElementById("loginPassword")
-            .value;
+const password =
+document.getElementById("loginPassword")
+.value;
 
-    const statusEl =
-        document.getElementById("loginStatus");
+const statusEl =
+document.getElementById("loginStatus");
 
-    const button =
-        document.getElementById("loginBtn");
-
-
-    if (!email || !password) {
-
-        status(
-            statusEl,
-            "ENTER YOUR EMAIL AND PASSWORD.",
-            "error"
-        );
-
-        return;
-    }
+const button =
+document.getElementById("loginBtn");
 
 
-    button.disabled = true;
+if(!email || !password){
 
-    button.textContent =
-        "LOGGING IN...";
+status(
+statusEl,
+"ENTER YOUR EMAIL AND PASSWORD.",
+"error"
+);
 
+return;
 
-    const {
-        data,
-        error
-    } = await db.auth.signInWithPassword({
-
-        email: email,
-
-        password: password
-
-    });
+}
 
 
-    if (error) {
+button.disabled = true;
 
-        console.error(error);
-
-        status(
-            statusEl,
-            error.message.toUpperCase(),
-            "error"
-        );
-
-        button.disabled = false;
-
-        button.textContent =
-            "LOGIN";
-
-        return;
-    }
+button.textContent =
+"LOGGING IN...";
 
 
-    await loadProfile(data.user);
+const {
+data,
+error
+} =
+await db.auth.signInWithPassword({
+
+email,
+password
+
+});
 
 
-    button.disabled = false;
+if(error){
 
-    button.textContent =
-        "LOGIN";
+status(
+statusEl,
+error.message.toUpperCase(),
+"error"
+);
+
+button.disabled = false;
+
+button.textContent =
+"LOGIN";
+
+return;
+
+}
+
+
+await loadProfile(data.user);
+
+button.disabled = false;
+
+button.textContent =
+"LOGIN";
+
 }
 
 
@@ -1549,107 +1785,479 @@ async function login() {
    LOAD PROFILE
 ========================================================= */
 
-async function loadProfile(user) {
+async function loadProfile(user){
 
-    if (!user) {
+if(!user){
 
-        showView("login");
+showView("login");
 
-        return;
+return;
 
-    }
-
-
-    const {
-        data: profile,
-        error
-    } = await db
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
-        .single();
+}
 
 
-    if (error) {
-
-        console.error(error);
-
-        toast("PROFILE COULD NOT LOAD");
-
-        return;
-
-    }
+currentUser = user;
 
 
-    document.getElementById("profileUsername")
-        .textContent =
-        profile.username || "USER";
+const {
+data:profile,
+error
+} =
+await db
+.from("profiles")
+.select("*")
+.eq("id",user.id)
+.single();
 
 
-    document.getElementById("profileEmail")
-        .textContent =
-        user.email || "";
+if(error){
+
+console.error(error);
+
+toast("PROFILE COULD NOT LOAD");
+
+return;
+
+}
 
 
-    const username =
-        profile.username || "?";
+/* USERNAME */
+
+document.getElementById("profileUsername")
+.textContent =
+profile.username || "USER";
 
 
-    document.getElementById("avatar")
-        .textContent =
-        username
-            .charAt(0)
-            .toUpperCase();
+/* EMAIL */
+
+document.getElementById("profileEmail")
+.textContent =
+user.email || "";
 
 
-    const badge =
-        document.getElementById("profileBadge");
+/* AVATAR */
+
+const avatar =
+document.getElementById("avatar");
+
+const username =
+profile.username || "?";
 
 
-    if (profile.is_admin) {
+if(profile.avatar_url){
 
-        badge.textContent =
-            "ADMIN";
+avatar.style.backgroundImage =
+`url("${profile.avatar_url}")`;
 
-        badge.classList.add("admin-badge");
+avatar.textContent = "";
 
-        document.getElementById("adminPanel")
-            .style.display = "block";
+}else{
 
-    } else {
+avatar.style.backgroundImage =
+"none";
 
-        badge.textContent =
-            "MEMBER";
+avatar.textContent =
+username.charAt(0).toUpperCase();
 
-        badge.classList.remove("admin-badge");
-
-        document.getElementById("adminPanel")
-            .style.display = "none";
-
-    }
+}
 
 
-    if (profile.created_at) {
+/* BANNER */
 
-        const date =
-            new Date(profile.created_at);
+const banner =
+document.getElementById("profileBanner");
 
-        document.getElementById("memberSince")
-            .textContent =
-            date.toLocaleDateString(
-                undefined,
-                {
-                    month:"short",
-                    year:"numeric"
-                }
-            ).toUpperCase();
+if(profile.banner_url){
 
-    }
+banner.style.backgroundImage =
+`
+linear-gradient(
+to bottom,
+transparent 20%,
+rgba(0,0,0,.85)
+),
+url("${profile.banner_url}")
+`;
+
+}else{
+
+banner.style.backgroundImage =
+`
+linear-gradient(
+135deg,
+${rgba(profile.accent_color || "#ff8c00",.15)},
+rgba(255,255,255,.02)
+)
+`;
+
+}
 
 
-    await loadAchievements(user.id);
+/* BIO */
 
-    showView("profile");
+document.getElementById("profileBio")
+.textContent =
+profile.bio || "NO BIO SET.";
+
+
+/* ACCENT */
+
+selectedColor =
+profile.accent_color ||
+"#ff8c00";
+
+applyTheme(selectedColor);
+
+
+/* BADGE */
+
+const badge =
+document.getElementById("profileBadge");
+
+if(profile.is_admin){
+
+badge.textContent =
+"ADMIN";
+
+badge.classList.add("admin-badge");
+
+document.getElementById("adminPanel")
+.style.display =
+"block";
+
+}else{
+
+badge.textContent =
+"MEMBER";
+
+badge.classList.remove("admin-badge");
+
+document.getElementById("adminPanel")
+.style.display =
+"none";
+
+}
+
+
+/* MEMBER DATE */
+
+if(profile.created_at){
+
+const date =
+new Date(profile.created_at);
+
+document.getElementById("memberSince")
+.textContent =
+date.toLocaleDateString(
+undefined,
+{
+month:"short",
+year:"numeric"
+}
+).toUpperCase();
+
+}
+
+
+/* LOAD ACHIEVEMENTS */
+
+await loadAchievements(user.id);
+
+showView("profile");
+
+}
+
+
+/* =========================================================
+   CUSTOMIZATION
+========================================================= */
+
+function openCustomization(){
+
+if(!currentUser)
+return;
+
+showView("customize");
+
+loadCustomizationFields();
+
+}
+
+
+function loadCustomizationFields(){
+
+if(!currentUser)
+return;
+
+
+/*
+   We already loaded the profile.
+   Fetch it again so the editor is always current.
+*/
+
+db
+.from("profiles")
+.select("*")
+.eq("id",currentUser.id)
+.single()
+.then(({data,error})=>{
+
+if(error){
+
+console.error(error);
+
+return;
+
+}
+
+
+document.getElementById("editUsername")
+.value =
+data.username || "";
+
+
+document.getElementById("editBio")
+.value =
+data.bio || "";
+
+
+document.getElementById("editAvatar")
+.value =
+data.avatar_url || "";
+
+
+document.getElementById("editBanner")
+.value =
+data.banner_url || "";
+
+
+selectedColor =
+data.accent_color ||
+"#ff8c00";
+
+
+document
+.querySelectorAll(".color-option")
+.forEach(button=>{
+
+button.classList.toggle(
+"selected",
+button.dataset.color.toLowerCase() ===
+selectedColor.toLowerCase()
+);
+
+});
+
+});
+
+}
+
+
+/* Replace button handler */
+
+document
+.querySelector(
+'[onclick="showView(\'customize\')"]'
+)
+?.addEventListener(
+"click",
+openCustomization
+);
+
+
+/* =========================================================
+   COLOR SELECT
+========================================================= */
+
+function selectColor(button){
+
+selectedColor =
+button.dataset.color;
+
+document
+.querySelectorAll(".color-option")
+.forEach(b =>
+b.classList.remove("selected")
+);
+
+button.classList.add("selected");
+
+applyTheme(selectedColor);
+
+}
+
+
+/* =========================================================
+   SAVE PROFILE
+========================================================= */
+
+async function saveProfile(){
+
+if(!currentUser){
+
+toast("NOT LOGGED IN");
+
+return;
+
+}
+
+
+const username =
+document.getElementById("editUsername")
+.value.trim();
+
+const bio =
+document.getElementById("editBio")
+.value.trim();
+
+const avatar =
+document.getElementById("editAvatar")
+.value.trim();
+
+const banner =
+document.getElementById("editBanner")
+.value.trim();
+
+const statusEl =
+document.getElementById("customizeStatus");
+
+const button =
+document.getElementById("saveProfileBtn");
+
+
+if(username.length < 3){
+
+status(
+statusEl,
+"USERNAME MUST BE AT LEAST 3 CHARACTERS.",
+"error"
+);
+
+return;
+
+}
+
+
+button.disabled = true;
+
+button.textContent =
+"SAVING...";
+
+
+/*
+   Check whether another account
+   already owns this username.
+*/
+
+const {
+data:existing,
+error:checkError
+} =
+await db
+.from("profiles")
+.select("id")
+.eq("username",username)
+.neq("id",currentUser.id)
+.maybeSingle();
+
+
+if(checkError){
+
+console.error(checkError);
+
+status(
+statusEl,
+"COULD NOT CHECK USERNAME.",
+"error"
+);
+
+button.disabled = false;
+
+button.textContent =
+"SAVE PROFILE";
+
+return;
+
+}
+
+
+if(existing){
+
+status(
+statusEl,
+"THAT USERNAME IS ALREADY TAKEN.",
+"error"
+);
+
+button.disabled = false;
+
+button.textContent =
+"SAVE PROFILE";
+
+return;
+
+}
+
+
+/* SAVE */
+
+const {
+error
+} =
+await db
+.from("profiles")
+.update({
+
+username:username,
+
+bio:bio,
+
+avatar_url:avatar,
+
+banner_url:banner,
+
+accent_color:selectedColor
+
+})
+.eq("id",currentUser.id);
+
+
+if(error){
+
+console.error(error);
+
+status(
+statusEl,
+"COULD NOT SAVE PROFILE.",
+"error"
+);
+
+button.disabled = false;
+
+button.textContent =
+"SAVE PROFILE";
+
+return;
+
+}
+
+
+status(
+statusEl,
+"PROFILE SAVED.",
+"success"
+);
+
+toast("PROFILE SAVED");
+
+button.disabled = false;
+
+button.textContent =
+"SAVE PROFILE";
+
+
+await loadProfile(currentUser);
+
 }
 
 
@@ -1657,111 +2265,116 @@ async function loadProfile(user) {
    ACHIEVEMENTS
 ========================================================= */
 
-async function loadAchievements(userId) {
+async function loadAchievements(userId){
 
-    const {
-        data,
-        error
-    } = await db
-        .from("user_achievements")
-        .select(`
-            unlocked_at,
-            achievements (
-                name,
-                description,
-                icon
-            )
-        `)
-        .eq("user_id", userId)
-        .order("unlocked_at", {
-            ascending:false
-        });
-
-
-    const list =
-        document.getElementById("achievementsList");
+const {
+data,
+error
+} =
+await db
+.from("user_achievements")
+.select(`
+unlocked_at,
+achievements (
+name,
+description,
+icon
+)
+`)
+.eq("user_id",userId)
+.order("unlocked_at",{
+ascending:false
+});
 
 
-    if (error) {
-
-        console.error(error);
-
-        list.innerHTML = `
-            <div class="empty">
-                COULD NOT LOAD ACHIEVEMENTS
-            </div>
-        `;
-
-        return;
-    }
+const list =
+document.getElementById(
+"achievementsList"
+);
 
 
-    document.getElementById("achievementCount")
-        .textContent =
-        data.length;
+if(error){
+
+console.error(error);
+
+list.innerHTML = `
+<div class="empty">
+COULD NOT LOAD ACHIEVEMENTS
+</div>
+`;
+
+return;
+
+}
 
 
-    if (!data.length) {
-
-        list.innerHTML = `
-            <div class="empty">
-                NO ACHIEVEMENTS YET
-            </div>
-        `;
-
-        return;
-    }
+document.getElementById(
+"achievementCount"
+).textContent =
+data.length;
 
 
-    list.innerHTML = "";
+if(!data.length){
+
+list.innerHTML = `
+<div class="empty">
+NO ACHIEVEMENTS YET
+</div>
+`;
+
+return;
+
+}
 
 
-    data.forEach(item => {
-
-        const achievement =
-            item.achievements;
+list.innerHTML = "";
 
 
-        if (!achievement)
-            return;
+data.forEach(item=>{
+
+const achievement =
+item.achievements;
+
+if(!achievement)
+return;
 
 
-        const el =
-            document.createElement("div");
+const el =
+document.createElement("div");
 
-        el.className =
-            "achievement";
+el.className =
+"achievement";
 
+el.innerHTML = `
 
-        el.innerHTML = `
+<div class="achievement-icon">
+${escapeHTML(
+achievement.icon || "🏆"
+)}
+</div>
 
-            <div class="achievement-icon">
-                ${escapeHTML(
-                    achievement.icon || "🏆"
-                )}
-            </div>
+<div>
 
-            <div>
+<div class="achievement-name">
+${escapeHTML(
+achievement.name
+)}
+</div>
 
-                <div class="achievement-name">
-                    ${escapeHTML(
-                        achievement.name
-                    )}
-                </div>
+<div class="achievement-description">
+${escapeHTML(
+achievement.description || ""
+)}
+</div>
 
-                <div class="achievement-description">
-                    ${escapeHTML(
-                        achievement.description || ""
-                    )}
-                </div>
+</div>
 
-            </div>
-        `;
+`;
 
+list.appendChild(el);
 
-        list.appendChild(el);
+});
 
-    });
 }
 
 
@@ -1769,56 +2382,60 @@ async function loadAchievements(userId) {
    PASSWORD RESET
 ========================================================= */
 
-async function resetPassword() {
+async function resetPassword(){
 
-    const email =
-        document.getElementById("loginEmail")
-            .value
-            .trim();
-
-
-    if (!email) {
-
-        status(
-            document.getElementById("loginStatus"),
-            "ENTER YOUR EMAIL FIRST.",
-            "error"
-        );
-
-        return;
-    }
+const email =
+document.getElementById("loginEmail")
+.value.trim();
 
 
-    const {
-        error
-    } = await db.auth
-        .resetPasswordForEmail(
-            email,
-            {
-                redirectTo:
-                    window.location.origin +
-                    window.location.pathname
-            }
-        );
+if(!email){
+
+status(
+document.getElementById("loginStatus"),
+"ENTER YOUR EMAIL FIRST.",
+"error"
+);
+
+showView("login");
+
+return;
+
+}
 
 
-    if (error) {
+const {
+error
+} =
+await db.auth
+.resetPasswordForEmail(
+email,
+{
+redirectTo:
+window.location.origin +
+window.location.pathname
+}
+);
 
-        status(
-            document.getElementById("loginStatus"),
-            error.message.toUpperCase(),
-            "error"
-        );
 
-        return;
-    }
+if(error){
+
+status(
+document.getElementById("loginStatus"),
+error.message.toUpperCase(),
+"error"
+);
+
+return;
+
+}
 
 
-    status(
-        document.getElementById("loginStatus"),
-        "PASSWORD RESET EMAIL SENT.",
-        "success"
-    );
+status(
+document.getElementById("loginStatus"),
+"PASSWORD RESET EMAIL SENT.",
+"success"
+);
 
 }
 
@@ -1827,25 +2444,28 @@ async function resetPassword() {
    LOGOUT
 ========================================================= */
 
-async function logout() {
+async function logout(){
 
-    const {
-        error
-    } = await db.auth.signOut();
-
-
-    if (error) {
-
-        toast("LOGOUT FAILED");
-
-        return;
-
-    }
+const {
+error
+} =
+await db.auth.signOut();
 
 
-    showView("login");
+if(error){
 
-    toast("LOGGED OUT");
+toast("LOGOUT FAILED");
+
+return;
+
+}
+
+
+currentUser = null;
+
+showView("login");
+
+toast("LOGGED OUT");
 
 }
 
@@ -1854,60 +2474,70 @@ async function logout() {
    ADMIN
 ========================================================= */
 
-async function openAdmin() {
+async function openAdmin(){
 
-    const {
-        data: {
-            user
-        }
-    } = await db.auth.getUser();
-
-
-    if (!user) {
-
-        showView("login");
-
-        return;
-
-    }
+const {
+data:{
+user
+}
+} =
+await db.auth.getUser();
 
 
-    const {
-        data: profile,
-        error
-    } = await db
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
+if(!user){
+
+showView("login");
+
+return;
+
+}
 
 
-    if (error || !profile || !profile.is_admin) {
+const {
+data:profile,
+error
+} =
+await db
+.from("profiles")
+.select("is_admin")
+.eq("id",user.id)
+.single();
 
-        toast("ADMIN ACCESS DENIED");
 
-        return;
+if(error ||
+!profile ||
+!profile.is_admin){
 
-    }
+toast("ADMIN ACCESS DENIED");
+
+return;
+
+}
 
 
-    showView("admin");
+showView("admin");
 
 }
 
 
 /* =========================================================
-   ESCAPE HTML
+   ESCAPE
 ========================================================= */
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+return String(value)
+
+.replaceAll("&","&amp;")
+
+.replaceAll("<","&lt;")
+
+.replaceAll(">","&gt;")
+
+.replaceAll('"',"&quot;")
+
+.replaceAll("'","&#039;");
+
 }
 
 
@@ -1916,15 +2546,18 @@ function escapeHTML(value) {
 ========================================================= */
 
 db.auth.onAuthStateChange(
-    async (event, session) => {
+async(event,session)=>{
 
-        if (session && session.user) {
+if(session &&
+session.user){
 
-            await loadProfile(session.user);
+await loadProfile(
+session.user
+);
 
-        }
+}
 
-    }
+}
 );
 
 
@@ -1932,67 +2565,73 @@ db.auth.onAuthStateChange(
    INITIAL LOAD
 ========================================================= */
 
-async function initialize() {
+async function initialize(){
 
-    const {
-        data: {
-            session
-        }
-    } = await db.auth.getSession();
-
-
-    if (session && session.user) {
-
-        await loadProfile(session.user);
-
-    } else {
-
-        showView("login");
-
-    }
+const {
+data:{
+session
+}
+} =
+await db.auth.getSession();
 
 
-    document.getElementById("loading")
-        .classList.add("hidden");
+if(session &&
+session.user){
+
+await loadProfile(
+session.user
+);
+
+}else{
+
+showView("login");
+
+}
+
+
+document
+.getElementById("loading")
+.classList.add("hidden");
+
 }
 
 
 /* =========================================================
-   LOAD SAVED PHANTOM SETTINGS
+   SETTINGS
 ========================================================= */
 
-(function loadSettings() {
+(function loadSettings(){
 
-    const accent =
-        localStorage.getItem(
-            "phantom_accent"
-        ) || "#ff8c00";
-
-
-    applyTheme(accent);
+const accent =
+localStorage.getItem(
+"phantom_accent"
+) || "#ff8c00";
 
 
-    const wallpaper =
-        localStorage.getItem(
-            "phantom_wallpaper"
-        );
+applyTheme(accent);
 
 
-    if (wallpaper) {
+const wallpaper =
+localStorage.getItem(
+"phantom_wallpaper"
+);
 
-        document.body.style.backgroundImage =
-            `url("${wallpaper}")`;
 
-        document.body.style.backgroundSize =
-            "cover";
+if(wallpaper){
 
-        document.body.style.backgroundPosition =
-            "center";
+document.body.style.backgroundImage =
+`url("${wallpaper}")`;
 
-        document.body.style.backgroundAttachment =
-            "fixed";
+document.body.style.backgroundSize =
+"cover";
 
-    }
+document.body.style.backgroundPosition =
+"center";
+
+document.body.style.backgroundAttachment =
+"fixed";
+
+}
 
 })();
 
@@ -2002,21 +2641,24 @@ async function initialize() {
 ========================================================= */
 
 fetch("version.json")
-    .then(res => res.json())
-    .then(data => {
 
-        document.getElementById("version")
-            .textContent =
-            `PHANTOM ${data.version}`;
+.then(res=>res.json())
 
-    })
-    .catch(() => {
+.then(data=>{
 
-        document.getElementById("version")
-            .textContent =
-            "PHANTOM";
+document.getElementById("version")
+.textContent =
+`PHANTOM ${data.version}`;
 
-    });
+})
+
+.catch(()=>{
+
+document.getElementById("version")
+.textContent =
+"PHANTOM";
+
+});
 
 
 /* =========================================================
