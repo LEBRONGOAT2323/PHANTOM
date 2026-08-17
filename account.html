@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PHANTOM</title>
+<title>PHANTOM — Account</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
@@ -12,10 +12,15 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 :root {
     --accent: #ff8c00;
-    --profile-accent: #ff8c00;
+    --accent-rgb: 255,140,0;
 }
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -23,23 +28,21 @@
     box-sizing: border-box;
 }
 
+html {
+    background: #000;
+}
+
 body {
     font-family: 'Orbitron', sans-serif;
     background: #000;
-    color: white;
+    color: rgba(255,255,255,.85);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
-button,
-input,
-textarea {
-    font-family: 'Orbitron', sans-serif;
-}
-
-/* =========================
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 #stars {
     position: fixed;
@@ -77,82 +80,419 @@ textarea {
     pointer-events: none;
 }
 
-/* =========================
+/* =========================================================
    PAGE
-========================= */
+========================================================= */
 
 .page {
     position: relative;
     z-index: 2;
-    width: min(850px, calc(100% - 32px));
+
+    width: min(820px, calc(100% - 30px));
+
     margin: auto;
-    padding: 40px 0 90px;
+
+    padding: 35px 0 100px;
 }
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .back-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
 
-    color: rgba(255,255,255,.5);
-    font-size: .7rem;
+    color: rgba(255,255,255,.42);
+
+    font-size: .65rem;
     letter-spacing: 2px;
 
     background: none;
     border: none;
+
     cursor: pointer;
 
-    margin-bottom: 32px;
+    font-family: 'Orbitron', sans-serif;
+
+    margin-bottom: 30px;
 
     transition: .25s;
 }
 
 .back-btn:hover {
-    color: var(--accent);
+    color: rgba(255,255,255,.8);
 }
 
 .logo {
-    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-size: clamp(2.7rem, 8vw, 4.5rem);
+
     font-weight: 900;
+
     letter-spacing: 10px;
+
+    color: #fff;
+
     margin-bottom: 8px;
+
+    animation: logoPulse 6s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+
+    0%,100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.015);
+        filter: brightness(1.08);
+    }
+
 }
 
 .subtitle {
-    font-size: .7rem;
+    font-size: .65rem;
+
     letter-spacing: 3px;
-    opacity: .4;
-    margin-bottom: 40px;
+
+    color: rgba(255,255,255,.35);
+
+    margin-bottom: 35px;
 }
 
-/* =========================
+/* =========================================================
    PANELS
-========================= */
+========================================================= */
 
 .panel {
     background: rgba(255,255,255,.025);
-    border: 1px solid rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.075);
+
     border-radius: 18px;
-    padding: 26px;
+
+    padding: 24px;
+
     backdrop-filter: blur(14px);
-    margin-bottom: 16px;
-    transition: .3s;
+
+    margin-bottom: 15px;
+
+    transition:
+        border-color .25s,
+        background .25s;
 }
 
 .panel:hover {
-    border-color: rgba(255,255,255,.13);
+    border-color: rgba(255,255,255,.11);
 }
 
 .panel-title {
-    font-size: .7rem;
+    font-size: .65rem;
+
     letter-spacing: 3px;
-    color: var(--accent);
-    margin-bottom: 22px;
+
+    color: rgba(255,255,255,.55);
+
+    margin-bottom: 20px;
 }
 
-/* =========================
-   FIELDS
-========================= */
+/* =========================================================
+   PROFILE CARD
+========================================================= */
+
+.profile-card {
+    overflow: hidden;
+
+    padding: 0;
+
+    position: relative;
+}
+
+/* Banner */
+
+.profile-banner {
+    height: 190px;
+
+    width: 100%;
+
+    position: relative;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(var(--accent-rgb), .18),
+            rgba(255,255,255,.025) 45%,
+            rgba(0,0,0,.7)
+        );
+
+    background-size: cover;
+
+    background-position: center;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.profile-banner::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            transparent 45%,
+            rgba(0,0,0,.7)
+        );
+
+    pointer-events: none;
+}
+
+/* Profile info */
+
+.profile-info {
+    position: relative;
+
+    padding: 0 25px 25px;
+}
+
+/* Avatar */
+
+.avatar-wrapper {
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+
+    margin-top: -50px;
+
+    margin-bottom: 14px;
+
+    z-index: 3;
+}
+
+.avatar {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.055);
+
+    border: 2px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 0 0 5px rgba(0,0,0,.85),
+        0 0 30px rgba(var(--accent-rgb),.12);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    color: rgba(255,255,255,.7);
+
+    font-size: 1.8rem;
+
+    font-weight: 700;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+/* Upload overlay */
+
+.avatar-upload {
+    position: absolute;
+
+    right: -3px;
+    bottom: -3px;
+
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #111;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    color: rgba(255,255,255,.7);
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    z-index: 5;
+}
+
+.avatar-upload:hover {
+    color: var(--accent);
+
+    border-color:
+        rgba(var(--accent-rgb),.45);
+
+    box-shadow:
+        0 0 15px rgba(var(--accent-rgb),.12);
+}
+
+.avatar-upload input {
+    display: none;
+}
+
+/* Name */
+
+.profile-name-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.username {
+    font-size: 1.15rem;
+
+    letter-spacing: 2px;
+
+    color: rgba(255,255,255,.92);
+}
+
+.email {
+    margin-top: 7px;
+
+    font-size: .52rem;
+
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,.32);
+}
+
+/* =========================================================
+   ADMIN BADGE
+========================================================= */
+
+.badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    font-size: .47rem;
+
+    letter-spacing: 1.5px;
+
+    color: rgba(255,255,255,.45);
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid rgba(255,255,255,.09);
+}
+
+.admin-badge {
+    color: rgba(255,255,255,.78);
+
+    background:
+        rgba(var(--accent-rgb),.08);
+
+    border:
+        1px solid rgba(var(--accent-rgb),.25);
+
+    box-shadow:
+        inset 0 0 12px rgba(var(--accent-rgb),.035);
+}
+
+/* =========================================================
+   BIO
+========================================================= */
+
+.bio {
+    margin-top: 15px;
+
+    max-width: 650px;
+
+    font-size: .58rem;
+
+    line-height: 1.8;
+
+    letter-spacing: .5px;
+
+    color: rgba(255,255,255,.48);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.stat {
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.055);
+
+    border-radius: 11px;
+
+    padding: 16px;
+
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 1rem;
+
+    color: rgba(255,255,255,.8);
+
+    margin-bottom: 6px;
+}
+
+.stat-label {
+    font-size: .45rem;
+
+    letter-spacing: 1.5px;
+
+    color: rgba(255,255,255,.3);
+}
+
+/* =========================================================
+   FORM
+========================================================= */
 
 .field {
     margin-bottom: 16px;
@@ -160,28 +500,39 @@ textarea {
 
 .field label {
     display: block;
-    font-size: .6rem;
+
+    font-size: .55rem;
+
     letter-spacing: 2px;
-    opacity: .5;
+
+    color: rgba(255,255,255,.4);
+
     margin-bottom: 8px;
 }
 
 .field input,
-.field textarea {
+.field textarea,
+.field select {
+
     width: 100%;
 
-    background: rgba(255,255,255,.045);
+    background:
+        rgba(255,255,255,.035);
 
-    border: 1px solid rgba(255,255,255,.1);
+    border:
+        1px solid rgba(255,255,255,.09);
 
     border-radius: 10px;
 
-    padding: 13px 14px;
+    padding: 12px 13px;
 
-    color: white;
+    color: rgba(255,255,255,.85);
 
-    font-size: .7rem;
-    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: .65rem;
+
+    letter-spacing: .7px;
 
     outline: none;
 
@@ -189,65 +540,361 @@ textarea {
 }
 
 .field textarea {
-    min-height: 100px;
     resize: vertical;
-    line-height: 1.7;
+
+    min-height: 100px;
 }
 
 .field input:focus,
-.field textarea:focus {
-    border-color: var(--profile-accent);
-    box-shadow: 0 0 15px rgba(255,140,0,.08);
+.field textarea:focus,
+.field select:focus {
+
+    border-color:
+        rgba(var(--accent-rgb),.45);
+
+    box-shadow:
+        0 0 15px rgba(var(--accent-rgb),.07);
 }
 
 .field input::placeholder,
 .field textarea::placeholder {
-    color: rgba(255,255,255,.2);
+
+    color: rgba(255,255,255,.18);
 }
 
-/* =========================
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+.upload-box {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.06);
+}
+
+.upload-info {
+    min-width: 0;
+}
+
+.upload-title {
+    font-size: .58rem;
+
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,.7);
+}
+
+.upload-description {
+    font-size: .45rem;
+
+    color: rgba(255,255,255,.3);
+
+    margin-top: 5px;
+
+    line-height: 1.5;
+}
+
+.file-button {
+
+    flex-shrink: 0;
+
+    padding: 9px 13px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: .48rem;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.file-button:hover {
+
+    color: #fff;
+
+    border-color:
+        rgba(var(--accent-rgb),.35);
+
+    background:
+        rgba(var(--accent-rgb),.06);
+}
+
+.file-button input {
+    display: none;
+}
+
+/* =========================================================
    BUTTONS
-========================= */
+========================================================= */
 
 .btn {
-    width: 100%;
-    border-radius: 10px;
-    padding: 13px 18px;
 
-    font-size: .65rem;
+    width: 100%;
+
+    border-radius: 10px;
+
+    padding: 12px 18px;
+
+    font-family: 'Orbitron', sans-serif;
+
+    font-size: .58rem;
+
     letter-spacing: 2px;
 
     cursor: pointer;
+
     transition: .25s;
 
-    margin-top: 6px;
+    margin-top: 7px;
 }
 
 .primary-btn {
-    background: rgba(255,140,0,.08);
-    border: 1px solid rgba(255,140,0,.35);
-    color: var(--profile-accent);
+
+    background:
+        rgba(var(--accent-rgb),.07);
+
+    border:
+        1px solid rgba(var(--accent-rgb),.28);
+
+    color:
+        rgba(255,255,255,.78);
 }
 
 .primary-btn:hover {
-    background: rgba(255,140,0,.15);
-    box-shadow: 0 0 20px rgba(255,140,0,.15);
+
+    background:
+        rgba(var(--accent-rgb),.13);
+
+    border-color:
+        rgba(var(--accent-rgb),.45);
+
+    box-shadow:
+        0 0 20px rgba(var(--accent-rgb),.08);
 }
 
 .secondary-btn {
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.1);
-    color: rgba(255,255,255,.6);
+
+    background:
+        rgba(255,255,255,.03);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    color:
+        rgba(255,255,255,.55);
 }
 
 .secondary-btn:hover {
-    color: white;
-    border-color: rgba(255,255,255,.2);
+
+    color: #fff;
+
+    border-color:
+        rgba(255,255,255,.18);
 }
 
-/* =========================
-   VIEW SYSTEM
-========================= */
+.btn:disabled {
+
+    opacity: .4;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   COLOR PICKER
+========================================================= */
+
+.colors {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+.color-option {
+
+    width: 32px;
+    height: 32px;
+
+    border-radius: 50%;
+
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.color-option:hover {
+
+    transform: scale(1.1);
+}
+
+.color-option.active {
+
+    border-color: #fff;
+
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.08);
+}
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+.achievement {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.055);
+
+    border-radius: 11px;
+
+    margin-bottom: 8px;
+}
+
+.achievement-icon {
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(255,255,255,.035);
+
+    font-size: 1.1rem;
+}
+
+.achievement-name {
+
+    font-size: .6rem;
+
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,.75);
+}
+
+.achievement-description {
+
+    font-size: .47rem;
+
+    color: rgba(255,255,255,.3);
+
+    margin-top: 4px;
+
+    letter-spacing: .4px;
+}
+
+.empty {
+
+    text-align: center;
+
+    padding: 22px;
+
+    font-size: .55rem;
+
+    letter-spacing: 1px;
+
+    color: rgba(255,255,255,.25);
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    display: none;
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    font-size: .55rem;
+
+    line-height: 1.6;
+
+    letter-spacing: .6px;
+
+    margin-bottom: 16px;
+}
+
+.status.show {
+    display: block;
+}
+
+.status.error {
+
+    color: #ff6677;
+
+    background:
+        rgba(255,50,80,.06);
+
+    border:
+        1px solid rgba(255,50,80,.18);
+}
+
+.status.success {
+
+    color:
+        rgba(255,255,255,.7);
+
+    background:
+        rgba(var(--accent-rgb),.06);
+
+    border:
+        1px solid rgba(var(--accent-rgb),.18);
+}
+
+/* =========================================================
+   LOGIN / SIGNUP
+========================================================= */
 
 .view {
     display: none;
@@ -257,400 +904,69 @@ textarea {
     display: block;
 }
 
-/* =========================
-   STATUS
-========================= */
-
-.status {
-    display: none;
-
-    padding: 12px 14px;
-
-    border-radius: 10px;
-
-    font-size: .6rem;
-    line-height: 1.6;
-
-    letter-spacing: .7px;
-
-    margin-bottom: 18px;
-}
-
-.status.show {
-    display: block;
-}
-
-.status.error {
-    color: #ff6677;
-    background: rgba(255,50,80,.07);
-    border: 1px solid rgba(255,50,80,.2);
-}
-
-.status.success {
-    color: var(--profile-accent);
-    background: rgba(255,140,0,.07);
-    border: 1px solid rgba(255,140,0,.2);
-}
-
-/* =========================
-   SWITCH
-========================= */
-
 .switch-row {
-    text-align: center;
-    margin-top: 20px;
 
-    font-size: .6rem;
+    text-align: center;
+
+    margin-top: 18px;
+
+    font-size: .55rem;
+
     letter-spacing: 1px;
 
-    color: rgba(255,255,255,.4);
+    color: rgba(255,255,255,.32);
 }
 
 .link-btn {
+
     border: none;
+
     background: none;
 
-    color: var(--accent);
+    color: rgba(255,255,255,.7);
 
-    font-size: .6rem;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-/* =========================
-   PROFILE BANNER
-========================= */
-
-.profile-banner {
-    height: 190px;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,140,0,.12),
-            rgba(255,255,255,.02)
-        );
-
-    border: 1px solid rgba(255,255,255,.08);
-
-    background-size: cover;
-    background-position: center;
-
-    position: relative;
-
-    overflow: hidden;
-
-    margin-bottom: -42px;
-}
-
-.profile-banner::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent 30%,
-            rgba(0,0,0,.85)
-        );
-}
-
-/* =========================
-   PROFILE
-========================= */
-
-.profile-card {
-    position: relative;
-    z-index: 2;
-}
-
-.profile-head {
-    display: flex;
-    align-items: flex-end;
-    gap: 18px;
-
-    margin-bottom: 24px;
-}
-
-.avatar {
-    width: 86px;
-    height: 86px;
-
-    border-radius: 50%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #111;
-
-    border: 2px solid var(--profile-accent);
-
-    color: var(--profile-accent);
-
-    font-size: 1.5rem;
-    font-weight: 700;
-
-    box-shadow:
-        0 0 20px rgba(255,140,0,.15);
-
-    flex-shrink: 0;
-
-    background-size: cover;
-    background-position: center;
-}
-
-.profile-info {
-    padding-bottom: 5px;
-}
-
-.username {
-    font-size: 1.15rem;
-    letter-spacing: 2px;
-}
-
-.email {
-    margin-top: 6px;
+    font-family: 'Orbitron', sans-serif;
 
     font-size: .55rem;
+
     letter-spacing: 1px;
-
-    opacity: .35;
-}
-
-.badge {
-    display: inline-block;
-
-    margin-top: 8px;
-
-    padding: 4px 8px;
-
-    border-radius: 5px;
-
-    font-size: .5rem;
-    letter-spacing: 1.5px;
-
-    background: rgba(255,255,255,.05);
-    border: 1px solid rgba(255,255,255,.1);
-
-    color: rgba(255,255,255,.5);
-}
-
-.admin-badge {
-    color: var(--profile-accent);
-
-    background: rgba(255,140,0,.08);
-
-    border-color: rgba(255,140,0,.3);
-}
-
-.bio {
-    font-size: .6rem;
-
-    line-height: 1.8;
-
-    letter-spacing: .5px;
-
-    color: rgba(255,255,255,.5);
-
-    padding: 15px;
-
-    border-radius: 10px;
-
-    background: rgba(255,255,255,.02);
-
-    border: 1px solid rgba(255,255,255,.05);
-
-    margin-bottom: 18px;
-}
-
-/* =========================
-   STATS
-========================= */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 10px;
-
-    margin-bottom: 20px;
-}
-
-.stat {
-    background: rgba(255,255,255,.025);
-
-    border: 1px solid rgba(255,255,255,.06);
-
-    border-radius: 12px;
-
-    padding: 18px;
-
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 1.2rem;
-    color: var(--profile-accent);
-    margin-bottom: 7px;
-}
-
-.stat-label {
-    font-size: .5rem;
-    letter-spacing: 1.5px;
-    opacity: .4;
-}
-
-/* =========================
-   ACHIEVEMENTS
-========================= */
-
-.achievement {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-
-    padding: 14px;
-
-    background: rgba(255,255,255,.025);
-
-    border: 1px solid rgba(255,255,255,.06);
-
-    border-radius: 12px;
-
-    margin-bottom: 9px;
-}
-
-.achievement-icon {
-    width: 42px;
-    height: 42px;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(255,255,255,.04);
-
-    font-size: 1.2rem;
-}
-
-.achievement-name {
-    font-size: .65rem;
-    letter-spacing: 1px;
-}
-
-.achievement-description {
-    font-size: .5rem;
-    opacity: .35;
-    margin-top: 5px;
-    letter-spacing: .5px;
-}
-
-.empty {
-    text-align: center;
-
-    padding: 25px;
-
-    font-size: .6rem;
-    letter-spacing: 1px;
-
-    opacity: .3;
-}
-
-/* =========================
-   COLOR PICKER
-========================= */
-
-.color-options {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.color-option {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 50%;
-
-    border: 2px solid rgba(255,255,255,.15);
 
     cursor: pointer;
 
-    transition: .2s;
+    margin-left: 4px;
 }
 
-.color-option:hover {
-    transform: scale(1.12);
+.link-btn:hover {
+
+    color: var(--accent);
+
 }
 
-.color-option.selected {
-    border-color: white;
-    box-shadow: 0 0 15px currentColor;
-}
-
-/* =========================
+/* =========================================================
    ADMIN
-========================= */
+========================================================= */
 
 .admin-panel {
-    border-color: rgba(255,140,0,.2);
+
+    border-color:
+        rgba(var(--accent-rgb),.14);
 }
 
-.admin-warning {
-    font-size: .55rem;
-    opacity: .4;
-    line-height: 1.7;
-    margin-bottom: 18px;
-}
-
-/* =========================
-   LOADING
-========================= */
-
-#loading {
-    position: fixed;
-    inset: 0;
-
-    z-index: 100;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #000;
-
-    font-size: .7rem;
-    letter-spacing: 3px;
-
-    color: var(--accent);
-
-    transition: opacity .4s;
-}
-
-#loading.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* =========================
+/* =========================================================
    TOAST
-========================= */
+========================================================= */
 
 .toast {
+
     position: fixed;
 
-    bottom: 30px;
+    bottom: 28px;
+
     left: 50%;
 
-    transform: translateX(-50%) translateY(20px);
+    transform:
+        translateX(-50%)
+        translateY(20px);
 
     opacity: 0;
 
@@ -662,8 +978,9 @@ textarea {
 
     border-radius: 10px;
 
-    font-size: .6rem;
-    letter-spacing: 1.5px;
+    font-size: .55rem;
+
+    letter-spacing: 1.3px;
 
     backdrop-filter: blur(12px);
 
@@ -671,52 +988,93 @@ textarea {
 }
 
 .toast.show {
+
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
+/* =========================================================
+   VERSION
+========================================================= */
+
 .version {
+
     position: fixed;
 
-    bottom: 14px;
+    bottom: 13px;
+
     left: 50%;
 
     transform: translateX(-50%);
 
-    font-size: .55rem;
+    font-size: .5rem;
+
     letter-spacing: 2px;
 
-    opacity: .25;
+    color: rgba(255,255,255,.2);
 
     z-index: 3;
 }
 
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media(max-width:550px) {
 
     .page {
-        width: calc(100% - 24px);
+
+        width: calc(100% - 22px);
+
         padding-top: 25px;
     }
 
+    .profile-banner {
+
+        height: 145px;
+    }
+
+    .profile-info {
+
+        padding: 0 18px 20px;
+    }
+
     .panel {
+
         padding: 20px;
     }
 
-    .profile-head {
-        align-items: flex-end;
+    .upload-box {
+
+        align-items: flex-start;
+
+        flex-direction: column;
     }
 
-    .profile-banner {
-        height: 150px;
+    .file-button {
+
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .avatar-wrapper {
+
+        width: 85px;
+        height: 85px;
+
+        margin-top: -42px;
     }
 
 }
+
 </style>
 </head>
 
 <body>
-
-<div id="loading">LOADING PHANTOM...</div>
 
 <div id="stars"></div>
 <div id="bottom-glow"></div>
@@ -735,562 +1093,637 @@ textarea {
 
 <!-- =====================================================
      LOGIN
-===================================================== -->
+====================================================== -->
 
 <div id="loginView" class="view">
 
-<div class="panel">
+    <div class="panel">
 
-<div class="panel-title">
-    <i class="fa-solid fa-right-to-bracket"></i>
-    LOGIN
-</div>
+        <div class="panel-title">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            LOGIN
+        </div>
 
-<div id="loginStatus" class="status"></div>
+        <div id="loginStatus" class="status"></div>
 
-<div class="field">
-<label>EMAIL</label>
-<input
-    type="email"
-    id="loginEmail"
-    placeholder="YOUR EMAIL"
-    autocomplete="email"
->
-</div>
+        <div class="field">
+            <label>EMAIL</label>
 
-<div class="field">
-<label>PASSWORD</label>
-<input
-    type="password"
-    id="loginPassword"
-    placeholder="YOUR PASSWORD"
-    autocomplete="current-password"
->
-</div>
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="YOUR EMAIL"
+                autocomplete="email"
+            >
+        </div>
 
-<button
-    class="btn primary-btn"
-    onclick="login()"
-    id="loginBtn"
->
-LOGIN
-</button>
+        <div class="field">
+            <label>PASSWORD</label>
 
-<div class="switch-row">
-DON'T HAVE AN ACCOUNT?
-<button class="link-btn" onclick="showView('signup')">
-CREATE ONE
-</button>
-</div>
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="YOUR PASSWORD"
+                autocomplete="current-password"
+            >
+        </div>
 
-</div>
+        <button
+            class="btn primary-btn"
+            id="loginBtn"
+            onclick="login()"
+        >
+            LOGIN
+        </button>
 
-<div class="panel">
+        <div class="switch-row">
 
-<div class="panel-title">
-    <i class="fa-solid fa-key"></i>
-    PASSWORD
-</div>
+            DON'T HAVE AN ACCOUNT?
 
-<button
-    class="btn secondary-btn"
-    onclick="resetPassword()"
->
-RESET PASSWORD
-</button>
+            <button
+                class="link-btn"
+                onclick="showView('signup')"
+            >
+                CREATE ONE
+            </button>
 
-</div>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-title">
+            <i class="fa-solid fa-key"></i>
+            PASSWORD
+        </div>
+
+        <button
+            class="btn secondary-btn"
+            onclick="resetPassword()"
+        >
+            RESET PASSWORD
+        </button>
+
+    </div>
 
 </div>
 
 
 <!-- =====================================================
      SIGNUP
-===================================================== -->
+====================================================== -->
 
 <div id="signupView" class="view">
 
-<div class="panel">
+    <div class="panel">
 
-<div class="panel-title">
-    <i class="fa-solid fa-user-plus"></i>
-    CREATE ACCOUNT
-</div>
+        <div class="panel-title">
+            <i class="fa-solid fa-user-plus"></i>
+            CREATE ACCOUNT
+        </div>
 
-<div id="signupStatus" class="status"></div>
+        <div id="signupStatus" class="status"></div>
 
-<div class="field">
-<label>USERNAME</label>
-<input
-    type="text"
-    id="signupUsername"
-    placeholder="CHOOSE A USERNAME"
-    maxlength="24"
-    autocomplete="username"
->
-</div>
+        <div class="field">
 
-<div class="field">
-<label>EMAIL</label>
-<input
-    type="email"
-    id="signupEmail"
-    placeholder="YOUR EMAIL"
-    autocomplete="email"
->
-</div>
+            <label>USERNAME</label>
 
-<div class="field">
-<label>PASSWORD</label>
-<input
-    type="password"
-    id="signupPassword"
-    placeholder="AT LEAST 6 CHARACTERS"
-    autocomplete="new-password"
->
-</div>
+            <input
+                type="text"
+                id="signupUsername"
+                placeholder="CHOOSE A USERNAME"
+                maxlength="24"
+                autocomplete="username"
+            >
 
-<div class="field">
-<label>CONFIRM PASSWORD</label>
-<input
-    type="password"
-    id="signupConfirm"
-    placeholder="RE-ENTER PASSWORD"
-    autocomplete="new-password"
->
-</div>
+        </div>
 
-<button
-    class="btn primary-btn"
-    onclick="signup()"
-    id="signupBtn"
->
-CREATE ACCOUNT
-</button>
+        <div class="field">
 
-<div class="switch-row">
-ALREADY HAVE AN ACCOUNT?
-<button class="link-btn" onclick="showView('login')">
-LOGIN
-</button>
-</div>
+            <label>EMAIL</label>
 
-</div>
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="YOUR EMAIL"
+                autocomplete="email"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>PASSWORD</label>
+
+            <input
+                type="password"
+                id="signupPassword"
+                placeholder="AT LEAST 6 CHARACTERS"
+                autocomplete="new-password"
+            >
+
+        </div>
+
+        <div class="field">
+
+            <label>CONFIRM PASSWORD</label>
+
+            <input
+                type="password"
+                id="signupConfirm"
+                placeholder="RE-ENTER PASSWORD"
+                autocomplete="new-password"
+            >
+
+        </div>
+
+        <button
+            class="btn primary-btn"
+            id="signupBtn"
+            onclick="signup()"
+        >
+            CREATE ACCOUNT
+        </button>
+
+        <div class="switch-row">
+
+            ALREADY HAVE AN ACCOUNT?
+
+            <button
+                class="link-btn"
+                onclick="showView('login')"
+            >
+                LOGIN
+            </button>
+
+        </div>
+
+    </div>
 
 </div>
 
 
 <!-- =====================================================
      VERIFY
-===================================================== -->
+====================================================== -->
 
 <div id="verifyView" class="view">
 
-<div class="panel" style="text-align:center;">
+    <div class="panel" style="text-align:center;">
 
-<div style="
-width:70px;
-height:70px;
-border-radius:50%;
-margin:0 auto 20px;
-display:flex;
-align-items:center;
-justify-content:center;
-border:1px solid var(--accent);
-color:var(--accent);
-font-size:1.5rem;
-box-shadow:0 0 25px rgba(255,140,0,.12);
-">
+        <div style="
+            width:70px;
+            height:70px;
+            border-radius:50%;
+            margin:0 auto 20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border:1px solid rgba(255,255,255,.15);
+            color:rgba(255,255,255,.7);
+            font-size:1.5rem;
+        ">
 
-<i class="fa-solid fa-envelope"></i>
+            <i class="fa-solid fa-envelope"></i>
 
-</div>
+        </div>
 
-<div class="panel-title">
-CHECK YOUR EMAIL
-</div>
+        <div class="panel-title">
+            CHECK YOUR EMAIL
+        </div>
 
-<div style="
-font-size:.6rem;
-line-height:1.8;
-opacity:.45;
-letter-spacing:.5px;
-">
+        <div style="
+            font-size:.58rem;
+            line-height:1.8;
+            color:rgba(255,255,255,.4);
+        ">
 
-We've sent a confirmation link to:
+            We've sent a confirmation link to:
 
-<br><br>
+            <br><br>
 
-<strong
-id="verifyEmail"
-style="color:var(--accent);opacity:1;"
-></strong>
+            <strong
+                id="verifyEmail"
+                style="color:rgba(255,255,255,.75);"
+            ></strong>
 
-<br><br>
+            <br><br>
 
-Open the email and confirm your address.
-Then come back and log in.
+            Confirm your email, then come back and log in.
 
-</div>
+        </div>
 
-<button
-class="btn secondary-btn"
-onclick="showView('login')"
-style="margin-top:25px;"
->
-BACK TO LOGIN
-</button>
+        <button
+            class="btn secondary-btn"
+            onclick="showView('login')"
+        >
+            BACK TO LOGIN
+        </button>
 
-</div>
+    </div>
 
 </div>
 
 
 <!-- =====================================================
      PROFILE
-===================================================== -->
+====================================================== -->
 
 <div id="profileView" class="view">
 
-<div class="profile-banner" id="profileBanner"></div>
+    <!-- PROFILE -->
 
-<div class="panel profile-card">
+    <div class="panel profile-card">
 
-<div class="profile-head">
+        <div
+            class="profile-banner"
+            id="profileBanner"
+        ></div>
 
-<div class="avatar" id="avatar">
-?
-</div>
+        <div class="profile-info">
 
-<div class="profile-info">
+            <div class="avatar-wrapper">
 
-<div
-class="username"
-id="profileUsername"
->
-USER
-</div>
+                <div
+                    class="avatar"
+                    id="avatar"
+                >
+                    ?
+                </div>
 
-<div
-class="email"
-id="profileEmail"
->
-email
-</div>
+                <label class="avatar-upload">
 
-<div
-class="badge"
-id="profileBadge"
->
-MEMBER
-</div>
+                    <i class="fa-solid fa-camera"></i>
 
-</div>
+                    <input
+                        type="file"
+                        id="avatarInput"
+                        accept="image/png,image/jpeg,image/webp,image/gif"
+                        onchange="uploadAvatar(event)"
+                    >
 
-</div>
+                </label>
 
-<div
-class="bio"
-id="profileBio"
->
-NO BIO SET.
-</div>
+            </div>
 
-<div class="stats">
+            <div class="profile-name-row">
 
-<div class="stat">
+                <div
+                    class="username"
+                    id="profileUsername"
+                >
+                    USER
+                </div>
 
-<div
-class="stat-number"
-id="achievementCount"
->
-0
-</div>
+                <div
+                    class="badge"
+                    id="profileBadge"
+                >
+                    MEMBER
+                </div>
 
-<div class="stat-label">
-ACHIEVEMENTS
-</div>
+            </div>
 
-</div>
+            <div
+                class="email"
+                id="profileEmail"
+            >
+                email
+            </div>
 
-<div class="stat">
+            <div
+                class="bio"
+                id="profileBio"
+            ></div>
 
-<div
-class="stat-number"
-id="memberSince"
->
---
-</div>
+            <div class="stats">
 
-<div class="stat-label">
-MEMBER SINCE
-</div>
+                <div class="stat">
 
-</div>
+                    <div
+                        class="stat-number"
+                        id="achievementCount"
+                    >
+                        0
+                    </div>
 
-</div>
+                    <div class="stat-label">
+                        ACHIEVEMENTS
+                    </div>
 
-<button
-class="btn primary-btn"
-onclick="showView('customize')"
->
-<i class="fa-solid fa-sliders"></i>
-CUSTOMIZE PROFILE
-</button>
+                </div>
 
-<button
-class="btn secondary-btn"
-onclick="logout()"
->
-<i class="fa-solid fa-right-from-bracket"></i>
-LOG OUT
-</button>
+                <div class="stat">
 
-</div>
+                    <div
+                        class="stat-number"
+                        id="memberSince"
+                    >
+                        --
+                    </div>
 
+                    <div class="stat-label">
+                        MEMBER SINCE
+                    </div>
 
-<!-- ACHIEVEMENTS -->
+                </div>
 
-<div class="panel">
+            </div>
 
-<div class="panel-title">
-<i class="fa-solid fa-trophy"></i>
-ACHIEVEMENTS
-</div>
+        </div>
 
-<div id="achievementsList">
-
-<div class="empty">
-NO ACHIEVEMENTS YET
-</div>
-
-</div>
-
-</div>
+    </div>
 
 
-<!-- ADMIN -->
+    <!-- CUSTOMIZATION -->
 
-<div
-class="panel admin-panel"
-id="adminPanel"
-style="display:none;"
->
+    <div class="panel">
 
-<div class="panel-title">
-<i class="fa-solid fa-crown"></i>
-ADMIN
-</div>
+        <div class="panel-title">
+            <i class="fa-solid fa-sliders"></i>
+            CUSTOMIZE PROFILE
+        </div>
 
-<div class="admin-warning">
+        <div id="profileStatus" class="status"></div>
 
-You have administrator privileges on PHANTOM.
-This section is only visible to authorized accounts.
+        <div class="field">
 
-</div>
+            <label>USERNAME</label>
 
-<button
-class="btn primary-btn"
-onclick="openAdmin()"
->
-OPEN ADMIN PANEL
-</button>
+            <input
+                type="text"
+                id="editUsername"
+                maxlength="24"
+            >
 
-</div>
+        </div>
+
+        <div class="field">
+
+            <label>BIO</label>
+
+            <textarea
+                id="editBio"
+                maxlength="160"
+                placeholder="TELL PEOPLE A LITTLE ABOUT YOURSELF..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- AVATAR -->
+
+        <div class="upload-box">
+
+            <div class="upload-info">
+
+                <div class="upload-title">
+                    PROFILE PICTURE
+                </div>
+
+                <div class="upload-description">
+                    PNG, JPG, WEBP OR GIF — MAX 5MB
+                </div>
+
+            </div>
+
+            <label class="file-button">
+
+                <i class="fa-solid fa-upload"></i>
+                UPLOAD
+
+                <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/gif"
+                    onchange="uploadAvatar(event)"
+                >
+
+            </label>
+
+        </div>
+
+
+        <div style="height:10px;"></div>
+
+
+        <!-- BANNER -->
+
+        <div class="upload-box">
+
+            <div class="upload-info">
+
+                <div class="upload-title">
+                    PROFILE BANNER
+                </div>
+
+                <div class="upload-description">
+                    PNG, JPG OR WEBP — MAX 8MB
+                </div>
+
+            </div>
+
+            <label class="file-button">
+
+                <i class="fa-solid fa-image"></i>
+                UPLOAD
+
+                <input
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    onchange="uploadBanner(event)"
+                >
+
+            </label>
+
+        </div>
+
+
+        <div style="height:20px;"></div>
+
+
+        <!-- COLORS -->
+
+        <div class="field">
+
+            <label>ACCENT COLOR</label>
+
+            <div class="colors">
+
+                <div
+                    class="color-option"
+                    data-color="#ff8c00"
+                    style="background:#ff8c00;"
+                    onclick="chooseColor('#ff8c00',this)"
+                ></div>
+
+                <div
+                    class="color-option"
+                    data-color="#00aaff"
+                    style="background:#00aaff;"
+                    onclick="chooseColor('#00aaff',this)"
+                ></div>
+
+                <div
+                    class="color-option"
+                    data-color="#8b5cf6"
+                    style="background:#8b5cf6;"
+                    onclick="chooseColor('#8b5cf6',this)"
+                ></div>
+
+                <div
+                    class="color-option"
+                    data-color="#ff3366"
+                    style="background:#ff3366;"
+                    onclick="chooseColor('#ff3366',this)"
+                ></div>
+
+                <div
+                    class="color-option"
+                    data-color="#00cc88"
+                    style="background:#00cc88;"
+                    onclick="chooseColor('#00cc88',this)"
+                ></div>
+
+                <div
+                    class="color-option"
+                    data-color="#ffffff"
+                    style="background:#ffffff;"
+                    onclick="chooseColor('#ffffff',this)"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="btn primary-btn"
+            onclick="saveProfile()"
+            id="saveBtn"
+        >
+            SAVE CHANGES
+        </button>
+
+    </div>
+
+
+    <!-- ACHIEVEMENTS -->
+
+    <div class="panel">
+
+        <div class="panel-title">
+
+            <i class="fa-solid fa-trophy"></i>
+
+            ACHIEVEMENTS
+
+        </div>
+
+        <div id="achievementsList">
+
+            <div class="empty">
+                NO ACHIEVEMENTS YET
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN -->
+
+    <div
+        class="panel admin-panel"
+        id="adminPanel"
+        style="display:none;"
+    >
+
+        <div class="panel-title">
+
+            <i class="fa-solid fa-crown"></i>
+
+            ADMIN
+
+        </div>
+
+        <div style="
+            font-size:.52rem;
+            line-height:1.7;
+            color:rgba(255,255,255,.35);
+            margin-bottom:15px;
+        ">
+
+            You have administrator privileges on PHANTOM.
+
+        </div>
+
+        <button
+            class="btn primary-btn"
+            onclick="openAdmin()"
+        >
+            OPEN ADMIN PANEL
+        </button>
+
+    </div>
+
+
+    <!-- LOGOUT -->
+
+    <div class="panel">
+
+        <button
+            class="btn secondary-btn"
+            onclick="logout()"
+        >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            LOG OUT
+        </button>
+
+    </div>
 
 </div>
 
 
 <!-- =====================================================
-     CUSTOMIZE
-===================================================== -->
-
-<div id="customizeView" class="view">
-
-<div class="panel">
-
-<div class="panel-title">
-<i class="fa-solid fa-wand-magic-sparkles"></i>
-CUSTOMIZE PROFILE
-</div>
-
-<div id="customizeStatus" class="status"></div>
-
-<div class="field">
-
-<label>USERNAME</label>
-
-<input
-type="text"
-id="editUsername"
-maxlength="24"
-placeholder="YOUR USERNAME"
->
-
-</div>
-
-<div class="field">
-
-<label>BIO</label>
-
-<textarea
-id="editBio"
-maxlength="200"
-placeholder="TELL PEOPLE A LITTLE ABOUT YOURSELF..."
-></textarea>
-
-</div>
-
-<div class="field">
-
-<label>PROFILE PICTURE URL</label>
-
-<input
-type="url"
-id="editAvatar"
-placeholder="https://..."
->
-
-</div>
-
-<div class="field">
-
-<label>PROFILE BANNER URL</label>
-
-<input
-type="url"
-id="editBanner"
-placeholder="https://..."
->
-
-</div>
-
-<div class="field">
-
-<label>PROFILE ACCENT</label>
-
-<div class="color-options">
-
-<button
-class="color-option"
-style="background:#ff8c00;color:#ff8c00"
-data-color="#ff8c00"
-onclick="selectColor(this)"
-></button>
-
-<button
-class="color-option"
-style="background:#00aaff;color:#00aaff"
-data-color="#00aaff"
-onclick="selectColor(this)"
-></button>
-
-<button
-class="color-option"
-style="background:#9b5cff;color:#9b5cff"
-data-color="#9b5cff"
-onclick="selectColor(this)"
-></button>
-
-<button
-class="color-option"
-style="background:#ff3b5c;color:#ff3b5c"
-data-color="#ff3b5c"
-onclick="selectColor(this)"
-></button>
-
-<button
-class="color-option"
-style="background:#00d084;color:#00d084"
-data-color="#00d084"
-onclick="selectColor(this)"
-></button>
-
-<button
-class="color-option"
-style="background:#ffffff;color:#ffffff"
-data-color="#ffffff"
-onclick="selectColor(this)"
-></button>
-
-</div>
-
-</div>
-
-<button
-class="btn primary-btn"
-onclick="saveProfile()"
-id="saveProfileBtn"
->
-<i class="fa-solid fa-floppy-disk"></i>
-SAVE PROFILE
-</button>
-
-<button
-class="btn secondary-btn"
-onclick="showView('profile')"
->
-CANCEL
-</button>
-
-</div>
-
-
-<div class="panel">
-
-<div class="panel-title">
-<i class="fa-solid fa-lock"></i>
-ACCOUNT
-</div>
-
-<button
-class="btn secondary-btn"
-onclick="resetPassword()"
->
-CHANGE PASSWORD
-</button>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     ADMIN
-===================================================== -->
+     ADMIN VIEW
+====================================================== -->
 
 <div id="adminView" class="view">
 
-<div class="panel">
+    <div class="panel">
 
-<div class="panel-title">
-<i class="fa-solid fa-crown"></i>
-PHANTOM ADMIN
-</div>
+        <div class="panel-title">
 
-<div class="admin-warning">
+            <i class="fa-solid fa-crown"></i>
 
-ADMIN PANEL
+            PHANTOM ADMIN
 
-<br><br>
+        </div>
 
-This area is restricted to PHANTOM administrators.
+        <div style="
+            font-size:.55rem;
+            line-height:1.8;
+            color:rgba(255,255,255,.4);
+        ">
 
-<br><br>
+            ADMIN PANEL
 
-Administrator status is stored securely
-in the Supabase database.
+            <br><br>
 
-</div>
+            This area is restricted to authorized PHANTOM
+            administrators.
 
-<button
-class="btn secondary-btn"
-onclick="showView('profile')"
->
-BACK TO PROFILE
-</button>
+        </div>
 
-</div>
+        <button
+            class="btn secondary-btn"
+            onclick="showView('profile')"
+        >
+            BACK TO PROFILE
+        </button>
+
+    </div>
 
 </div>
 
@@ -1300,7 +1733,7 @@ BACK TO PROFILE
 <div class="toast" id="toast"></div>
 
 <div class="version" id="version">
-PHANTOM
+    PHANTOM
 </div>
 
 
@@ -1311,27 +1744,29 @@ PHANTOM
 ========================================================= */
 
 const SUPABASE_URL =
-"https://xxzrbpglmgzoisjnnezy.supabase.co";
+    "https://xxzrbpglmgzoisjnnezy.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
 
 const {
-createClient
+    createClient
 } = window.supabase;
 
 const db = createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
 );
 
 
 /* =========================================================
-   CURRENT USER
+   GLOBAL
 ========================================================= */
 
 let currentUser = null;
-let selectedColor = "#ff8c00";
+let currentProfile = null;
+let selectedColor =
+    localStorage.getItem("phantom_accent") || "#ff8c00";
 
 
 /* =========================================================
@@ -1339,30 +1774,29 @@ let selectedColor = "#ff8c00";
 ========================================================= */
 
 const stars =
-document.getElementById("stars");
+    document.getElementById("stars");
 
-for(let i = 0; i < 90; i++){
+for (let i = 0; i < 90; i++) {
 
-const star =
-document.createElement("div");
+    const star =
+        document.createElement("div");
 
-star.className = "star";
+    star.className = "star";
 
-const size =
-Math.random() * 2 + 1;
+    const size =
+        Math.random() * 2 + 1;
 
-star.style.cssText = `
-width:${size}px;
-height:${size}px;
-left:${Math.random()*100}%;
-top:${Math.random()*120}%;
-opacity:${Math.random()*.6+.2};
-animation-duration:${Math.random()*80+80}s;
-animation-delay:-${Math.random()*100}s;
-`;
+    star.style.cssText = `
+        width:${size}px;
+        height:${size}px;
+        left:${Math.random() * 100}%;
+        top:${Math.random() * 120}%;
+        opacity:${Math.random() * .6 + .2};
+        animation-duration:${Math.random() * 80 + 80}s;
+        animation-delay:-${Math.random() * 100}s;
+    `;
 
-stars.appendChild(star);
-
+    stars.appendChild(star);
 }
 
 
@@ -1370,60 +1804,96 @@ stars.appendChild(star);
    COLOR
 ========================================================= */
 
-function hexToRgb(hex){
+function hexToRgb(hex) {
 
-hex = hex.replace("#","");
+    hex = hex.replace("#","");
 
-return {
+    return {
+        r: parseInt(hex.substring(0,2),16),
+        g: parseInt(hex.substring(2,4),16),
+        b: parseInt(hex.substring(4,6),16)
+    };
+}
 
-r:parseInt(hex.substring(0,2),16),
 
-g:parseInt(hex.substring(2,4),16),
+function rgba(hex, alpha) {
 
-b:parseInt(hex.substring(4,6),16)
+    const c = hexToRgb(hex);
 
-};
+    return `
+        rgba(
+            ${c.r},
+            ${c.g},
+            ${c.b},
+            ${alpha}
+        )
+    `;
+}
+
+
+function applyTheme(color) {
+
+    selectedColor = color;
+
+    const rgb = hexToRgb(color);
+
+    document.documentElement
+        .style
+        .setProperty("--accent", color);
+
+    document.documentElement
+        .style
+        .setProperty(
+            "--accent-rgb",
+            `${rgb.r},${rgb.g},${rgb.b}`
+        );
+
+    document.getElementById("logo")
+        .style.textShadow = `
+            0 0 6px rgba(255,255,255,.15),
+            0 0 15px ${rgba(color,.4)},
+            0 0 30px ${rgba(color,.25)},
+            0 0 60px ${rgba(color,.15)}
+        `;
+
+    document.getElementById("bottom-glow")
+        .style.background = `
+            radial-gradient(
+                ellipse at center,
+                ${rgba(color,.12)} 0%,
+                ${rgba(color,.04)} 35%,
+                transparent 70%
+            )
+        `;
+
+    document
+        .querySelectorAll(".color-option")
+        .forEach(option => {
+
+            option.classList.toggle(
+                "active",
+                option.dataset.color
+                    .toLowerCase() ===
+                color.toLowerCase()
+            );
+
+        });
 
 }
 
 
-function rgba(hex,alpha){
+/* =========================================================
+   COLOR CHOOSER
+========================================================= */
 
-const c =
-hexToRgb(hex);
+function chooseColor(color) {
 
-return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+    applyTheme(color);
 
-}
-
-
-function applyTheme(color){
-
-document.documentElement
-.style
-.setProperty("--profile-accent",color);
-
-document.documentElement
-.style
-.setProperty("--accent",color);
-
-document.getElementById("logo")
-.style.textShadow = `
-0 0 6px rgba(255,255,255,.15),
-0 0 15px ${rgba(color,.4)},
-0 0 30px ${rgba(color,.25)},
-0 0 60px ${rgba(color,.15)}
-`;
-
-document.getElementById("bottom-glow")
-.style.background = `
-radial-gradient(
-ellipse at center,
-${rgba(color,.12)} 0%,
-${rgba(color,.04)} 35%,
-transparent 70%
-)
-`;
+    localStorage.setItem(
+        "phantom_accent",
+        color
+    );
 
 }
 
@@ -1432,30 +1902,29 @@ transparent 70%
    TOAST
 ========================================================= */
 
-function toast(message){
+function toast(message) {
 
-const el =
-document.getElementById("toast");
+    const el =
+        document.getElementById("toast");
 
-el.textContent = message;
+    el.textContent = message;
 
-el.style.background =
-rgba(selectedColor,.12);
+    el.style.background =
+        rgba(selectedColor,.1);
 
-el.style.border =
-`1px solid ${rgba(selectedColor,.35)}`;
+    el.style.border =
+        `1px solid ${rgba(selectedColor,.25)}`;
 
-el.style.color =
-selectedColor;
+    el.style.color =
+        "rgba(255,255,255,.75)";
 
-el.classList.add("show");
+    el.classList.add("show");
 
-setTimeout(()=>{
+    setTimeout(() => {
 
-el.classList.remove("show");
+        el.classList.remove("show");
 
-},2500);
-
+    }, 2500);
 }
 
 
@@ -1463,36 +1932,35 @@ el.classList.remove("show");
    STATUS
 ========================================================= */
 
-function status(element,message,type){
+function status(element, message, type) {
 
-element.textContent =
-message;
+    element.textContent = message;
 
-element.className =
-"status show " + type;
+    element.className =
+        "status show " + type;
 
 }
 
 
 /* =========================================================
-   VIEWS
+   VIEW
 ========================================================= */
 
-function showView(view){
+function showView(view) {
 
-document
-.querySelectorAll(".view")
-.forEach(v =>
-v.classList.remove("active")
-);
+    document
+        .querySelectorAll(".view")
+        .forEach(v =>
+            v.classList.remove("active")
+        );
 
-const target =
-document.getElementById(
-view + "View"
-);
+    const target =
+        document.getElementById(
+            view + "View"
+        );
 
-if(target)
-target.classList.add("active");
+    if (target)
+        target.classList.add("active");
 
 }
 
@@ -1501,202 +1969,203 @@ target.classList.add("active");
    SIGNUP
 ========================================================= */
 
-async function signup(){
+async function signup() {
 
-const username =
-document.getElementById("signupUsername")
-.value.trim();
+    const username =
+        document
+            .getElementById("signupUsername")
+            .value
+            .trim();
 
-const email =
-document.getElementById("signupEmail")
-.value.trim();
+    const email =
+        document
+            .getElementById("signupEmail")
+            .value
+            .trim();
 
-const password =
-document.getElementById("signupPassword")
-.value;
+    const password =
+        document
+            .getElementById("signupPassword")
+            .value;
 
-const confirm =
-document.getElementById("signupConfirm")
-.value;
+    const confirm =
+        document
+            .getElementById("signupConfirm")
+            .value;
 
-const statusEl =
-document.getElementById("signupStatus");
+    const statusEl =
+        document.getElementById(
+            "signupStatus"
+        );
 
-const button =
-document.getElementById("signupBtn");
+    const button =
+        document.getElementById(
+            "signupBtn"
+        );
 
 
-if(!username){
+    if (!username) {
 
-status(
-statusEl,
-"CHOOSE A USERNAME.",
-"error"
-);
+        status(
+            statusEl,
+            "CHOOSE A USERNAME.",
+            "error"
+        );
 
-return;
+        return;
+    }
 
-}
 
+    if (username.length < 3) {
 
-if(username.length < 3){
+        status(
+            statusEl,
+            "USERNAME MUST BE AT LEAST 3 CHARACTERS.",
+            "error"
+        );
 
-status(
-statusEl,
-"USERNAME MUST BE AT LEAST 3 CHARACTERS.",
-"error"
-);
+        return;
+    }
 
-return;
 
-}
+    if (!email) {
 
+        status(
+            statusEl,
+            "ENTER YOUR EMAIL.",
+            "error"
+        );
 
-if(!email){
+        return;
+    }
 
-status(
-statusEl,
-"ENTER YOUR EMAIL.",
-"error"
-);
 
-return;
+    if (password.length < 6) {
 
-}
+        status(
+            statusEl,
+            "PASSWORD MUST BE AT LEAST 6 CHARACTERS.",
+            "error"
+        );
 
+        return;
+    }
 
-if(password.length < 6){
 
-status(
-statusEl,
-"PASSWORD MUST BE AT LEAST 6 CHARACTERS.",
-"error"
-);
+    if (password !== confirm) {
 
-return;
+        status(
+            statusEl,
+            "PASSWORDS DO NOT MATCH.",
+            "error"
+        );
 
-}
+        return;
+    }
 
 
-if(password !== confirm){
+    button.disabled = true;
 
-status(
-statusEl,
-"PASSWORDS DO NOT MATCH.",
-"error"
-);
+    button.textContent =
+        "CREATING ACCOUNT...";
 
-return;
 
-}
+    const {
+        data: existing,
+        error: usernameError
+    } = await db
+        .from("profiles")
+        .select("id")
+        .eq("username", username)
+        .maybeSingle();
 
 
-button.disabled = true;
+    if (usernameError) {
 
-button.textContent =
-"CREATING ACCOUNT...";
+        console.error(usernameError);
 
+        status(
+            statusEl,
+            "COULD NOT CHECK USERNAME.",
+            "error"
+        );
 
-const {
-data:existing,
-error:usernameError
-} =
-await db
-.from("profiles")
-.select("id")
-.eq("username",username)
-.maybeSingle();
+        button.disabled = false;
 
+        button.textContent =
+            "CREATE ACCOUNT";
 
-if(usernameError){
+        return;
+    }
 
-console.error(usernameError);
 
-status(
-statusEl,
-"COULD NOT CHECK USERNAME.",
-"error"
-);
+    if (existing) {
 
-button.disabled = false;
+        status(
+            statusEl,
+            "THAT USERNAME IS ALREADY TAKEN.",
+            "error"
+        );
 
-button.textContent =
-"CREATE ACCOUNT";
+        button.disabled = false;
 
-return;
+        button.textContent =
+            "CREATE ACCOUNT";
 
-}
+        return;
+    }
 
 
-if(existing){
+    const {
+        error
+    } = await db.auth.signUp({
 
-status(
-statusEl,
-"THAT USERNAME IS ALREADY TAKEN.",
-"error"
-);
+        email,
 
-button.disabled = false;
+        password,
 
-button.textContent =
-"CREATE ACCOUNT";
+        options: {
 
-return;
+            data: {
+                username
+            },
 
-}
+            emailRedirectTo:
+                window.location.origin +
+                window.location.pathname
 
+        }
 
-const {
-data,
-error
-} =
-await db.auth.signUp({
+    });
 
-email:email,
 
-password:password,
+    if (error) {
 
-options:{
-data:{
-username:username
-},
+        status(
+            statusEl,
+            error.message.toUpperCase(),
+            "error"
+        );
 
-emailRedirectTo:
-window.location.origin +
-window.location.pathname
+        button.disabled = false;
 
-}
+        button.textContent =
+            "CREATE ACCOUNT";
 
-});
+        return;
+    }
 
 
-if(error){
+    document.getElementById(
+        "verifyEmail"
+    ).textContent = email;
 
-status(
-statusEl,
-error.message.toUpperCase(),
-"error"
-);
+    showView("verify");
 
-button.disabled = false;
+    button.disabled = false;
 
-button.textContent =
-"CREATE ACCOUNT";
-
-return;
-
-}
-
-
-document.getElementById("verifyEmail")
-.textContent = email;
-
-showView("verify");
-
-button.disabled = false;
-
-button.textContent =
-"CREATE ACCOUNT";
+    button.textContent =
+        "CREATE ACCOUNT";
 
 }
 
@@ -1705,78 +2174,83 @@ button.textContent =
    LOGIN
 ========================================================= */
 
-async function login(){
+async function login() {
 
-const email =
-document.getElementById("loginEmail")
-.value.trim();
+    const email =
+        document
+            .getElementById("loginEmail")
+            .value
+            .trim();
 
-const password =
-document.getElementById("loginPassword")
-.value;
+    const password =
+        document
+            .getElementById("loginPassword")
+            .value;
 
-const statusEl =
-document.getElementById("loginStatus");
+    const statusEl =
+        document.getElementById(
+            "loginStatus"
+        );
 
-const button =
-document.getElementById("loginBtn");
-
-
-if(!email || !password){
-
-status(
-statusEl,
-"ENTER YOUR EMAIL AND PASSWORD.",
-"error"
-);
-
-return;
-
-}
+    const button =
+        document.getElementById(
+            "loginBtn"
+        );
 
 
-button.disabled = true;
+    if (!email || !password) {
 
-button.textContent =
-"LOGGING IN...";
+        status(
+            statusEl,
+            "ENTER YOUR EMAIL AND PASSWORD.",
+            "error"
+        );
 
-
-const {
-data,
-error
-} =
-await db.auth.signInWithPassword({
-
-email,
-password
-
-});
+        return;
+    }
 
 
-if(error){
+    button.disabled = true;
 
-status(
-statusEl,
-error.message.toUpperCase(),
-"error"
-);
-
-button.disabled = false;
-
-button.textContent =
-"LOGIN";
-
-return;
-
-}
+    button.textContent =
+        "LOGGING IN...";
 
 
-await loadProfile(data.user);
+    const {
+        data,
+        error
+    } = await db.auth
+        .signInWithPassword({
 
-button.disabled = false;
+            email,
+            password
 
-button.textContent =
-"LOGIN";
+        });
+
+
+    if (error) {
+
+        status(
+            statusEl,
+            error.message.toUpperCase(),
+            "error"
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+            "LOGIN";
+
+        return;
+    }
+
+
+    await loadProfile(data.user);
+
+    button.disabled = false;
+
+    button.textContent =
+        "LOGIN";
 
 }
 
@@ -1785,304 +2259,466 @@ button.textContent =
    LOAD PROFILE
 ========================================================= */
 
-async function loadProfile(user){
+async function loadProfile(user) {
 
-if(!user){
+    if (!user) {
 
-showView("login");
+        showView("login");
 
-return;
+        return;
 
-}
+    }
 
 
-currentUser = user;
+    currentUser = user;
 
 
-const {
-data:profile,
-error
-} =
-await db
-.from("profiles")
-.select("*")
-.eq("id",user.id)
-.single();
+    const {
+        data: profile,
+        error
+    } = await db
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
 
 
-if(error){
+    if (error) {
 
-console.error(error);
+        console.error(error);
 
-toast("PROFILE COULD NOT LOAD");
+        toast("PROFILE COULD NOT LOAD");
 
-return;
+        return;
 
-}
+    }
 
 
-/* USERNAME */
+    currentProfile = profile;
 
-document.getElementById("profileUsername")
-.textContent =
-profile.username || "USER";
 
+    /* Username */
 
-/* EMAIL */
+    const username =
+        profile.username || "USER";
 
-document.getElementById("profileEmail")
-.textContent =
-user.email || "";
+    document.getElementById(
+        "profileUsername"
+    ).textContent = username;
 
 
-/* AVATAR */
+    document.getElementById(
+        "editUsername"
+    ).value = username;
 
-const avatar =
-document.getElementById("avatar");
 
-const username =
-profile.username || "?";
+    /* Email */
 
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        user.email || "";
 
-if(profile.avatar_url){
 
-avatar.style.backgroundImage =
-`url("${profile.avatar_url}")`;
+    /* Avatar */
 
-avatar.textContent = "";
+    document.getElementById(
+        "avatar"
+    ).innerHTML =
+        profile.avatar_url
+            ? `<img src="${escapeHTML(profile.avatar_url)}" alt="">`
+            : escapeHTML(
+                username
+                    .charAt(0)
+                    .toUpperCase()
+            );
 
-}else{
 
-avatar.style.backgroundImage =
-"none";
+    /* Bio */
 
-avatar.textContent =
-username.charAt(0).toUpperCase();
+    document.getElementById(
+        "profileBio"
+    ).textContent =
+        profile.bio || "";
 
-}
 
+    document.getElementById(
+        "editBio"
+    ).value =
+        profile.bio || "";
 
-/* BANNER */
 
-const banner =
-document.getElementById("profileBanner");
+    /* Banner */
 
-if(profile.banner_url){
+    const banner =
+        document.getElementById(
+            "profileBanner"
+        );
 
-banner.style.backgroundImage =
-`
-linear-gradient(
-to bottom,
-transparent 20%,
-rgba(0,0,0,.85)
-),
-url("${profile.banner_url}")
-`;
+    if (profile.banner_url) {
 
-}else{
+        banner.style.backgroundImage =
+            `url("${profile.banner_url}")`;
 
-banner.style.backgroundImage =
-`
-linear-gradient(
-135deg,
-${rgba(profile.accent_color || "#ff8c00",.15)},
-rgba(255,255,255,.02)
-)
-`;
+    } else {
 
-}
+        banner.style.backgroundImage =
+            "none";
 
+    }
 
-/* BIO */
 
-document.getElementById("profileBio")
-.textContent =
-profile.bio || "NO BIO SET.";
+    /* Badge */
 
+    const badge =
+        document.getElementById(
+            "profileBadge"
+        );
 
-/* ACCENT */
+    if (profile.is_admin) {
 
-selectedColor =
-profile.accent_color ||
-"#ff8c00";
+        badge.innerHTML =
+            `<i class="fa-solid fa-crown"></i> ADMIN`;
 
-applyTheme(selectedColor);
+        badge.classList.add(
+            "admin-badge"
+        );
 
+        document.getElementById(
+            "adminPanel"
+        ).style.display =
+            "block";
 
-/* BADGE */
+    } else {
 
-const badge =
-document.getElementById("profileBadge");
+        badge.textContent =
+            "MEMBER";
 
-if(profile.is_admin){
+        badge.classList.remove(
+            "admin-badge"
+        );
 
-badge.textContent =
-"ADMIN";
+        document.getElementById(
+            "adminPanel"
+        ).style.display =
+            "none";
 
-badge.classList.add("admin-badge");
+    }
 
-document.getElementById("adminPanel")
-.style.display =
-"block";
 
-}else{
+    /* Member since */
 
-badge.textContent =
-"MEMBER";
+    if (profile.created_at) {
 
-badge.classList.remove("admin-badge");
+        const date =
+            new Date(profile.created_at);
 
-document.getElementById("adminPanel")
-.style.display =
-"none";
+        document.getElementById(
+            "memberSince"
+        ).textContent =
+            date
+                .toLocaleDateString(
+                    undefined,
+                    {
+                        month: "short",
+                        year: "numeric"
+                    }
+                )
+                .toUpperCase();
 
-}
+    }
 
 
-/* MEMBER DATE */
+    /* Theme */
 
-if(profile.created_at){
+    if (profile.accent_color) {
 
-const date =
-new Date(profile.created_at);
+        applyTheme(
+            profile.accent_color
+        );
 
-document.getElementById("memberSince")
-.textContent =
-date.toLocaleDateString(
-undefined,
-{
-month:"short",
-year:"numeric"
-}
-).toUpperCase();
+    } else {
 
-}
+        applyTheme(selectedColor);
 
+    }
 
-/* LOAD ACHIEVEMENTS */
 
-await loadAchievements(user.id);
+    await loadAchievements(
+        user.id
+    );
 
-showView("profile");
+
+    showView("profile");
 
 }
 
 
 /* =========================================================
-   CUSTOMIZATION
+   UPLOAD AVATAR
 ========================================================= */
 
-function openCustomization(){
+async function uploadAvatar(event) {
 
-if(!currentUser)
-return;
+    const file =
+        event.target.files[0];
 
-showView("customize");
+    if (!file || !currentUser)
+        return;
 
-loadCustomizationFields();
+
+    if (file.size > 5 * 1024 * 1024) {
+
+        toast(
+            "PROFILE PICTURE MUST BE UNDER 5MB"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+
+    const allowed = [
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+        "image/gif"
+    ];
+
+
+    if (!allowed.includes(file.type)) {
+
+        toast(
+            "INVALID IMAGE TYPE"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+
+    toast("UPLOADING PROFILE PICTURE...");
+
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    const path =
+        `${currentUser.id}/avatar.${extension}`;
+
+
+    const {
+        error: uploadError
+    } = await db.storage
+        .from("avatars")
+        .upload(
+            path,
+            file,
+            {
+                upsert: true,
+                contentType: file.type
+            }
+        );
+
+
+    if (uploadError) {
+
+        console.error(uploadError);
+
+        toast(
+            "PROFILE PICTURE UPLOAD FAILED"
+        );
+
+        return;
+    }
+
+
+    const {
+        data
+    } = db.storage
+        .from("avatars")
+        .getPublicUrl(path);
+
+
+    const imageUrl =
+        `${data.publicUrl}?v=${Date.now()}`;
+
+
+    const {
+        error: updateError
+    } = await db
+        .from("profiles")
+        .update({
+            avatar_url: imageUrl
+        })
+        .eq("id", currentUser.id);
+
+
+    if (updateError) {
+
+        console.error(updateError);
+
+        toast(
+            "COULD NOT SAVE PROFILE PICTURE"
+        );
+
+        return;
+    }
+
+
+    currentProfile.avatar_url =
+        imageUrl;
+
+
+    document.getElementById(
+        "avatar"
+    ).innerHTML =
+        `<img src="${escapeHTML(imageUrl)}" alt="">`;
+
+
+    toast(
+        "PROFILE PICTURE UPDATED"
+    );
 
 }
-
-
-function loadCustomizationFields(){
-
-if(!currentUser)
-return;
-
-
-/*
-   We already loaded the profile.
-   Fetch it again so the editor is always current.
-*/
-
-db
-.from("profiles")
-.select("*")
-.eq("id",currentUser.id)
-.single()
-.then(({data,error})=>{
-
-if(error){
-
-console.error(error);
-
-return;
-
-}
-
-
-document.getElementById("editUsername")
-.value =
-data.username || "";
-
-
-document.getElementById("editBio")
-.value =
-data.bio || "";
-
-
-document.getElementById("editAvatar")
-.value =
-data.avatar_url || "";
-
-
-document.getElementById("editBanner")
-.value =
-data.banner_url || "";
-
-
-selectedColor =
-data.accent_color ||
-"#ff8c00";
-
-
-document
-.querySelectorAll(".color-option")
-.forEach(button=>{
-
-button.classList.toggle(
-"selected",
-button.dataset.color.toLowerCase() ===
-selectedColor.toLowerCase()
-);
-
-});
-
-});
-
-}
-
-
-/* Replace button handler */
-
-document
-.querySelector(
-'[onclick="showView(\'customize\')"]'
-)
-?.addEventListener(
-"click",
-openCustomization
-);
 
 
 /* =========================================================
-   COLOR SELECT
+   UPLOAD BANNER
 ========================================================= */
 
-function selectColor(button){
+async function uploadBanner(event) {
 
-selectedColor =
-button.dataset.color;
+    const file =
+        event.target.files[0];
 
-document
-.querySelectorAll(".color-option")
-.forEach(b =>
-b.classList.remove("selected")
-);
+    if (!file || !currentUser)
+        return;
 
-button.classList.add("selected");
 
-applyTheme(selectedColor);
+    if (file.size > 8 * 1024 * 1024) {
+
+        toast(
+            "BANNER MUST BE UNDER 8MB"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+
+    const allowed = [
+        "image/png",
+        "image/jpeg",
+        "image/webp"
+    ];
+
+
+    if (!allowed.includes(file.type)) {
+
+        toast(
+            "INVALID IMAGE TYPE"
+        );
+
+        event.target.value = "";
+
+        return;
+    }
+
+
+    toast("UPLOADING BANNER...");
+
+
+    const extension =
+        file.name
+            .split(".")
+            .pop()
+            .toLowerCase();
+
+
+    const path =
+        `${currentUser.id}/banner.${extension}`;
+
+
+    const {
+        error: uploadError
+    } = await db.storage
+        .from("banners")
+        .upload(
+            path,
+            file,
+            {
+                upsert: true,
+                contentType: file.type
+            }
+        );
+
+
+    if (uploadError) {
+
+        console.error(uploadError);
+
+        toast(
+            "BANNER UPLOAD FAILED"
+        );
+
+        return;
+    }
+
+
+    const {
+        data
+    } = db.storage
+        .from("banners")
+        .getPublicUrl(path);
+
+
+    const imageUrl =
+        `${data.publicUrl}?v=${Date.now()}`;
+
+
+    const {
+        error: updateError
+    } = await db
+        .from("profiles")
+        .update({
+            banner_url: imageUrl
+        })
+        .eq("id", currentUser.id);
+
+
+    if (updateError) {
+
+        console.error(updateError);
+
+        toast(
+            "COULD NOT SAVE BANNER"
+        );
+
+        return;
+    }
+
+
+    currentProfile.banner_url =
+        imageUrl;
+
+
+    document.getElementById(
+        "profileBanner"
+    ).style.backgroundImage =
+        `url("${imageUrl}")`;
+
+
+    toast(
+        "BANNER UPDATED"
+    );
 
 }
 
@@ -2091,172 +2727,184 @@ applyTheme(selectedColor);
    SAVE PROFILE
 ========================================================= */
 
-async function saveProfile(){
+async function saveProfile() {
 
-if(!currentUser){
-
-toast("NOT LOGGED IN");
-
-return;
-
-}
+    if (!currentUser)
+        return;
 
 
-const username =
-document.getElementById("editUsername")
-.value.trim();
-
-const bio =
-document.getElementById("editBio")
-.value.trim();
-
-const avatar =
-document.getElementById("editAvatar")
-.value.trim();
-
-const banner =
-document.getElementById("editBanner")
-.value.trim();
-
-const statusEl =
-document.getElementById("customizeStatus");
-
-const button =
-document.getElementById("saveProfileBtn");
+    const username =
+        document
+            .getElementById(
+                "editUsername"
+            )
+            .value
+            .trim();
 
 
-if(username.length < 3){
-
-status(
-statusEl,
-"USERNAME MUST BE AT LEAST 3 CHARACTERS.",
-"error"
-);
-
-return;
-
-}
+    const bio =
+        document
+            .getElementById(
+                "editBio"
+            )
+            .value
+            .trim();
 
 
-button.disabled = true;
-
-button.textContent =
-"SAVING...";
-
-
-/*
-   Check whether another account
-   already owns this username.
-*/
-
-const {
-data:existing,
-error:checkError
-} =
-await db
-.from("profiles")
-.select("id")
-.eq("username",username)
-.neq("id",currentUser.id)
-.maybeSingle();
+    const statusEl =
+        document.getElementById(
+            "profileStatus"
+        );
 
 
-if(checkError){
+    if (username.length < 3) {
 
-console.error(checkError);
+        status(
+            statusEl,
+            "USERNAME MUST BE AT LEAST 3 CHARACTERS.",
+            "error"
+        );
 
-status(
-statusEl,
-"COULD NOT CHECK USERNAME.",
-"error"
-);
-
-button.disabled = false;
-
-button.textContent =
-"SAVE PROFILE";
-
-return;
-
-}
+        return;
+    }
 
 
-if(existing){
-
-status(
-statusEl,
-"THAT USERNAME IS ALREADY TAKEN.",
-"error"
-);
-
-button.disabled = false;
-
-button.textContent =
-"SAVE PROFILE";
-
-return;
-
-}
+    const button =
+        document.getElementById(
+            "saveBtn"
+        );
 
 
-/* SAVE */
+    button.disabled = true;
 
-const {
-error
-} =
-await db
-.from("profiles")
-.update({
-
-username:username,
-
-bio:bio,
-
-avatar_url:avatar,
-
-banner_url:banner,
-
-accent_color:selectedColor
-
-})
-.eq("id",currentUser.id);
+    button.textContent =
+        "SAVING...";
 
 
-if(error){
+    /* Check username */
 
-console.error(error);
-
-status(
-statusEl,
-"COULD NOT SAVE PROFILE.",
-"error"
-);
-
-button.disabled = false;
-
-button.textContent =
-"SAVE PROFILE";
-
-return;
-
-}
+    const {
+        data: existing,
+        error: usernameError
+    } = await db
+        .from("profiles")
+        .select("id")
+        .eq("username", username)
+        .neq("id", currentUser.id)
+        .maybeSingle();
 
 
-status(
-statusEl,
-"PROFILE SAVED.",
-"success"
-);
+    if (usernameError) {
 
-toast("PROFILE SAVED");
+        console.error(usernameError);
 
-button.disabled = false;
+        status(
+            statusEl,
+            "COULD NOT CHECK USERNAME.",
+            "error"
+        );
 
-button.textContent =
-"SAVE PROFILE";
+        button.disabled = false;
+
+        button.textContent =
+            "SAVE CHANGES";
+
+        return;
+    }
 
 
-await loadProfile(currentUser);
+    if (existing) {
+
+        status(
+            statusEl,
+            "THAT USERNAME IS ALREADY TAKEN.",
+            "error"
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+            "SAVE CHANGES";
+
+        return;
+    }
+
+
+    const {
+        error
+    } = await db
+        .from("profiles")
+        .update({
+
+            username,
+
+            bio,
+
+            accent_color:
+                selectedColor
+
+        })
+        .eq(
+            "id",
+            currentUser.id
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        status(
+            statusEl,
+            error.message.toUpperCase(),
+            "error"
+        );
+
+        button.disabled = false;
+
+        button.textContent =
+            "SAVE CHANGES";
+
+        return;
+    }
+
+
+    currentProfile.username =
+        username;
+
+    currentProfile.bio =
+        bio;
+
+    currentProfile.accent_color =
+        selectedColor;
+
+
+    document.getElementById(
+        "profileUsername"
+    ).textContent =
+        username;
+
+
+    document.getElementById(
+        "profileBio"
+    ).textContent =
+        bio;
+
+
+    status(
+        statusEl,
+        "PROFILE SAVED.",
+        "success"
+    );
+
+
+    toast("PROFILE UPDATED");
+
+
+    button.disabled = false;
+
+    button.textContent =
+        "SAVE CHANGES";
 
 }
 
@@ -2265,115 +2913,120 @@ await loadProfile(currentUser);
    ACHIEVEMENTS
 ========================================================= */
 
-async function loadAchievements(userId){
+async function loadAchievements(userId) {
 
-const {
-data,
-error
-} =
-await db
-.from("user_achievements")
-.select(`
-unlocked_at,
-achievements (
-name,
-description,
-icon
-)
-`)
-.eq("user_id",userId)
-.order("unlocked_at",{
-ascending:false
-});
-
-
-const list =
-document.getElementById(
-"achievementsList"
-);
-
-
-if(error){
-
-console.error(error);
-
-list.innerHTML = `
-<div class="empty">
-COULD NOT LOAD ACHIEVEMENTS
-</div>
-`;
-
-return;
-
-}
+    const {
+        data,
+        error
+    } = await db
+        .from("user_achievements")
+        .select(`
+            unlocked_at,
+            achievements (
+                name,
+                description,
+                icon
+            )
+        `)
+        .eq(
+            "user_id",
+            userId
+        )
+        .order(
+            "unlocked_at",
+            {
+                ascending: false
+            }
+        );
 
 
-document.getElementById(
-"achievementCount"
-).textContent =
-data.length;
+    const list =
+        document.getElementById(
+            "achievementsList"
+        );
 
 
-if(!data.length){
+    if (error) {
 
-list.innerHTML = `
-<div class="empty">
-NO ACHIEVEMENTS YET
-</div>
-`;
+        console.error(error);
 
-return;
+        list.innerHTML = `
+            <div class="empty">
+                COULD NOT LOAD ACHIEVEMENTS
+            </div>
+        `;
 
-}
-
-
-list.innerHTML = "";
+        return;
+    }
 
 
-data.forEach(item=>{
-
-const achievement =
-item.achievements;
-
-if(!achievement)
-return;
+    document.getElementById(
+        "achievementCount"
+    ).textContent =
+        data.length;
 
 
-const el =
-document.createElement("div");
+    if (!data.length) {
 
-el.className =
-"achievement";
+        list.innerHTML = `
+            <div class="empty">
+                NO ACHIEVEMENTS YET
+            </div>
+        `;
 
-el.innerHTML = `
+        return;
+    }
 
-<div class="achievement-icon">
-${escapeHTML(
-achievement.icon || "🏆"
-)}
-</div>
 
-<div>
+    list.innerHTML = "";
 
-<div class="achievement-name">
-${escapeHTML(
-achievement.name
-)}
-</div>
 
-<div class="achievement-description">
-${escapeHTML(
-achievement.description || ""
-)}
-</div>
+    data.forEach(item => {
 
-</div>
+        const achievement =
+            item.achievements;
 
-`;
+        if (!achievement)
+            return;
 
-list.appendChild(el);
 
-});
+        const el =
+            document.createElement("div");
+
+        el.className =
+            "achievement";
+
+
+        el.innerHTML = `
+
+            <div class="achievement-icon">
+                ${escapeHTML(
+                    achievement.icon || "🏆"
+                )}
+            </div>
+
+            <div>
+
+                <div class="achievement-name">
+                    ${escapeHTML(
+                        achievement.name
+                    )}
+                </div>
+
+                <div class="achievement-description">
+                    ${escapeHTML(
+                        achievement.description || ""
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+
+        list.appendChild(el);
+
+    });
 
 }
 
@@ -2382,60 +3035,65 @@ list.appendChild(el);
    PASSWORD RESET
 ========================================================= */
 
-async function resetPassword(){
+async function resetPassword() {
 
-const email =
-document.getElementById("loginEmail")
-.value.trim();
-
-
-if(!email){
-
-status(
-document.getElementById("loginStatus"),
-"ENTER YOUR EMAIL FIRST.",
-"error"
-);
-
-showView("login");
-
-return;
-
-}
+    const email =
+        document
+            .getElementById(
+                "loginEmail"
+            )
+            .value
+            .trim();
 
 
-const {
-error
-} =
-await db.auth
-.resetPasswordForEmail(
-email,
-{
-redirectTo:
-window.location.origin +
-window.location.pathname
-}
-);
+    if (!email) {
+
+        status(
+            document.getElementById(
+                "loginStatus"
+            ),
+            "ENTER YOUR EMAIL FIRST.",
+            "error"
+        );
+
+        return;
+    }
 
 
-if(error){
+    const {
+        error
+    } = await db.auth
+        .resetPasswordForEmail(
+            email,
+            {
+                redirectTo:
+                    window.location.origin +
+                    window.location.pathname
+            }
+        );
 
-status(
-document.getElementById("loginStatus"),
-error.message.toUpperCase(),
-"error"
-);
 
-return;
+    if (error) {
 
-}
+        status(
+            document.getElementById(
+                "loginStatus"
+            ),
+            error.message.toUpperCase(),
+            "error"
+        );
+
+        return;
+    }
 
 
-status(
-document.getElementById("loginStatus"),
-"PASSWORD RESET EMAIL SENT.",
-"success"
-);
+    status(
+        document.getElementById(
+            "loginStatus"
+        ),
+        "PASSWORD RESET EMAIL SENT.",
+        "success"
+    );
 
 }
 
@@ -2444,28 +3102,28 @@ document.getElementById("loginStatus"),
    LOGOUT
 ========================================================= */
 
-async function logout(){
+async function logout() {
 
-const {
-error
-} =
-await db.auth.signOut();
-
-
-if(error){
-
-toast("LOGOUT FAILED");
-
-return;
-
-}
+    const {
+        error
+    } = await db.auth.signOut();
 
 
-currentUser = null;
+    if (error) {
 
-showView("login");
+        toast("LOGOUT FAILED");
 
-toast("LOGGED OUT");
+        return;
+    }
+
+
+    currentUser = null;
+
+    currentProfile = null;
+
+    showView("login");
+
+    toast("LOGGED OUT");
 
 }
 
@@ -2474,69 +3132,80 @@ toast("LOGGED OUT");
    ADMIN
 ========================================================= */
 
-async function openAdmin(){
+async function openAdmin() {
 
-const {
-data:{
-user
-}
-} =
-await db.auth.getUser();
+    if (!currentUser) {
 
+        showView("login");
 
-if(!user){
-
-showView("login");
-
-return;
-
-}
+        return;
+    }
 
 
-const {
-data:profile,
-error
-} =
-await db
-.from("profiles")
-.select("is_admin")
-.eq("id",user.id)
-.single();
+    const {
+        data: profile,
+        error
+    } = await db
+        .from("profiles")
+        .select("is_admin")
+        .eq(
+            "id",
+            currentUser.id
+        )
+        .single();
 
 
-if(error ||
-!profile ||
-!profile.is_admin){
+    if (
+        error ||
+        !profile ||
+        !profile.is_admin
+    ) {
 
-toast("ADMIN ACCESS DENIED");
+        toast(
+            "ADMIN ACCESS DENIED"
+        );
 
-return;
+        return;
+    }
 
-}
 
-
-showView("admin");
+    showView("admin");
 
 }
 
 
 /* =========================================================
-   ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
-function escapeHTML(value){
+function escapeHTML(value) {
 
-return String(value)
+    return String(value)
 
-.replaceAll("&","&amp;")
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
 
-.replaceAll("<","&lt;")
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
 
-.replaceAll(">","&gt;")
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
 
-.replaceAll('"',"&quot;")
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
 
-.replaceAll("'","&#039;");
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
@@ -2546,52 +3215,65 @@ return String(value)
 ========================================================= */
 
 db.auth.onAuthStateChange(
-async(event,session)=>{
+    async (
+        event,
+        session
+    ) => {
 
-if(session &&
-session.user){
+        if (
+            session &&
+            session.user
+        ) {
 
-await loadProfile(
-session.user
-);
+            await loadProfile(
+                session.user
+            );
 
-}
+        }
 
-}
+    }
 );
 
 
 /* =========================================================
-   INITIAL LOAD
+   INITIALIZE
 ========================================================= */
 
-async function initialize(){
+async function initialize() {
 
-const {
-data:{
-session
-}
-} =
-await db.auth.getSession();
+    /* Apply theme immediately */
 
-
-if(session &&
-session.user){
-
-await loadProfile(
-session.user
-);
-
-}else{
-
-showView("login");
-
-}
+    applyTheme(
+        localStorage.getItem(
+            "phantom_accent"
+        ) || "#ff8c00"
+    );
 
 
-document
-.getElementById("loading")
-.classList.add("hidden");
+    /* Check session */
+
+    const {
+        data: {
+            session
+        }
+    } = await db.auth
+        .getSession();
+
+
+    if (
+        session &&
+        session.user
+    ) {
+
+        await loadProfile(
+            session.user
+        );
+
+    } else {
+
+        showView("login");
+
+    }
 
 }
 
@@ -2600,38 +3282,37 @@ document
    SETTINGS
 ========================================================= */
 
-(function loadSettings(){
+(function loadSettings() {
 
-const accent =
-localStorage.getItem(
-"phantom_accent"
-) || "#ff8c00";
+    const accent =
+        localStorage.getItem(
+            "phantom_accent"
+        ) || "#ff8c00";
 
-
-applyTheme(accent);
-
-
-const wallpaper =
-localStorage.getItem(
-"phantom_wallpaper"
-);
+    applyTheme(accent);
 
 
-if(wallpaper){
+    const wallpaper =
+        localStorage.getItem(
+            "phantom_wallpaper"
+        );
 
-document.body.style.backgroundImage =
-`url("${wallpaper}")`;
 
-document.body.style.backgroundSize =
-"cover";
+    if (wallpaper) {
 
-document.body.style.backgroundPosition =
-"center";
+        document.body.style.backgroundImage =
+            `url("${wallpaper}")`;
 
-document.body.style.backgroundAttachment =
-"fixed";
+        document.body.style.backgroundSize =
+            "cover";
 
-}
+        document.body.style.backgroundPosition =
+            "center";
+
+        document.body.style.backgroundAttachment =
+            "fixed";
+
+    }
 
 })();
 
@@ -2642,23 +3323,25 @@ document.body.style.backgroundAttachment =
 
 fetch("version.json")
 
-.then(res=>res.json())
+    .then(res => res.json())
 
-.then(data=>{
+    .then(data => {
 
-document.getElementById("version")
-.textContent =
-`PHANTOM ${data.version}`;
+        document.getElementById(
+            "version"
+        ).textContent =
+            `PHANTOM ${data.version}`;
 
-})
+    })
 
-.catch(()=>{
+    .catch(() => {
 
-document.getElementById("version")
-.textContent =
-"PHANTOM";
+        document.getElementById(
+            "version"
+        ).textContent =
+            "PHANTOM";
 
-});
+    });
 
 
 /* =========================================================
