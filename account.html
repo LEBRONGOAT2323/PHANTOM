@@ -12,6 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 :root {
     --accent: #ff8c00;
 }
@@ -53,6 +54,7 @@ body {
     from {
         transform: translateY(0);
     }
+
     to {
         transform: translateY(-120vh);
     }
@@ -76,8 +78,11 @@ body {
 .page {
     position: relative;
     z-index: 2;
+
     width: min(820px, calc(100% - 32px));
+
     margin: auto;
+
     padding: 35px 0 90px;
 }
 
@@ -87,6 +92,7 @@ body {
     gap: 8px;
 
     color: rgba(255,255,255,.45);
+
     font-size: .7rem;
     letter-spacing: 2px;
 
@@ -97,6 +103,7 @@ body {
     font-family: 'Orbitron', sans-serif;
 
     margin-bottom: 28px;
+
     transition: .25s;
 }
 
@@ -106,15 +113,21 @@ body {
 
 .logo {
     font-size: clamp(2.5rem, 7vw, 4.5rem);
+
     font-weight: 900;
+
     letter-spacing: 10px;
+
     margin-bottom: 8px;
 }
 
 .subtitle {
     font-size: .7rem;
+
     letter-spacing: 3px;
+
     color: rgba(255,255,255,.38);
+
     margin-bottom: 30px;
 }
 
@@ -124,11 +137,17 @@ body {
 
 .panel {
     background: rgba(255,255,255,.025);
+
     border: 1px solid rgba(255,255,255,.08);
+
     border-radius: 18px;
+
     padding: 26px;
+
     backdrop-filter: blur(14px);
+
     margin-bottom: 16px;
+
     transition: .3s;
 }
 
@@ -138,8 +157,11 @@ body {
 
 .panel-title {
     font-size: .7rem;
+
     letter-spacing: 3px;
+
     color: rgba(255,255,255,.65);
+
     margin-bottom: 22px;
 }
 
@@ -149,6 +171,7 @@ body {
 
 .profile-banner {
     height: 190px;
+
     width: 100%;
 
     border-radius: 14px;
@@ -162,6 +185,7 @@ body {
         rgba(255,255,255,.035);
 
     background-size: cover;
+
     background-position: center;
 
     border: 1px solid rgba(255,255,255,.08);
@@ -182,6 +206,7 @@ body {
 .profile-head {
     display: flex;
     align-items: flex-end;
+
     gap: 18px;
 
     padding: 0 18px;
@@ -191,6 +216,7 @@ body {
 
 .avatar-wrap {
     position: relative;
+
     flex-shrink: 0;
 }
 
@@ -216,12 +242,14 @@ body {
     color: rgba(255,255,255,.8);
 
     font-size: 1.7rem;
+
     font-weight: 700;
 }
 
 .avatar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
@@ -257,7 +285,10 @@ body {
 
 .camera-btn:hover {
     color: #fff;
-    border-color: rgba(255,255,255,.35);
+
+    border-color:
+        rgba(255,255,255,.35);
+
     transform: scale(1.05);
 }
 
@@ -293,7 +324,9 @@ body {
 
 .banner-camera:hover {
     color: #fff;
-    border-color: rgba(255,255,255,.3);
+
+    border-color:
+        rgba(255,255,255,.3);
 }
 
 .hidden-file {
@@ -302,13 +335,19 @@ body {
 
 .profile-info {
     padding-bottom: 8px;
+
     min-width: 0;
 }
 
 .username {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
+
+    font-weight: 700;
+
     letter-spacing: 2px;
+
     color: #fff;
+
     word-break: break-word;
 }
 
@@ -316,6 +355,7 @@ body {
     margin-top: 7px;
 
     font-size: .55rem;
+
     letter-spacing: 1px;
 
     color: rgba(255,255,255,.38);
@@ -337,21 +377,27 @@ body {
     border-radius: 5px;
 
     font-size: .46rem;
+
     letter-spacing: 1.3px;
 
     background: rgba(255,255,255,.035);
 
-    border: 1px solid rgba(255,255,255,.09);
+    border:
+        1px solid rgba(255,255,255,.09);
 
-    color: rgba(255,255,255,.42);
+    color:
+        rgba(255,255,255,.42);
 }
 
 .admin-badge {
-    color: rgba(255,255,255,.58);
+    color:
+        rgba(255,255,255,.58);
 
-    background: rgba(255,140,0,.035);
+    background:
+        rgba(255,140,0,.035);
 
-    border-color: rgba(255,140,0,.16);
+    border-color:
+        rgba(255,140,0,.16);
 }
 
 /* =========================
@@ -360,16 +406,21 @@ body {
 
 .stats {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+
+    grid-template-columns:
+        repeat(2,1fr);
+
     gap: 10px;
 
     margin-bottom: 20px;
 }
 
 .stat {
-    background: rgba(255,255,255,.025);
+    background:
+        rgba(255,255,255,.025);
 
-    border: 1px solid rgba(255,255,255,.06);
+    border:
+        1px solid rgba(255,255,255,.06);
 
     border-radius: 12px;
 
@@ -380,14 +431,20 @@ body {
 
 .stat-number {
     font-size: 1.1rem;
-    color: rgba(255,255,255,.85);
+
+    color:
+        rgba(255,255,255,.85);
+
     margin-bottom: 7px;
 }
 
 .stat-label {
     font-size: .5rem;
+
     letter-spacing: 1.5px;
-    color: rgba(255,255,255,.35);
+
+    color:
+        rgba(255,255,255,.35);
 }
 
 /* =========================
@@ -402,7 +459,9 @@ body {
     padding: 13px 18px;
 
     font-family: 'Orbitron', sans-serif;
+
     font-size: .65rem;
+
     letter-spacing: 2px;
 
     cursor: pointer;
@@ -413,25 +472,39 @@ body {
 }
 
 .primary-btn {
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.11);
-    color: rgba(255,255,255,.75);
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid rgba(255,255,255,.11);
+
+    color:
+        rgba(255,255,255,.75);
 }
 
 .primary-btn:hover {
-    border-color: var(--accent);
+    border-color:
+        var(--accent);
+
     color: #fff;
 }
 
 .secondary-btn {
-    background: rgba(255,255,255,.025);
-    border: 1px solid rgba(255,255,255,.08);
-    color: rgba(255,255,255,.55);
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    color:
+        rgba(255,255,255,.55);
 }
 
 .secondary-btn:hover {
     color: #fff;
-    border-color: rgba(255,255,255,.18);
+
+    border-color:
+        rgba(255,255,255,.18);
 }
 
 /* =========================
@@ -440,14 +513,18 @@ body {
 
 .achievement {
     display: flex;
+
     align-items: center;
+
     gap: 14px;
 
     padding: 14px;
 
-    background: rgba(255,255,255,.025);
+    background:
+        rgba(255,255,255,.025);
 
-    border: 1px solid rgba(255,255,255,.06);
+    border:
+        1px solid rgba(255,255,255,.06);
 
     border-radius: 12px;
 
@@ -461,10 +538,12 @@ body {
     border-radius: 10px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    background: rgba(255,255,255,.04);
+    background:
+        rgba(255,255,255,.04);
 
     font-size: 1.2rem;
 
@@ -473,14 +552,21 @@ body {
 
 .achievement-name {
     font-size: .65rem;
+
     letter-spacing: 1px;
-    color: rgba(255,255,255,.8);
+
+    color:
+        rgba(255,255,255,.8);
 }
 
 .achievement-description {
     font-size: .5rem;
-    color: rgba(255,255,255,.34);
+
+    color:
+        rgba(255,255,255,.34);
+
     margin-top: 5px;
+
     letter-spacing: .5px;
 }
 
@@ -490,9 +576,11 @@ body {
     padding: 25px;
 
     font-size: .6rem;
+
     letter-spacing: 1px;
 
-    color: rgba(255,255,255,.25);
+    color:
+        rgba(255,255,255,.25);
 }
 
 /* =========================
@@ -500,13 +588,18 @@ body {
 ========================= */
 
 .admin-panel {
-    border-color: rgba(255,255,255,.07);
+    border-color:
+        rgba(255,255,255,.07);
 }
 
 .admin-warning {
     font-size: .55rem;
-    color: rgba(255,255,255,.35);
+
+    color:
+        rgba(255,255,255,.35);
+
     line-height: 1.7;
+
     margin-bottom: 18px;
 }
 
@@ -534,6 +627,7 @@ body {
     border-radius: 10px;
 
     font-size: .6rem;
+
     line-height: 1.6;
 
     letter-spacing: .7px;
@@ -547,14 +641,23 @@ body {
 
 .status.error {
     color: #ff6677;
-    background: rgba(255,50,80,.07);
-    border: 1px solid rgba(255,50,80,.2);
+
+    background:
+        rgba(255,50,80,.07);
+
+    border:
+        1px solid rgba(255,50,80,.2);
 }
 
 .status.success {
-    color: rgba(255,255,255,.7);
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.1);
+    color:
+        rgba(255,255,255,.7);
+
+    background:
+        rgba(255,255,255,.035);
+
+    border:
+        1px solid rgba(255,255,255,.1);
 }
 
 /* =========================
@@ -569,9 +672,11 @@ body {
     display: block;
 
     font-size: .6rem;
+
     letter-spacing: 2px;
 
-    color: rgba(255,255,255,.45);
+    color:
+        rgba(255,255,255,.45);
 
     margin-bottom: 8px;
 }
@@ -579,9 +684,11 @@ body {
 .field input {
     width: 100%;
 
-    background: rgba(255,255,255,.045);
+    background:
+        rgba(255,255,255,.045);
 
-    border: 1px solid rgba(255,255,255,.1);
+    border:
+        1px solid rgba(255,255,255,.1);
 
     border-radius: 10px;
 
@@ -590,7 +697,9 @@ body {
     color: white;
 
     font-family: 'Orbitron', sans-serif;
+
     font-size: .7rem;
+
     letter-spacing: 1px;
 
     outline: none;
@@ -599,11 +708,13 @@ body {
 }
 
 .field input:focus {
-    border-color: var(--accent);
+    border-color:
+        var(--accent);
 }
 
 .field input::placeholder {
-    color: rgba(255,255,255,.2);
+    color:
+        rgba(255,255,255,.2);
 }
 
 .switch-row {
@@ -612,20 +723,27 @@ body {
     margin-top: 20px;
 
     font-size: .6rem;
+
     letter-spacing: 1px;
 
-    color: rgba(255,255,255,.4);
+    color:
+        rgba(255,255,255,.4);
 }
 
 .link-btn {
     border: none;
+
     background: none;
 
-    color: rgba(255,255,255,.65);
+    color:
+        rgba(255,255,255,.65);
 
-    font-family: 'Orbitron', sans-serif;
+    font-family:
+        'Orbitron',
+        sans-serif;
 
     font-size: .6rem;
+
     letter-spacing: 1px;
 
     cursor: pointer;
@@ -641,9 +759,12 @@ body {
     position: fixed;
 
     bottom: 30px;
+
     left: 50%;
 
-    transform: translateX(-50%) translateY(20px);
+    transform:
+        translateX(-50%)
+        translateY(20px);
 
     opacity: 0;
 
@@ -656,6 +777,7 @@ body {
     border-radius: 10px;
 
     font-size: .6rem;
+
     letter-spacing: 1.5px;
 
     backdrop-filter: blur(12px);
@@ -665,21 +787,28 @@ body {
 
 .toast.show {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
 .version {
     position: fixed;
 
     bottom: 14px;
+
     left: 50%;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     font-size: .55rem;
+
     letter-spacing: 2px;
 
-    color: rgba(255,255,255,.25);
+    color:
+        rgba(255,255,255,.25);
 
     z-index: 3;
 }
@@ -687,7 +816,9 @@ body {
 @media(max-width:550px) {
 
     .page {
-        width: calc(100% - 24px);
+        width:
+            calc(100% - 24px);
+
         padding-top: 25px;
     }
 
@@ -701,6 +832,7 @@ body {
 
     .profile-head {
         padding: 0 10px;
+
         gap: 13px;
     }
 
@@ -710,8 +842,9 @@ body {
     }
 
     .username {
-        font-size: .9rem;
+        font-size: .95rem;
     }
+
 }
 </style>
 </head>
@@ -729,12 +862,15 @@ body {
 </button>
 
 <h1 class="logo" id="logo">PHANTOM</h1>
-<div class="subtitle">ACCOUNT</div>
+
+<div class="subtitle">
+    ACCOUNT
+</div>
 
 
-<!-- =========================
+<!-- =====================================================
      LOGIN
-========================= -->
+===================================================== -->
 
 <div id="loginView" class="view">
 
@@ -748,36 +884,67 @@ body {
 <div id="loginStatus" class="status"></div>
 
 <div class="field">
+
 <label>EMAIL</label>
-<input type="email" id="loginEmail" placeholder="YOUR EMAIL">
+
+<input
+    type="email"
+    id="loginEmail"
+    placeholder="YOUR EMAIL"
+>
+
 </div>
 
 <div class="field">
+
 <label>PASSWORD</label>
-<input type="password" id="loginPassword" placeholder="YOUR PASSWORD">
+
+<input
+    type="password"
+    id="loginPassword"
+    placeholder="YOUR PASSWORD"
+>
+
 </div>
 
-<button class="btn primary-btn" onclick="login()" id="loginBtn">
+<button
+    class="btn primary-btn"
+    onclick="login()"
+    id="loginBtn"
+>
     LOGIN
 </button>
 
 <div class="switch-row">
-    DON'T HAVE AN ACCOUNT?
-    <button class="link-btn" onclick="showView('signup')">
-        CREATE ONE
-    </button>
+
+DON'T HAVE AN ACCOUNT?
+
+<button
+    class="link-btn"
+    onclick="showView('signup')"
+>
+    CREATE ONE
+</button>
+
 </div>
 
 </div>
+
 
 <div class="panel">
 
 <div class="panel-title">
-    <i class="fa-solid fa-key"></i>
-    PASSWORD
+
+<i class="fa-solid fa-key"></i>
+
+PASSWORD
+
 </div>
 
-<button class="btn secondary-btn" onclick="resetPassword()">
+<button
+    class="btn secondary-btn"
+    onclick="resetPassword()"
+>
     RESET PASSWORD
 </button>
 
@@ -786,64 +953,112 @@ body {
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      SIGNUP
-========================= -->
+===================================================== -->
 
 <div id="signupView" class="view">
 
 <div class="panel">
 
 <div class="panel-title">
-    <i class="fa-solid fa-user-plus"></i>
-    CREATE ACCOUNT
+
+<i class="fa-solid fa-user-plus"></i>
+
+CREATE ACCOUNT
+
 </div>
 
-<div id="signupStatus" class="status"></div>
+<div
+    id="signupStatus"
+    class="status"
+></div>
 
 <div class="field">
+
 <label>USERNAME</label>
-<input type="text" id="signupUsername" placeholder="CHOOSE A USERNAME" maxlength="24">
+
+<input
+    type="text"
+    id="signupUsername"
+    placeholder="CHOOSE A USERNAME"
+    maxlength="24"
+>
+
 </div>
 
 <div class="field">
+
 <label>EMAIL</label>
-<input type="email" id="signupEmail" placeholder="YOUR EMAIL">
+
+<input
+    type="email"
+    id="signupEmail"
+    placeholder="YOUR EMAIL"
+>
+
 </div>
 
 <div class="field">
+
 <label>PASSWORD</label>
-<input type="password" id="signupPassword" placeholder="AT LEAST 6 CHARACTERS">
+
+<input
+    type="password"
+    id="signupPassword"
+    placeholder="AT LEAST 6 CHARACTERS"
+>
+
 </div>
 
 <div class="field">
+
 <label>CONFIRM PASSWORD</label>
-<input type="password" id="signupConfirm" placeholder="RE-ENTER PASSWORD">
+
+<input
+    type="password"
+    id="signupConfirm"
+    placeholder="RE-ENTER PASSWORD"
+>
+
 </div>
 
-<button class="btn primary-btn" onclick="signup()" id="signupBtn">
+<button
+    class="btn primary-btn"
+    onclick="signup()"
+    id="signupBtn"
+>
     CREATE ACCOUNT
 </button>
 
 <div class="switch-row">
-    ALREADY HAVE AN ACCOUNT?
-    <button class="link-btn" onclick="showView('login')">
-        LOGIN
-    </button>
-</div>
+
+ALREADY HAVE AN ACCOUNT?
+
+<button
+    class="link-btn"
+    onclick="showView('login')"
+>
+    LOGIN
+</button>
 
 </div>
 
 </div>
 
+</div>
 
-<!-- =========================
+
+<!-- =====================================================
      VERIFY
-========================= -->
+===================================================== -->
 
 <div id="verifyView" class="view">
 
-<div class="panel" style="text-align:center;">
+<div
+    class="panel"
+    style="text-align:center;"
+>
 
 <div style="
 width:70px;
@@ -876,7 +1091,10 @@ We've sent a confirmation link to:
 
 <br><br>
 
-<strong id="verifyEmail" style="color:#fff;"></strong>
+<strong
+    id="verifyEmail"
+    style="color:#fff;"
+></strong>
 
 <br><br>
 
@@ -885,9 +1103,11 @@ Then come back and log in.
 
 </div>
 
-<button class="btn secondary-btn"
-onclick="showView('login')"
-style="margin-top:25px;">
+<button
+    class="btn secondary-btn"
+    onclick="showView('login')"
+    style="margin-top:25px;"
+>
     BACK TO LOGIN
 </button>
 
@@ -896,9 +1116,9 @@ style="margin-top:25px;">
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      PROFILE
-========================= -->
+===================================================== -->
 
 <div id="profileView" class="view">
 
@@ -906,22 +1126,28 @@ style="margin-top:25px;">
 
 <div class="profile-section">
 
-<div class="profile-banner" id="profileBanner">
 
-<button class="banner-camera"
-onclick="document.getElementById('bannerInput').click()"
-title="Change banner">
+<div
+    class="profile-banner"
+    id="profileBanner"
+>
+
+<button
+    class="banner-camera"
+    onclick="document.getElementById('bannerInput').click()"
+    title="Change banner"
+>
 
 <i class="fa-solid fa-camera"></i>
 
 </button>
 
 <input
-type="file"
-id="bannerInput"
-class="hidden-file"
-accept="image/png,image/jpeg,image/webp"
-onchange="uploadBanner(this)"
+    type="file"
+    id="bannerInput"
+    class="hidden-file"
+    accept="image/png,image/jpeg,image/webp"
+    onchange="uploadBanner(this)"
 >
 
 </div>
@@ -929,42 +1155,57 @@ onchange="uploadBanner(this)"
 
 <div class="profile-head">
 
+
 <div class="avatar-wrap">
 
-<div class="avatar" id="avatar">
+<div
+    class="avatar"
+    id="avatar"
+>
     ?
 </div>
 
 <button
-class="camera-btn"
-onclick="document.getElementById('avatarInput').click()"
-title="Change profile picture">
+    class="camera-btn"
+    onclick="document.getElementById('avatarInput').click()"
+    title="Change profile picture"
+>
 
 <i class="fa-solid fa-camera"></i>
 
 </button>
 
 <input
-type="file"
-id="avatarInput"
-class="hidden-file"
-accept="image/png,image/jpeg,image/webp"
-onchange="uploadAvatar(this)"
+    type="file"
+    id="avatarInput"
+    class="hidden-file"
+    accept="image/png,image/jpeg,image/webp"
+    onchange="uploadAvatar(this)"
 >
 
 </div>
 
+
 <div class="profile-info">
 
-<div class="username" id="profileUsername">
+<div
+    class="username"
+    id="profileUsername"
+>
     USER
 </div>
 
-<div class="email" id="profileEmail">
+<div
+    class="email"
+    id="profileEmail"
+>
     EMAIL
 </div>
 
-<div class="badge" id="profileBadge">
+<div
+    class="badge"
+    id="profileBadge"
+>
     MEMBER
 </div>
 
@@ -979,7 +1220,10 @@ onchange="uploadAvatar(this)"
 
 <div class="stat">
 
-<div class="stat-number" id="achievementCount">
+<div
+    class="stat-number"
+    id="achievementCount"
+>
     0
 </div>
 
@@ -989,9 +1233,13 @@ onchange="uploadAvatar(this)"
 
 </div>
 
+
 <div class="stat">
 
-<div class="stat-number" id="memberSince">
+<div
+    class="stat-number"
+    id="memberSince"
+>
     --
 </div>
 
@@ -1004,7 +1252,10 @@ onchange="uploadAvatar(this)"
 </div>
 
 
-<button class="btn secondary-btn" onclick="logout()">
+<button
+    class="btn secondary-btn"
+    onclick="logout()"
+>
     <i class="fa-solid fa-right-from-bracket"></i>
     LOG OUT
 </button>
@@ -1017,8 +1268,11 @@ onchange="uploadAvatar(this)"
 <div class="panel">
 
 <div class="panel-title">
-    <i class="fa-solid fa-trophy"></i>
-    ACHIEVEMENTS
+
+<i class="fa-solid fa-trophy"></i>
+
+ACHIEVEMENTS
+
 </div>
 
 <div id="achievementsList">
@@ -1034,18 +1288,30 @@ onchange="uploadAvatar(this)"
 
 <!-- ADMIN -->
 
-<div class="panel admin-panel" id="adminPanel" style="display:none;">
+<div
+    class="panel admin-panel"
+    id="adminPanel"
+    style="display:none;"
+>
 
 <div class="panel-title">
-    <i class="fa-solid fa-crown"></i>
-    ADMIN
+
+<i class="fa-solid fa-crown"></i>
+
+ADMIN
+
 </div>
 
 <div class="admin-warning">
-    You have administrator privileges on PHANTOM.
+
+You have administrator privileges on PHANTOM.
+
 </div>
 
-<button class="btn secondary-btn" onclick="openAdmin()">
+<button
+    class="btn secondary-btn"
+    onclick="openAdmin()"
+>
     OPEN ADMIN PANEL
 </button>
 
@@ -1054,17 +1320,20 @@ onchange="uploadAvatar(this)"
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      ADMIN
-========================= -->
+===================================================== -->
 
 <div id="adminView" class="view">
 
 <div class="panel">
 
 <div class="panel-title">
-    <i class="fa-solid fa-crown"></i>
-    PHANTOM ADMIN
+
+<i class="fa-solid fa-crown"></i>
+
+PHANTOM ADMIN
+
 </div>
 
 <div class="admin-warning">
@@ -1077,8 +1346,10 @@ This area is restricted to PHANTOM administrators.
 
 </div>
 
-<button class="btn secondary-btn"
-onclick="showView('profile')">
+<button
+    class="btn secondary-btn"
+    onclick="showView('profile')"
+>
     BACK TO PROFILE
 </button>
 
@@ -1088,9 +1359,16 @@ onclick="showView('profile')">
 
 </div>
 
-<div class="toast" id="toast"></div>
 
-<div class="version" id="version">
+<div
+    class="toast"
+    id="toast"
+></div>
+
+<div
+    class="version"
+    id="version"
+>
     PHANTOM
 </div>
 
@@ -1102,10 +1380,10 @@ onclick="showView('profile')">
 ========================================================= */
 
 const SUPABASE_URL =
-"https://xxzrbpglmgzoisjnnezy.supabase.co";
+    "https://xxzrbpglmgzoisjnnezy.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4enJicGdsbWd6b2lzam5uZXp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODczMzksImV4cCI6MjEwMjU2MzMzOX0.Bn086psa2kjtpy5U08NDEiRcBP5yM8dKuuzxv4Uwcxo";
 
 const {
     createClient
@@ -1122,17 +1400,17 @@ const db = createClient(
 ========================================================= */
 
 const stars =
-document.getElementById("stars");
+    document.getElementById("stars");
 
 for (let i = 0; i < 90; i++) {
 
     const star =
-    document.createElement("div");
+        document.createElement("div");
 
     star.className = "star";
 
     const size =
-    Math.random() * 2 + 1;
+        Math.random() * 2 + 1;
 
     star.style.cssText = `
         width:${size}px;
@@ -1161,35 +1439,108 @@ function hexToRgb(hex) {
         g: parseInt(hex.substring(2,4),16),
         b: parseInt(hex.substring(4,6),16)
     };
+
 }
 
-function rgba(hex, alpha) {
 
-    const c = hexToRgb(hex);
+function rgba(hex,alpha) {
+
+    const c =
+        hexToRgb(hex);
 
     return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+
 }
+
 
 function applyTheme(color) {
 
     document.documentElement
-    .style
-    .setProperty("--accent", color);
+        .style
+        .setProperty(
+            "--accent",
+            color
+        );
 
-    document.getElementById("logo").style.textShadow = `
-        0 0 6px rgba(255,255,255,.15),
-        0 0 15px ${rgba(color,.25)},
-        0 0 30px ${rgba(color,.12)}
-    `;
 
-    document.getElementById("bottom-glow").style.background = `
-        radial-gradient(
-            ellipse at center,
-            ${rgba(color,.08)} 0%,
-            ${rgba(color,.025)} 35%,
-            transparent 70%
-        )
-    `;
+    document.getElementById("logo")
+        .style.textShadow = `
+            0 0 6px rgba(255,255,255,.15),
+            0 0 15px ${rgba(color,.25)},
+            0 0 30px ${rgba(color,.12)}
+        `;
+
+
+    document.getElementById("bottom-glow")
+        .style.background = `
+            radial-gradient(
+                ellipse at center,
+                ${rgba(color,.08)} 0%,
+                ${rgba(color,.025)} 35%,
+                transparent 70%
+            )
+        `;
+}
+
+
+/* =========================================================
+   EMAIL MASKING
+========================================================= */
+
+function maskEmail(email) {
+
+    if (!email || !email.includes("@")) {
+        return "";
+    }
+
+    const parts =
+        email.split("@");
+
+    const local =
+        parts[0];
+
+    const domain =
+        parts.slice(1).join("@");
+
+
+    /*
+        Keep the first character visible.
+        Hide the rest of the local part.
+        
+        Example:
+        lebron@gmail.com
+        becomes:
+        l*****@gmail.com
+    */
+
+    if (local.length <= 1) {
+
+        return `*@${domain}`;
+
+    }
+
+
+    if (local.length === 2) {
+
+        return `${local[0]}*@${domain}`;
+
+    }
+
+
+    const visible =
+        local[0];
+
+    const stars =
+        "*".repeat(
+            Math.min(
+                Math.max(local.length - 1,3),
+                7
+            )
+        );
+
+
+    return `${visible}${stars}@${domain}`;
+
 }
 
 
@@ -1200,18 +1551,19 @@ function applyTheme(color) {
 function toast(message) {
 
     const el =
-    document.getElementById("toast");
+        document.getElementById("toast");
 
-    el.textContent = message;
+    el.textContent =
+        message;
 
     el.style.background =
-    "rgba(15,15,15,.9)";
+        "rgba(15,15,15,.9)";
 
     el.style.border =
-    "1px solid rgba(255,255,255,.12)";
+        "1px solid rgba(255,255,255,.12)";
 
     el.style.color =
-    "rgba(255,255,255,.75)";
+        "rgba(255,255,255,.75)";
 
     el.classList.add("show");
 
@@ -1219,7 +1571,8 @@ function toast(message) {
 
         el.classList.remove("show");
 
-    }, 2500);
+    },2500);
+
 }
 
 
@@ -1227,12 +1580,18 @@ function toast(message) {
    STATUS
 ========================================================= */
 
-function status(element,message,type) {
+function status(
+    element,
+    message,
+    type
+) {
 
-    element.textContent = message;
+    element.textContent =
+        message;
 
     element.className =
-    "status show " + type;
+        "status show " + type;
+
 }
 
 
@@ -1242,16 +1601,25 @@ function status(element,message,type) {
 
 function showView(view) {
 
-    document.querySelectorAll(".view")
-    .forEach(v =>
-        v.classList.remove("active")
-    );
+    document
+        .querySelectorAll(".view")
+        .forEach(v =>
+            v.classList.remove("active")
+        );
+
 
     const target =
-    document.getElementById(view + "View");
+        document.getElementById(
+            view + "View"
+        );
 
-    if (target)
+
+    if (target) {
+
         target.classList.add("active");
+
+    }
+
 }
 
 
@@ -1262,26 +1630,45 @@ function showView(view) {
 async function signup() {
 
     const username =
-    document.getElementById("signupUsername")
-    .value.trim();
+        document.getElementById(
+            "signupUsername"
+        )
+        .value
+        .trim();
+
 
     const email =
-    document.getElementById("signupEmail")
-    .value.trim();
+        document.getElementById(
+            "signupEmail"
+        )
+        .value
+        .trim();
+
 
     const password =
-    document.getElementById("signupPassword")
-    .value;
+        document.getElementById(
+            "signupPassword"
+        )
+        .value;
+
 
     const confirm =
-    document.getElementById("signupConfirm")
-    .value;
+        document.getElementById(
+            "signupConfirm"
+        )
+        .value;
+
 
     const statusEl =
-    document.getElementById("signupStatus");
+        document.getElementById(
+            "signupStatus"
+        );
+
 
     const button =
-    document.getElementById("signupBtn");
+        document.getElementById(
+            "signupBtn"
+        );
 
 
     if (!username) {
@@ -1295,6 +1682,7 @@ async function signup() {
         return;
     }
 
+
     if (username.length < 3) {
 
         status(
@@ -1305,6 +1693,7 @@ async function signup() {
 
         return;
     }
+
 
     if (!email) {
 
@@ -1317,6 +1706,7 @@ async function signup() {
         return;
     }
 
+
     if (password.length < 6) {
 
         status(
@@ -1327,6 +1717,7 @@ async function signup() {
 
         return;
     }
+
 
     if (password !== confirm) {
 
@@ -1343,22 +1734,24 @@ async function signup() {
     button.disabled = true;
 
     button.textContent =
-    "CREATING ACCOUNT...";
+        "CREATING ACCOUNT...";
 
 
     const {
         data: existing,
         error: usernameError
     } = await db
-    .from("profiles")
-    .select("id")
-    .eq("username", username)
-    .maybeSingle();
+        .from("profiles")
+        .select("id")
+        .eq("username",username)
+        .maybeSingle();
 
 
     if (usernameError) {
 
-        console.error(usernameError);
+        console.error(
+            usernameError
+        );
 
         status(
             statusEl,
@@ -1369,7 +1762,7 @@ async function signup() {
         button.disabled = false;
 
         button.textContent =
-        "CREATE ACCOUNT";
+            "CREATE ACCOUNT";
 
         return;
     }
@@ -1386,18 +1779,18 @@ async function signup() {
         button.disabled = false;
 
         button.textContent =
-        "CREATE ACCOUNT";
+            "CREATE ACCOUNT";
 
         return;
     }
 
 
     const {
-        data,
         error
     } = await db.auth.signUp({
 
         email,
+
         password,
 
         options: {
@@ -1407,8 +1800,8 @@ async function signup() {
             },
 
             emailRedirectTo:
-            window.location.origin +
-            window.location.pathname
+                window.location.origin +
+                window.location.pathname
 
         }
 
@@ -1426,21 +1819,27 @@ async function signup() {
         button.disabled = false;
 
         button.textContent =
-        "CREATE ACCOUNT";
+            "CREATE ACCOUNT";
 
         return;
     }
 
 
-    document.getElementById("verifyEmail")
-    .textContent = email;
+    document.getElementById(
+        "verifyEmail"
+    )
+    .textContent =
+        maskEmail(email);
+
 
     showView("verify");
+
 
     button.disabled = false;
 
     button.textContent =
-    "CREATE ACCOUNT";
+        "CREATE ACCOUNT";
+
 }
 
 
@@ -1451,18 +1850,30 @@ async function signup() {
 async function login() {
 
     const email =
-    document.getElementById("loginEmail")
-    .value.trim();
+        document.getElementById(
+            "loginEmail"
+        )
+        .value
+        .trim();
+
 
     const password =
-    document.getElementById("loginPassword")
-    .value;
+        document.getElementById(
+            "loginPassword"
+        )
+        .value;
+
 
     const statusEl =
-    document.getElementById("loginStatus");
+        document.getElementById(
+            "loginStatus"
+        );
+
 
     const button =
-    document.getElementById("loginBtn");
+        document.getElementById(
+            "loginBtn"
+        );
 
 
     if (!email || !password) {
@@ -1480,16 +1891,21 @@ async function login() {
     button.disabled = true;
 
     button.textContent =
-    "LOGGING IN...";
+        "LOGGING IN...";
 
 
     const {
         data,
         error
-    } = await db.auth.signInWithPassword({
-        email,
-        password
-    });
+    } =
+        await db.auth
+            .signInWithPassword({
+
+                email,
+
+                password
+
+            });
 
 
     if (error) {
@@ -1503,18 +1919,22 @@ async function login() {
         button.disabled = false;
 
         button.textContent =
-        "LOGIN";
+            "LOGIN";
 
         return;
     }
 
 
-    await loadProfile(data.user);
+    await loadProfile(
+        data.user
+    );
+
 
     button.disabled = false;
 
     button.textContent =
-    "LOGIN";
+        "LOGIN";
+
 }
 
 
@@ -1535,46 +1955,82 @@ async function loadProfile(user) {
     const {
         data: profile,
         error
-    } = await db
-    .from("profiles")
-    .select("*")
-    .eq("id",user.id)
-    .single();
+    } =
+        await db
+            .from("profiles")
+            .select("*")
+            .eq("id",user.id)
+            .single();
 
 
     if (error) {
 
         console.error(error);
 
-        toast("PROFILE COULD NOT LOAD");
+        toast(
+            "PROFILE COULD NOT LOAD"
+        );
 
         return;
     }
 
 
     const username =
-    profile.username || "USER";
+        profile.username ||
+        "USER";
 
 
-    document.getElementById("profileUsername")
-    .textContent = username;
+    /* USERNAME */
 
-    document.getElementById("profileEmail")
-    .textContent = user.email || "";
+    document.getElementById(
+        "profileUsername"
+    )
+    .textContent =
+        username;
 
 
-    document.getElementById("avatar")
+    /* MASKED EMAIL */
+
+    document.getElementById(
+        "profileEmail"
+    )
+    .textContent =
+        maskEmail(
+            user.email || ""
+        );
+
+
+    /* AVATAR */
+
+    document.getElementById(
+        "avatar"
+    )
     .innerHTML =
-    profile.avatar_url
-    ? `<img src="${escapeHTML(profile.avatar_url)}" alt="">`
-    : escapeHTML(
-        username.charAt(0).toUpperCase()
-    );
+        profile.avatar_url
 
+        ? `
+            <img
+                src="${escapeHTML(
+                    profile.avatar_url
+                )}"
+                alt="Profile picture"
+            >
+        `
+
+        : escapeHTML(
+            username
+                .charAt(0)
+                .toUpperCase()
+        );
+
+
+    /* BANNER */
 
     if (profile.banner_url) {
 
-        document.getElementById("profileBanner")
+        document.getElementById(
+            "profileBanner"
+        )
         .style.backgroundImage = `
             linear-gradient(
                 180deg,
@@ -1587,55 +2043,81 @@ async function loadProfile(user) {
     }
 
 
+    /* ADMIN */
+
     const badge =
-    document.getElementById("profileBadge");
+        document.getElementById(
+            "profileBadge"
+        );
+
 
     const adminPanel =
-    document.getElementById("adminPanel");
+        document.getElementById(
+            "adminPanel"
+        );
 
 
     if (profile.is_admin) {
 
         badge.textContent =
-        "ADMIN";
+            "ADMIN";
 
-        badge.classList.add("admin-badge");
+        badge.classList.add(
+            "admin-badge"
+        );
 
         adminPanel.style.display =
-        "block";
+            "block";
 
     } else {
 
         badge.textContent =
-        "MEMBER";
+            "MEMBER";
 
-        badge.classList.remove("admin-badge");
+        badge.classList.remove(
+            "admin-badge"
+        );
 
         adminPanel.style.display =
-        "none";
+            "none";
+
     }
 
+
+    /* MEMBER SINCE */
 
     if (profile.created_at) {
 
         const date =
-        new Date(profile.created_at);
+            new Date(
+                profile.created_at
+            );
 
-        document.getElementById("memberSince")
+
+        document.getElementById(
+            "memberSince"
+        )
         .textContent =
-        date.toLocaleDateString(
-            undefined,
-            {
-                month:"short",
-                year:"numeric"
-            }
-        ).toUpperCase();
+            date
+                .toLocaleDateString(
+                    undefined,
+                    {
+                        month:"short",
+                        year:"numeric"
+                    }
+                )
+                .toUpperCase();
+
     }
 
 
-    await loadAchievements(user.id);
+    await loadAchievements(
+        user.id
+    );
+
 
     showView("profile");
+
 }
 
 
@@ -1643,20 +2125,32 @@ async function loadProfile(user) {
    IMAGE UPLOAD
 ========================================================= */
 
-async function uploadImage(file, type) {
+async function uploadImage(
+    file,
+    type
+) {
 
-    if (!file) return;
+    if (!file)
+        return;
+
 
     const {
         data: {
             user
         }
-    } = await db.auth.getUser();
+    } =
+        await db.auth.getUser();
+
 
     if (!user) {
-        toast("YOU ARE NOT LOGGED IN");
+
+        toast(
+            "YOU ARE NOT LOGGED IN"
+        );
+
         return;
     }
+
 
     const allowedTypes = [
         "image/png",
@@ -1664,20 +2158,38 @@ async function uploadImage(file, type) {
         "image/webp"
     ];
 
-    if (!allowedTypes.includes(file.type)) {
-        toast("PNG, JPG OR WEBP ONLY");
+
+    if (
+        !allowedTypes
+            .includes(file.type)
+    ) {
+
+        toast(
+            "PNG, JPG OR WEBP ONLY"
+        );
+
         return;
     }
 
-    if (file.size > 5 * 1024 * 1024) {
-        toast("IMAGE MUST BE UNDER 5MB");
+
+    if (
+        file.size >
+        5 * 1024 * 1024
+    ) {
+
+        toast(
+            "IMAGE MUST BE UNDER 5MB"
+        );
+
         return;
     }
+
 
     const bucket =
-    type === "avatar"
-        ? "Avatars"
-        : "banners";
+        type === "avatar"
+            ? "Avatars"
+            : "banners";
+
 
     const extension =
         file.name
@@ -1685,59 +2197,90 @@ async function uploadImage(file, type) {
             .pop()
             .toLowerCase();
 
+
     const path =
         `${user.id}/${type}-${Date.now()}.${extension}`;
 
-    toast("UPLOADING IMAGE...");
+
+    toast(
+        "UPLOADING IMAGE..."
+    );
+
 
     const {
-        data: uploadedFile,
-        error: uploadError
-    } = await db.storage
-        .from(bucket)
-        .upload(
-            path,
-            file,
-            {
-                cacheControl: "3600",
-                contentType: file.type,
-                upsert: false
-            }
-        );
+        data:
+            uploadedFile,
+        error:
+            uploadError
+    } =
+        await db.storage
+            .from(bucket)
+            .upload(
+                path,
+                file,
+                {
+                    cacheControl:"3600",
+
+                    contentType:
+                        file.type,
+
+                    upsert:false
+                }
+            );
+
 
     if (uploadError) {
 
-        console.error("FULL STORAGE ERROR:", uploadError);
+        console.error(
+            "FULL STORAGE ERROR:",
+            uploadError
+        );
 
         toast(
-            `UPLOAD FAILED: ${uploadError.message || "UNKNOWN ERROR"}`
+            `UPLOAD FAILED: ${
+                uploadError.message ||
+                "UNKNOWN ERROR"
+            }`
         );
 
         return;
     }
 
+
     const {
-        data: publicData
-    } = db.storage
-        .from(bucket)
-        .getPublicUrl(path);
+        data:
+            publicData
+    } =
+        db.storage
+            .from(bucket)
+            .getPublicUrl(path);
+
 
     const imageUrl =
         publicData.publicUrl;
+
 
     const column =
         type === "avatar"
             ? "avatar_url"
             : "banner_url";
 
+
     const {
-        error: profileError
-    } = await db
-        .from("profiles")
-        .update({
-            [column]: imageUrl
-        })
-        .eq("id", user.id);
+        error:
+            profileError
+    } =
+        await db
+            .from("profiles")
+            .update({
+                [column]:
+                    imageUrl
+            })
+            .eq(
+                "id",
+                user.id
+            );
+
 
     if (profileError) {
 
@@ -1747,25 +2290,33 @@ async function uploadImage(file, type) {
         );
 
         toast(
-            `IMAGE SAVED BUT PROFILE UPDATE FAILED`
+            "COULD NOT SAVE IMAGE"
         );
 
         return;
     }
 
+
     if (type === "avatar") {
 
-        document.getElementById("avatar").innerHTML =
-            `<img
-                src="${escapeHTML(imageUrl)}"
+        document.getElementById(
+            "avatar"
+        )
+        .innerHTML = `
+            <img
+                src="${escapeHTML(
+                    imageUrl
+                )}"
                 alt="Profile picture"
-            >`;
+            >
+        `;
 
     } else {
 
         document.getElementById(
             "profileBanner"
-        ).style.backgroundImage = `
+        )
+        .style.backgroundImage = `
             linear-gradient(
                 180deg,
                 rgba(0,0,0,.05),
@@ -1776,13 +2327,18 @@ async function uploadImage(file, type) {
 
     }
 
-    toast("IMAGE UPDATED");
+
+    toast(
+        "IMAGE UPDATED"
+    );
+
 }
+
 
 async function uploadAvatar(input) {
 
     const file =
-    input.files[0];
+        input.files[0];
 
     await uploadImage(
         file,
@@ -1790,13 +2346,14 @@ async function uploadAvatar(input) {
     );
 
     input.value = "";
+
 }
 
 
 async function uploadBanner(input) {
 
     const file =
-    input.files[0];
+        input.files[0];
 
     await uploadImage(
         file,
@@ -1804,6 +2361,7 @@ async function uploadBanner(input) {
     );
 
     input.value = "";
+
 }
 
 
@@ -1816,29 +2374,42 @@ async function loadAchievements(userId) {
     const {
         data,
         error
-    } = await db
-    .from("user_achievements")
-    .select(`
-        unlocked_at,
-        achievements (
-            name,
-            description,
-            icon
-        )
-    `)
-    .eq("user_id",userId)
-    .order("unlocked_at",{
-        ascending:false
-    });
+    } =
+        await db
+            .from(
+                "user_achievements"
+            )
+            .select(`
+                unlocked_at,
+                achievements (
+                    name,
+                    description,
+                    icon
+                )
+            `)
+            .eq(
+                "user_id",
+                userId
+            )
+            .order(
+                "unlocked_at",
+                {
+                    ascending:false
+                }
+            );
 
 
     const list =
-    document.getElementById("achievementsList");
+        document.getElementById(
+            "achievementsList"
+        );
 
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         list.innerHTML = `
             <div class="empty">
@@ -1850,8 +2421,11 @@ async function loadAchievements(userId) {
     }
 
 
-    document.getElementById("achievementCount")
-    .textContent = data.length;
+    document.getElementById(
+        "achievementCount"
+    )
+    .textContent =
+        data.length;
 
 
     if (!data.length) {
@@ -1872,7 +2446,7 @@ async function loadAchievements(userId) {
     data.forEach(item => {
 
         const achievement =
-        item.achievements;
+            item.achievements;
 
 
         if (!achievement)
@@ -1880,17 +2454,21 @@ async function loadAchievements(userId) {
 
 
         const el =
-        document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         el.className =
-        "achievement";
+            "achievement";
 
 
         el.innerHTML = `
 
             <div class="achievement-icon">
                 ${escapeHTML(
-                    achievement.icon || "🏆"
+                    achievement.icon ||
+                    "🏆"
                 )}
             </div>
 
@@ -1904,7 +2482,8 @@ async function loadAchievements(userId) {
 
                 <div class="achievement-description">
                     ${escapeHTML(
-                        achievement.description || ""
+                        achievement.description ||
+                        ""
                     )}
                 </div>
 
@@ -1915,6 +2494,7 @@ async function loadAchievements(userId) {
         list.appendChild(el);
 
     });
+
 }
 
 
@@ -1925,14 +2505,19 @@ async function loadAchievements(userId) {
 async function resetPassword() {
 
     const email =
-    document.getElementById("loginEmail")
-    .value.trim();
+        document.getElementById(
+            "loginEmail"
+        )
+        .value
+        .trim();
 
 
     if (!email) {
 
         status(
-            document.getElementById("loginStatus"),
+            document.getElementById(
+                "loginStatus"
+            ),
             "ENTER YOUR EMAIL FIRST.",
             "error"
         );
@@ -1943,21 +2528,24 @@ async function resetPassword() {
 
     const {
         error
-    } = await db.auth
-    .resetPasswordForEmail(
-        email,
-        {
-            redirectTo:
-            window.location.origin +
-            window.location.pathname
-        }
-    );
+    } =
+        await db.auth
+            .resetPasswordForEmail(
+                email,
+                {
+                    redirectTo:
+                        window.location.origin +
+                        window.location.pathname
+                }
+            );
 
 
     if (error) {
 
         status(
-            document.getElementById("loginStatus"),
+            document.getElementById(
+                "loginStatus"
+            ),
             error.message.toUpperCase(),
             "error"
         );
@@ -1967,10 +2555,13 @@ async function resetPassword() {
 
 
     status(
-        document.getElementById("loginStatus"),
+        document.getElementById(
+            "loginStatus"
+        ),
         "PASSWORD RESET EMAIL SENT.",
         "success"
     );
+
 }
 
 
@@ -1982,12 +2573,15 @@ async function logout() {
 
     const {
         error
-    } = await db.auth.signOut();
+    } =
+        await db.auth.signOut();
 
 
     if (error) {
 
-        toast("LOGOUT FAILED");
+        toast(
+            "LOGOUT FAILED"
+        );
 
         return;
     }
@@ -1995,7 +2589,10 @@ async function logout() {
 
     showView("login");
 
-    toast("LOGGED OUT");
+    toast(
+        "LOGGED OUT"
+    );
+
 }
 
 
@@ -2009,7 +2606,8 @@ async function openAdmin() {
         data: {
             user
         }
-    } = await db.auth.getUser();
+    } =
+        await db.auth.getUser();
 
 
     if (!user) {
@@ -2023,11 +2621,15 @@ async function openAdmin() {
     const {
         data: profile,
         error
-    } = await db
-    .from("profiles")
-    .select("is_admin")
-    .eq("id",user.id)
-    .single();
+    } =
+        await db
+            .from("profiles")
+            .select("is_admin")
+            .eq(
+                "id",
+                user.id
+            )
+            .single();
 
 
     if (
@@ -2036,28 +2638,52 @@ async function openAdmin() {
         !profile.is_admin
     ) {
 
-        toast("ADMIN ACCESS DENIED");
+        toast(
+            "ADMIN ACCESS DENIED"
+        );
 
         return;
     }
 
 
     showView("admin");
+
 }
 
 
 /* =========================================================
-   ESCAPE
+   ESCAPE HTML
 ========================================================= */
 
 function escapeHTML(value) {
 
     return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
 }
 
 
@@ -2066,7 +2692,10 @@ function escapeHTML(value) {
 ========================================================= */
 
 db.auth.onAuthStateChange(
-    async (event,session) => {
+    async (
+        event,
+        session
+    ) => {
 
         if (
             session &&
@@ -2090,33 +2719,36 @@ db.auth.onAuthStateChange(
 (function loadSettings() {
 
     const accent =
-    localStorage.getItem(
-        "phantom_accent"
-    ) || "#ff8c00";
+        localStorage.getItem(
+            "phantom_accent"
+        ) || "#ff8c00";
 
 
-    applyTheme(accent);
+    applyTheme(
+        accent
+    );
 
 
     const wallpaper =
-    localStorage.getItem(
-        "phantom_wallpaper"
-    );
+        localStorage.getItem(
+            "phantom_wallpaper"
+        );
 
 
     if (wallpaper) {
 
         document.body.style.backgroundImage =
-        `url("${wallpaper}")`;
+            `url("${wallpaper}")`;
 
         document.body.style.backgroundSize =
-        "cover";
+            "cover";
 
         document.body.style.backgroundPosition =
-        "center";
+            "center";
 
         document.body.style.backgroundAttachment =
-        "fixed";
+            "fixed";
+
     }
 
 })();
@@ -2127,21 +2759,33 @@ db.auth.onAuthStateChange(
 ========================================================= */
 
 fetch("version.json")
-.then(res => res.json())
-.then(data => {
 
-    document.getElementById("version")
-    .textContent =
-    `PHANTOM ${data.version}`;
+    .then(
+        res =>
+            res.json()
+    )
 
-})
-.catch(() => {
+    .then(
+        data => {
 
-    document.getElementById("version")
-    .textContent =
-    "PHANTOM";
+            document.getElementById(
+                "version"
+            )
+            .textContent =
+                `PHANTOM ${data.version}`;
 
-});
+        }
+    )
+
+    .catch(() => {
+
+        document.getElementById(
+            "version"
+        )
+        .textContent =
+            "PHANTOM";
+
+    });
 
 
 /* =========================================================
@@ -2154,7 +2798,8 @@ fetch("version.json")
         data: {
             session
         }
-    } = await db.auth.getSession();
+    } =
+        await db.auth.getSession();
 
 
     if (
