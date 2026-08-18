@@ -1645,8 +1645,7 @@ async function loadProfile(user) {
 
 async function uploadImage(file, type) {
 
-    if (!file)
-        return;
+    if (!file) return;
 
     const {
         data: {
@@ -1659,13 +1658,13 @@ async function uploadImage(file, type) {
         return;
     }
 
-    const allowed = [
+    const allowedTypes = [
         "image/png",
         "image/jpeg",
         "image/webp"
     ];
 
-    if (!allowed.includes(file.type)) {
+    if (!allowedTypes.includes(file.type)) {
         toast("PNG, JPG OR WEBP ONLY");
         return;
     }
@@ -1675,7 +1674,10 @@ async function uploadImage(file, type) {
         return;
     }
 
-    toast("UPLOADING IMAGE...");
+    const bucket =
+        type === "avatar"
+            ? "avatars"
+            : "banners";
 
     const extension =
         file.name
@@ -1683,15 +1685,13 @@ async function uploadImage(file, type) {
             .pop()
             .toLowerCase();
 
-    const bucket =
-        type === "avatar"
-            ? "avatars"
-            : "banners";
-
     const path =
         `${user.id}/${type}-${Date.now()}.${extension}`;
 
+    toast("UPLOADING IMAGE...");
+
     const {
+        data: uploadedFile,
         error: uploadError
     } = await db.storage
         .from(bucket)
@@ -1699,25 +1699,31 @@ async function uploadImage(file, type) {
             path,
             file,
             {
-                upsert: true,
-                contentType: file.type
+                cacheControl: "3600",
+                contentType: file.type,
+                upsert: false
             }
         );
 
     if (uploadError) {
-        console.error("Storage upload error:", uploadError);
-        toast("IMAGE UPLOAD FAILED");
+
+        console.error("FULL STORAGE ERROR:", uploadError);
+
+        toast(
+            `UPLOAD FAILED: ${uploadError.message || "UNKNOWN ERROR"}`
+        );
+
         return;
     }
 
     const {
-        data
+        data: publicData
     } = db.storage
         .from(bucket)
         .getPublicUrl(path);
 
     const imageUrl =
-        data.publicUrl;
+        publicData.publicUrl;
 
     const column =
         type === "avatar"
@@ -1725,7 +1731,7 @@ async function uploadImage(file, type) {
             : "banner_url";
 
     const {
-        error: updateError
+        error: profileError
     } = await db
         .from("profiles")
         .update({
@@ -1733,28 +1739,41 @@ async function uploadImage(file, type) {
         })
         .eq("id", user.id);
 
-    if (updateError) {
-        console.error("Profile update error:", updateError);
-        toast("COULD NOT SAVE IMAGE");
+    if (profileError) {
+
+        console.error(
+            "PROFILE UPDATE ERROR:",
+            profileError
+        );
+
+        toast(
+            `IMAGE SAVED BUT PROFILE UPDATE FAILED`
+        );
+
         return;
     }
 
     if (type === "avatar") {
 
         document.getElementById("avatar").innerHTML =
-            `<img src="${escapeHTML(imageUrl)}" alt="Profile picture">`;
+            `<img
+                src="${escapeHTML(imageUrl)}"
+                alt="Profile picture"
+            >`;
 
     } else {
 
-        document.getElementById("profileBanner")
-            .style.backgroundImage = `
-                linear-gradient(
-                    180deg,
-                    rgba(0,0,0,.05),
-                    rgba(0,0,0,.75)
-                ),
-                url("${imageUrl}")
-            `;
+        document.getElementById(
+            "profileBanner"
+        ).style.backgroundImage = `
+            linear-gradient(
+                180deg,
+                rgba(0,0,0,.05),
+                rgba(0,0,0,.75)
+            ),
+            url("${imageUrl}")
+        `;
+
     }
 
     toast("IMAGE UPDATED");
