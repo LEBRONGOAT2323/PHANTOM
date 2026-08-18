@@ -192,7 +192,7 @@ body {
 
     position: relative;
 
-    margin-bottom: -48px;
+    margin-bottom: 0px;
 }
 
 /* =========================
@@ -206,12 +206,15 @@ body {
 .profile-head {
     display: flex;
     align-items: flex-end;
-
     gap: 18px;
 
     padding: 0 18px;
 
+    margin-top: -48px;
     margin-bottom: 25px;
+
+    position: relative;
+    z-index: 3;
 }
 
 .avatar-wrap {
@@ -335,8 +338,9 @@ body {
 
 .profile-info {
     padding-bottom: 8px;
-
     min-width: 0;
+    position: relative;
+    z-index: 4;
 }
 
 .username {
