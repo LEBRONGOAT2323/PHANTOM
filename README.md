@@ -7,7 +7,7 @@ A browser game-hub project with games, movies, music, and an account page. **Thi
 
 **Live site (may be outdated):** `https://phantom-ubg.vercel.app`.
 
-![PHANTOM screenshot](assets/images/screenshot.png)
+![PHANTOM screenshot](assets/images/screenshot-phantom.png)
 
 ---
 
